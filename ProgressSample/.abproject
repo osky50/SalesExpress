@@ -1,0 +1,45 @@
+{
+  "ProjectName": "ProgressSample",
+  "ProjectGuid": "8116b4c3-1d44-4c0f-9f7a-ceda231a4eaf",
+  "projectVersion": 1,
+  "AppIdentifier": "com.telerik.ProgressSample",
+  "DisplayName": "ProgressSample",
+  "Author": "",
+  "Description": "ProgressSample",
+  "BundleVersion": "1.0",
+  "AndroidVersionCode": "1",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
+  "FrameworkVersion": "4.0.0",
+  "AndroidPermissions": [
+    "android.permission.INTERNET"
+  ],
+  "DeviceOrientations": [
+    "Portrait",
+    "Landscape"
+  ],
+  "AndroidHardwareAcceleration": "true",
+  "iOSStatusBarStyle": "Default",
+  "Framework": "Cordova",
+  "WP8TileTitle": "",
+  "WP8Publisher": "",
+  "WP8Capabilities": [
+    "ID_CAP_NETWORKING",
+    "ID_CAP_WEBBROWSERCOMPONENT"
+  ],
+  "WP8Requirements": [],
+  "WP8PublisherID": "{d0066b06-3729-4592-8dfd-b26a47099833}",
+  "WP8ProductID": "{7a97f86b-3a69-437b-9c43-c080201d9caf}",
+  "WPSdk": "8.0",
+  "WP8PackageIdentityName": "1234Telerik.ProgressSample",
+  "WP8WindowsPublisherName": "CN=Telerik",
+  "WP8SupportedResolutions": [
+    "ID_RESOLUTION_WVGA",
+    "ID_RESOLUTION_WXGA",
+    "ID_RESOLUTION_HD720P"
+  ]
+}
