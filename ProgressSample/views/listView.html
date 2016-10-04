@@ -6,9 +6,18 @@
      data-init="app.viewModels.dataViewModel.onInit"
      data-show="app.viewModels.dataViewModel.onBeforeShow"
      data-model="app.viewModels.dataViewModel">
+
     <ul id="mainListView" 
         data-role="listview" data-style="inset">
-    </ul>        
+    </ul>
+
+    <script type="text/x-kendo-template" id="prodTemplate">
+        <a href="views/details.html?##id=#: Prod_Id #">
+            <div class="prodImage"><img src="#: ImgUrl #" /></div>
+            <div class="prodDesc">#: description #</div>
+            <div class="prodId">#: Prod_Id #</div>
+        </a>
+    </script>
 </div>
 
 

@@ -7,14 +7,14 @@
         selectedRow: {},
         origRow: {},
         resourceName: undefined,
-        
+
         // The order of the firing of events is as follows:
         //   before-show
         //   init (fires only once)
         //   show
-            
-        onBeforeShow: function() {
-            var clistView;   
+
+        onBeforeShow: function () {
+            var clistView;
 
             clistView = $("#mainListView").data("kendoMobileListView");
             if (clistView === undefined) {
@@ -28,25 +28,25 @@
                 app.changeTitle(app.viewModels.dataViewModel.resourceName);
             }
         },
-           
-        onInit: function(e) {    
+        onInit: function (e) {
             try {
                 // Create Data Source
+                debugger;
                 app.viewModels.dataViewModel.createJSDODataSource();
                 app.views.listView = e.view;
                 
                 // Create list
                 if (jsdoSettings && jsdoSettings.displayFields) {
-                     $("#mainListView").kendoMobileListView({
+                    $("#mainListView").kendoMobileListView({
                         dataSource: app.viewModels.dataViewModel.jsdoDataSource,
                         autoBind: false,
                         pullToRefresh: true,
                         appendOnRefresh: false,
                         endlessScroll: true,
                         virtualViewSize: 100,
-                        template: "#:" + jsdoSettings.displayFields.split(",").join("#</br> #:") + "#", 
+                        template: kendo.template($("#prodTemplate").html()),
 
-                        click: function(e) {
+                        click: function (e) {
                             // console.log("e.dataItem._id " + e.dataItem._id);
                             app.viewModels.dataViewModel.set("selectedRow", e.dataItem);
                         }
@@ -56,29 +56,45 @@
                     console.log("Warning: jsdoSettings.displayFields not specified");
                 }
             }
-            catch (ex) {    
-                console.log("Error in initListView: " + ex);        
+            catch (ex) {
+                console.log("Error in initListView: " + ex);
             }
         },
-        
-        createJSDODataSource: function( ) {
-            try { 
+
+        createJSDODataSource: function () {
+            try {
                 // create JSDO
-                if (jsdoSettings && jsdoSettings.resourceName) {   
-                    this.jsdoModel = new progress.data.JSDO({ name : jsdoSettings.resourceName,
-                        autoFill : false, events : {
-                            'afterFill' : [ {
-                                scope : this,
-                                fn : function (jsdo, success, request) {
+                var eProduct = kendo.data.Model.define({
+                    id: "id", // the identifier is the "id" field (declared below)
+                    fields: {
+                        Prod_Id: {
+                            type: "string", // the field is a string
+                            validation: { // validation rules
+                                required: true // the field is required
+                            },
+                            from: "[\"Product-Id\"]",
+                            defaultValue: "<empty>" // default field value
+
+                        }
+                    }
+                });
+                if (jsdoSettings && jsdoSettings.resourceName) {
+                    this.jsdoModel = new progress.data.JSDO({
+                        name: jsdoSettings.resourceName,
+                        autoFill: false, events: {
+                            'afterFill': [{
+                                scope: this,
+                                fn: function (jsdo, success, request) {
                                     // afterFill event handler statements ...
                                 }
-                            } ],
-                            'beforeFill' : [ {
-                                scope : this,
-                                fn : function (jsdo, success, request) {
+                            }],
+                            'beforeFill': [{
+                                scope: this,
+                                fn: function (jsdo, success, request) {
+                                    debugger;
                                     // beforeFill event handler statements ...
                                 }
-                            } ]
+                            }]
                         }
                     });
                     this.jsdoDataSource = new kendo.data.DataSource({
@@ -91,9 +107,12 @@
                         transport: {
                             jsdo: this.jsdoModel
                             // TO_DO - If resource is multi-table dataset, specify table name for data source
-                            //, tableRef: jsdoSettings.tableName
+                            , tableRef: jsdoSettings.tableName
                         },
-                        error: function(e) {
+                        schema: {
+                            model: eProduct
+                        },
+                        error: function (e) {
                             console.log("Error: ", e);
                         }
                     });
@@ -102,13 +121,13 @@
                 else {
                     console.log("Warning: jsdoSettings.resourceName not specified");
                 }
-           }
-           catch(ex) {
-               app.viewModels.dataViewModel.createDataSourceErrorFn({errorObject: ex});
-           } 
+            }
+            catch (ex) {
+                app.viewModels.dataViewModel.createDataSourceErrorFn({ errorObject: ex });
+            }
         },
-        
-        createDataSourceErrorFn: function(info) {
+
+        createDataSourceErrorFn: function (info) {
             var msg = "Error on create DataSource";
             app.showError(msg);
             if (info.errorObject !== undefined) {
@@ -116,10 +135,10 @@
             }
             console.log(msg);
         },
-        
+
         clearData: function () {
             var that = this,
-                clistView; 
+                clistView;
             //that.jsdoModel = undefined;
             //that.jsdoDataSource = undefined;
             if (that.jsdoModel) {
@@ -131,10 +150,10 @@
                 clistView.dataSource.data([]);
                 clistView.refresh();
             }
-       }
-        
-    });    
-    
+        }
+
+    });
+
     parent.dataViewModel = dataViewModel;
-    
+
 })(app.viewModels);

@@ -12,7 +12,7 @@
         onBeforeShow: function(e) {
             // Always clear password
             app.viewModels.loginViewModel.set("password", "");
-            if (!app.isAnonymous()) {
+            if (!app.isAnonymous() && !app.autoLogin) {
                 app.changeTitle(app.viewModels.loginViewModel.loginViewTitle);
             }
 
@@ -47,13 +47,16 @@
                         that.set("isLoggedIn", true);
                         app.viewModels.loginViewModel.loginViewTitle = app.viewModels.loginViewModel.logoutLabel;
                         app.viewModels.loginViewModel.onBeforeShow( );
-
+                        debugger;
+                        app.catalogExist = null;
                         var catPromise = jsdosession.addCatalog(jsdoSettings.catalogURIs);
-                        catPromise.done( function( jsdosession, result, details ) { 
+                        catPromise.done(function (jsdosession, result, details) {
+                            app.catalogExist = true;
                             console.log("Success on addCatalog()");
                          });
 
-                        catPromise.fail( function( jsdosession, result, details) {
+                        catPromise.fail(function (jsdosession, result, details) {
+                            app.catalogExist = false;
                             app.viewModels.loginViewModel.addCatalogErrorFn(app.jsdosession, 
                                                     progress.data.Session.GENERAL_FAILURE, details);
                         });  

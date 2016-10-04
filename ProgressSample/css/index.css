@@ -121,3 +121,22 @@ h1 {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
 }
+
+.prodImage {
+  float: left;
+}
+
+.prodId {
+  padding-left: 6em;
+  padding-right: 2em;
+}
+
+.prodDesc {
+  font-size: .8em;
+  font-style: italic;
+  padding-left: 7.4em;
+}
+
+.prodImage img {
+  width: 5em;
+}

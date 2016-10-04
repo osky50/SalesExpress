@@ -23,8 +23,16 @@
                     initial: 'views/home.html',
                     layout: "tabstrip-layout",
                     statusBarStyle: 'black-translucent'
-                });
+                 });
 
+                 app.WaitForCatalog = function (pvar) {
+                     if (pvar) {
+                         return;
+                     }
+                     else {
+                         window.setTimeout(app.WaitForCatalog, 100, pvar);
+                     }
+                 };
                 // Session management - behavior deoends on authentication model speecified in JSDO instance for session in jsdoSettings.js
                 progress.util.jsdoSettingsProcessor(jsdoSettings);
 
@@ -42,6 +50,14 @@
                 if (app.jsdosession && app.isAnonymous()) {    
                     // Login as anonymous automatically, data will be available on list page
                     $('#loginIcon').hide();
+                    app.viewModels.loginViewModel.login();
+                }
+
+                if (app.jsdosession &&  app.autoLogin) {
+                    // Login as anonymous automatically, data will be available on list page
+                    $('#loginIcon').hide();
+                    app.viewModels.loginViewModel.username = "gouser";
+                    app.viewModels.loginViewModel.password = "gouser";
                     app.viewModels.loginViewModel.login();
                 }
             } 
@@ -108,5 +124,6 @@
             }            
         }                
     };
+    app.autoLogin = true;
     
 }());
