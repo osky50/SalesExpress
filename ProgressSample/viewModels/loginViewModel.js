@@ -96,9 +96,9 @@
                     app.viewModels.loginViewModel.loginViewTitle = app.viewModels.loginViewModel.loginLabel;
                     app.viewModels.loginViewModel.onBeforeShow();
                     
-                    if (app.viewModels.dataViewModel) {
+                    if (app.viewModels.productViewModel) {
                         // Remove any leftover data
-                        app.viewModels.dataViewModel.clearData();
+                        app.viewModels.productViewModel.clearData();
                     }
                 });
                 promise.fail( function(jsdosession, result, info) {
