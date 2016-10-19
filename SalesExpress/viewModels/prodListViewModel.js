@@ -38,6 +38,7 @@
                     autoBind: false,
                     pullToRefresh: true,
                     style: "display: inline",
+                    pageable: true,
                     appendOnRefresh: false,
                     endlessScroll: true,
                     filterable: {
@@ -106,9 +107,9 @@
                     this.jsdoDataSource = new kendo.data.DataSource({
                         type: "jsdo",
                         // TO_DO - Enter your filtering and sorting options
-                        //serverFiltering: true,
+                        serverFiltering: true,
                         //serverSorting: true,
-                        //filter: { field: "State", operator: "startswith", value: "MA" },
+                        //filter: { field: "synonym", operator: "contains", value: "MA" },
                         //sort: [ { field: "Name", dir: "desc" } ],
                         transport: {
                             jsdo: this.jsdoModel
