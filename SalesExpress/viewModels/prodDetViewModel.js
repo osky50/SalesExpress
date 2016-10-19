@@ -57,6 +57,9 @@
                         }
                     }
                 });
+                //configuring JSDO Settings
+                jsdoSettings.resourceName = 'dsProd';
+                jsdoSettings.tableName = 'eProduct';
                 if (jsdoSettings && jsdoSettings.resourceName) {
                     this.jsdoModel = new progress.data.JSDO({
                         name: jsdoSettings.resourceName,
@@ -102,31 +105,12 @@
                 }
             }
             catch (ex) {
-                app.viewModels.productViewModel.createDataSourceErrorFn({ errorObject: ex });
+                createDataSourceErrorFn({ errorObject: ex });
             }
-        },
-
-        createDataSourceErrorFn: function (info) {
-            var msg = "Error on create DataSource";
-            app.showError(msg);
-            if (info.errorObject !== undefined) {
-                msg = msg + "\n" + info.errorObject;
-            }
-            console.log(msg);
         },
         onHide() {
             this.jsdoDataSource.filter({});
         },
-        clearData: function () {
-            var that = this,
-                clistView;
-            //that.jsdoModel = undefined;
-            //that.jsdoDataSource = undefined;
-            if (that.jsdoModel) {
-                that.jsdoModel.addRecords([], progress.data.JSDO.MODE_EMPTY);
-            }
-        }
-
     });
 
     parent.prodDetViewModel = prodDetViewModel;

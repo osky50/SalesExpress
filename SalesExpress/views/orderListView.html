@@ -1,0 +1,26 @@
+<!-- List view -->
+
+<div id="orderList"
+     data-role="view" 
+     data-style="inset" 
+     data-init="app.viewModels.orderListViewModel.onInit"
+     data-show="app.viewModels.orderListViewModel.onBeforeShow"
+     data-model="app.viewModels.orderListViewModel">
+    <ul id="orderListView" 
+        data-role="listview" data-style="inset">
+    </ul>
+    <div id="pager" class="k-pager-wrap"></div>
+    <script type="text/x-kendo-template" id="orderTemplate">
+        <a href="views/orderDetView.html?##id=#: Rowid #">
+            <div class="prodDesc">#: TransNo #</div>
+            <div class="prodId">#: TransDate #</div>
+            <div class="prodId">#: OriginalDoc #</div>
+            <div class="prodId">#: OrderAmt #</div>
+        </a>
+    </script>
+</div>
+
+
+
+
+

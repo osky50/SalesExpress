@@ -93,6 +93,7 @@
                     app.viewModels.loginViewModel.loginViewTitle = app.viewModels.loginViewModel.loginLabel;
                     app.viewModels.loginViewModel.onBeforeShow();
                     
+                    app.clearData(); //cleaning all data
                     if (app.viewModels.prodListViewModel) {
                         // Remove any leftover data
                         app.viewModels.prodListViewModel.clearData();

@@ -119,5 +119,18 @@
         }
     };
 
+    app.clearData = function () {
+        debugger;
+        for (var vmName in app.viewModels) {
+            var vm = app.viewModels[vmName];
+            if (vm.jsdoModel && vm.jsdoModel._clearData) { //cleaning jsdo
+                vm.jsdoModel._clearData()
+            }
+            if (vm.jsdoDataSource && vm.jsdoDataSource.data().length) { //cleaning datasource
+                vm.jsdoDataSource.data([]);
+            }
+        }
+    }
+
     app.autoLogin = true;
 }());
