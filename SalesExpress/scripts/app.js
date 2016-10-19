@@ -130,6 +130,9 @@
             }
         }
     }
+    app.back = function () {
+        app.mobileApp.navigate("#:back");
+    };
 
     app.autoLogin = true;
 }());
