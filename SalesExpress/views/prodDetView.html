@@ -1,0 +1,20 @@
+<div data-role="view" data-title="Proudct Details"
+     data-model="app.viewModels.prodDetViewModel"
+     data-init="app.viewModels.prodDetViewModel.onInit"
+     data-show="app.viewModels.prodDetViewModel.onBeforeShow"
+     data-hide="app.viewModels.prodDetViewModel.onHide"
+     data-layout="back-layout" data-reload="true"
+     data-transition="fade">
+
+    <div id="prodDetail">
+        <div class="title" data-bind="text: Synonym"></div>
+        <div class="title" data-bind="text: description"></div>
+        <div class="bigImage">
+            <img data-bind="attr: { src: imgUrl }" />
+        </div>
+        <div>
+            <label for="favorite">Favorite?</label>
+        </div>
+    </div>
+
+</div>

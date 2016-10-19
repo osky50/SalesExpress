@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}") = "ProgressSample", "ProgressSample\ProgressSample.iceproj", "{8116B4C3-1D44-4C0F-9F7A-CEDA231A4EAF}"
+Project("{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}") = "SalesExpress", "SalesExpress\SalesExpress.iceproj", "{8116B4C3-1D44-4C0F-9F7A-CEDA231A4EAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
