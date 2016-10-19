@@ -11,11 +11,12 @@
     </ul>
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="orderTemplate">
-        <a href="views/orderDetView.html?##id=#: Rowid #">
+        <a href="views/orderLinesListView.html">
             <div>#: TransNo #</div>
             <div>#: TransDate #</div>
-            <div>#: OriginalDoc #</div>
-            <div>#: OrderAmt #</div>
+            <div><b>Original Doc.: </b>#: OriginalDoc #</div>
+            <div><b>Status: </b>#: DocStatus #</div>
+            <div><b>Total: </b>#: TotalAmt #</div>
         </a>
     </script>
 </div>

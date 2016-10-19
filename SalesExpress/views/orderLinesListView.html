@@ -1,0 +1,24 @@
+<!-- List view -->
+
+<div id="orderLinesList"
+     data-role="view"
+     data-style="inset"
+     data-init="app.viewModels.orderLinesListViewModel.onInit"
+     data-show="app.viewModels.orderLinesListViewModel.onBeforeShow"
+     data-model="app.viewModels.orderLinesListViewModel">
+    <ul id="orderLinesListView"
+        data-role="listview" data-style="inset"></ul>
+    <div id="pager" class="k-pager-wrap"></div>
+    <script type="text/x-kendo-template" id="orderLineTemplate">
+        <div><b>Location: </b>#: LocId #</div>
+        <div><b>Synonym: </b>#: Synonym #</div>
+        <div><b>Qty.: </b>#: OrderQty #</div>
+        <div><b>Price: </b>$#: UnitPrice #</div>
+        <div><b>Line Total: </b>#: ExtPrice #</div>
+    </script>
+</div>
+
+
+
+
+

@@ -12,7 +12,6 @@
         //   show
 
         onBeforeShow: function () {
-            debugger;
             var location = window.location.toString();
             var predrecno = location.substring(location.lastIndexOf('?') + 4);
             app.viewModels.prodDetViewModel.jsdoDataSource.filter({ field: "Prod-RecNo", operator: "eq", value: predrecno });

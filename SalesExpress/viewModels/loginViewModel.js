@@ -94,10 +94,6 @@
                     app.viewModels.loginViewModel.onBeforeShow();
                     
                     app.clearData(); //cleaning all data
-                    if (app.viewModels.prodListViewModel) {
-                        // Remove any leftover data
-                        app.viewModels.prodListViewModel.clearData();
-                    }
                 });
                 promise.fail( function(jsdosession, result, info) {
                      app.viewModels.loginViewModel.logoutErrorFn(jsdosession, result, info);
