@@ -18,50 +18,64 @@
     under the License.
 -->
 <html>
-    <head>
-        <title>Sample Mobile App</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
-        <link href="css/index.css" rel="stylesheet" type="text/css" />
-        
-        <!-- Libraries used -->
-        <script src="kendo/js/jquery.min.js"></script>
-        <script src="kendo/js/kendo.mobile.min.js"></script>
-        <script type="text/javascript" src="cordova.js"></script>
-        
-        <!--  TO_DO: Change to minified file when done testing
-        <script src="lib/progress.all.min.js"></script>
-         -->
-        <script src="lib/progress.all.js"></script>
+<head>
+    <title>Sample Mobile App</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-        <!-- JavaScript files - app.js must be first -->
-        <script type="text/javascript" src="scripts/app.js"></script>
-        <script type="text/javascript" src="scripts/jsdoSettings.js"></script>
- 
-        <!-- ViewModels here -->
-        <script src="viewModels/loginViewModel.js"></script>
-        <script src="viewModels/dataViewModel.js"></script>
-    </head>
-    <body>
-        <!-- Layout -->
-        <div data-role="layout" data-id="tabstrip-layout">
-            <!-- Header -->
-            <div data-role="header">
-                <div data-role="navbar" id="navbar">
-                    <span data-role="view-title"></span>
-                </div>
-            </div>
+    <!-- Libraries used -->
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/kendo.mobile.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
 
-            <!-- Application views will be rendered here -->
+    <!--  TO_DO: Change to minified file when done testing
+    <script src="lib/progress.all.min.js"></script>
+     -->
+    <script src="lib/progress.all.js"></script>
+    <!-- JavaScript files - app.js must be first -->
+    <script type="text/javascript" src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/jsdoSettings.js"></script>
 
-            <!-- Footer -->
-            <div data-role="footer">
-                <div data-role="tabstrip" id="navigateTab" data-select="app.onSelectTab">
-                    <a href="views/home.html" data-icon="home">Home</a>
-                    <a href="views/loginView.html" data-icon="contacts" id="loginIcon">Login</a>
-                    <a href="views/ProdlistView.html" data-icon="search" id="listIcon">List</a>
-                </div>
+    <!-- ViewModels here -->
+    <script src="viewModels/loginViewModel.js"></script>
+    <script src="viewModels/productViewModel.js"></script>
+    <!--<script src="viewModels/productDetViewModel.js"></script>-->
+</head>
+<body>
+    <!-- Layout -->
+    <div data-role="layout" data-id="tabstrip-layout">
+        <!-- Header -->
+        <div data-role="header">
+            <div data-role="navbar" id="navbar">
+                <span data-role="view-title"></span>
+                <a href="#app-drawer" data-rel="drawer" data-role="button" data-align="left" data-icon="details"></a>
+                <a data-click="app.back" data-role="button" data-align="right" data-icon="rewind">Back</a>
             </div>
         </div>
-    </body>
+
+        <!-- Application views will be rendered here -->
+        <!-- Footer -->
+        <div data-role="footer">
+        </div>
+    </div>
+
+    <!-- Layouts -->
+    <!--Menu Definition-->
+    <div data-role="drawer" id="app-drawer">
+        <!--<div data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title">Menu</span>
+
+            </div>
+        </div>-->
+        <ul data-role="listview">
+            <li><a href="views/ProdlistView.html" data-icon="home">Product List</a></li>
+            <li><a href="views/ProdDetView.html" data-icon="home">Product Det</a></li>
+            <li><a href="views/LoginView.html" data-icon="user" id="listIcon">Logout</a></li>
+        </ul>
+    </div>
+
+</body>
 </html>

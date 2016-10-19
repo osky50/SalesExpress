@@ -11,8 +11,8 @@
 
     var bootstrap = function() {
         $(function() {
-           try {
-                 app.mobileApp = new kendo.mobile.Application(document.body, {
+            try {
+                app.mobileApp = new kendo.mobile.Application(document.body, {
 
                     // you can change the default transition (slide, zoom or fade)
                     transition: 'slide',
@@ -20,19 +20,24 @@
                     // and feel of the operating system
                     skin: 'flat',
                     // the application needs to know which view to load first
-                    initial: 'views/home.html',
+                    initial: 'views/LoginView.html',
                     layout: "tabstrip-layout",
                     statusBarStyle: 'black-translucent'
-                 });
+                });
 
-                 app.WaitForCatalog = function (pvar) {
-                     if (pvar) {
-                         return;
-                     }
-                     else {
-                         window.setTimeout(app.WaitForCatalog, 100, pvar);
-                     }
-                 };
+                app.back = function() {
+                    app.mobileApp.navigate("#:back");
+                };
+
+                app.WaitForCatalog = function (pvar) {
+                    if (pvar) {
+                        return;
+                    }
+                    else {
+                        window.setTimeout(app.WaitForCatalog, 100, pvar);
+                    }
+                };
+                debugger;
                 // Session management - behavior deoends on authentication model speecified in JSDO instance for session in jsdoSettings.js
                 progress.util.jsdoSettingsProcessor(jsdoSettings);
 
@@ -61,7 +66,7 @@
                     app.viewModels.loginViewModel.login();
                 }
             } 
-               catch(ex) { 
+            catch(ex) { 
                 console.log("Error creating JSDOSession: " + ex);        
             }    
         });
@@ -92,7 +97,7 @@
         }
     };
     
-   app.isAnonymous = function() {
+    app.isAnonymous = function() {
         // authenticationModel defaults to "ANONYMOUS"
         if (!jsdoSettings.authenticationModel || 
              jsdoSettings.authenticationModel.toUpperCase() === "ANONYMOUS") {
@@ -114,11 +119,11 @@
     app.changeTitle =  function (customTitle) {
         app.mobileApp.view().header.find('[data-role="navbar"]').data('kendoMobileNavBar').title(customTitle);
         //$("#navbar").data("kendoMobileNavBar").title(customTitle);
-       };
+    };
 
     app.onSelectTab = function (e) {
         if (e.item[0].id == "listIcon") {
-               if (!app.viewModels.loginViewModel.isLoggedIn && !app.isAnonymous()) {
+            if (!app.viewModels.loginViewModel.isLoggedIn && !app.isAnonymous()) {
                 app.showError("Please login first.");
                 e.preventDefault();
             }            

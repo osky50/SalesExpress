@@ -12,29 +12,38 @@
         //   before-show
         //   init (fires only once)
         //   show
+        onBeforeShowProdDet: function () {
+            debugger;
+            app.viewModels.productViewModel.createJSDODataSource();
 
+
+        },
         onBeforeShow: function () {
+            
             var clistView;
-
+            debugger;
+            //return;
             clistView = $("#mainListView").data("kendoMobileListView");
-            if (clistView === undefined) {
-                app.viewModels.productViewModel.onInit(this);
-            } else if (clistView.dataSource && clistView.dataSource.data().length === 0) {
-                clistView.dataSource.read();
-            }
-
+            //if (clistView === undefined) {
+            //    app.viewModels.productViewModel.onInit(this);
+            //} else if (clistView.dataSource && clistView.dataSource.data().length === 0) {
+            //    clistView.dataSource.read();
+            //}
+            clistView.dataSource.read();
             // Set list title to resource name
             if (app.viewModels.productViewModel.resourceName !== undefined) {
                 app.changeTitle(app.viewModels.productViewModel.resourceName);
             }
         },
         onInit: function (e) {
+            debugger;
+            if (e.view.inited) return;
             try {
                 // Create Data Source
                 debugger;
                 app.viewModels.productViewModel.createJSDODataSource();
                 app.views.listView = e.view;
-                
+
                 // Create list
                 if (jsdoSettings && jsdoSettings.displayFields) {
                     $("#mainListView").kendoMobileListView({
@@ -78,6 +87,15 @@
                                 required: true // the field is required
                             },
                             from: "[\"Product-Id\"]",
+                            defaultValue: "<empty>" // default field value
+
+                        },
+                        Prod_Recno: {
+                            type: "string", // the field is a string
+                            validation: { // validation rules
+                                required: true // the field is required
+                            },
+                            from: "[\"Prod-RecNo\"]",
                             defaultValue: "<empty>" // default field value
 
                         }

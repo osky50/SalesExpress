@@ -11,9 +11,10 @@
 
         onBeforeShow: function(e) {
             // Always clear password
+            debugger;
             app.viewModels.loginViewModel.set("password", "");
             if (!app.isAnonymous() && !app.autoLogin) {
-                app.changeTitle(app.viewModels.loginViewModel.loginViewTitle);
+                //app.changeTitle(app.viewModels.loginViewModel.loginViewTitle);
             }
 
             // If logged in, show welcome message
@@ -32,7 +33,9 @@
             }        
         },
 
-        onInit: function(e) { 
+        onInit: function (e) {
+            debugger;
+            if (e.view.inited) return;
         },
 
         login: function(e) {    
@@ -45,14 +48,16 @@
                     try { 
                         console.log("Success on login()");   
                         that.set("isLoggedIn", true);
-                        app.viewModels.loginViewModel.loginViewTitle = app.viewModels.loginViewModel.logoutLabel;
-                        app.viewModels.loginViewModel.onBeforeShow( );
+                        //app.viewModels.loginViewModel.loginViewTitle = app.viewModels.loginViewModel.logoutLabel;
+                        //app.viewModels.loginViewModel.onBeforeShow( );
                         debugger;
                         app.catalogExist = null;
                         var catPromise = jsdosession.addCatalog(jsdoSettings.catalogURIs);
                         catPromise.done(function (jsdosession, result, details) {
                             app.catalogExist = true;
                             console.log("Success on addCatalog()");
+                            debugger;
+                            //app.mobileApp.navigate("views/ProdListView.html");
                          });
 
                         catPromise.fail(function (jsdosession, result, details) {

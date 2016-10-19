@@ -32,7 +32,25 @@
     <Content Include="cordova.android.js" />
     <Content Include="cordova.ios.js" />
     <Content Include="cordova.wp8.js" />
+    <Content Include="css\font-awesome.min.css">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="css\index.css" />
+    <Content Include="fonts\fontawesome-webfont.eot">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont.svg">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont.ttf">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont.woff">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="fonts\FontAwesome.otf">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="img\cordova.png" />
     <Content Include="img\logo.png" />
     <Content Include="img\Progress_RGB.png" />
@@ -52,11 +70,13 @@
     <Content Include="README.txt" />
     <Content Include="scripts\app.js" />
     <Content Include="scripts\jsdoSettings.js" />
-    <Content Include="viewModels\dataViewModel.js" />
+    <Content Include="viewModels\productDetViewModel.js" />
+    <Content Include="viewModels\productViewModel.js" />
     <Content Include="viewModels\loginViewModel.js" />
     <Content Include="views\home.html" />
-    <Content Include="views\listView.html" />
-    <Content Include="views\loginView.html" />
+    <Content Include="views\ProdDetView.html" />
+    <Content Include="views\ProdListView.html" />
+    <Content Include="views\LoginView.html" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="App_Resources\Android\drawable-hdpi\icon.png" />
@@ -154,6 +174,7 @@
     <Folder Include="App_Resources\WP8\Tiles\" />
     <Folder Include="App_Resources\WP8\Tiles\Iconic\" />
     <Folder Include="css\" />
+    <Folder Include="fonts\" />
     <Folder Include="img\" />
     <Folder Include="kendo\" />
     <Folder Include="kendo\js\" />
