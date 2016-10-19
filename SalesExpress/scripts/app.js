@@ -120,7 +120,6 @@
     };
 
     app.clearData = function () {
-        debugger;
         for (var vmName in app.viewModels) {
             var vm = app.viewModels[vmName];
             if (vm.jsdoModel && vm.jsdoModel._clearData) { //cleaning jsdo

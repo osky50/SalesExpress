@@ -22,7 +22,6 @@
         onInit: function (e) {
             try {
                 // Create Data Source
-                debugger;
                 app.viewModels.prodDetViewModel.createJSDODataSource();
                 app.views.productDetView = e.view;
             }
@@ -73,7 +72,6 @@
                             'beforeFill': [{
                                 scope: this,
                                 fn: function (jsdo, success, request) {
-                                    debugger;
                                     // beforeFill event handler statements ...
                                 }
                             }]

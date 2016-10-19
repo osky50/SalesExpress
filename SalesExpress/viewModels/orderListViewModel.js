@@ -19,7 +19,6 @@
             if (orderListView === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.orderListViewModel.onInit(this);
             } else if (orderListView.dataSource && orderListView.dataSource.data().length === 0) {
-                debugger;
                 orderListView.dataSource.read();
             }
             // Set list title to resource name

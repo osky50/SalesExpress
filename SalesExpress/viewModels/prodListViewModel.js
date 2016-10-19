@@ -18,7 +18,6 @@
             if (prodListView === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.prodListViewModel.onInit(this);
             } else if (prodListView.dataSource && prodListView.dataSource.data().length === 0) {
-                debugger;
                 prodListView.dataSource.read();
             }
 
