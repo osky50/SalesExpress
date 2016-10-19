@@ -43,11 +43,9 @@
                     template: kendo.template($("#orderTemplate").html()),
                     click: function (e) {
                         // console.log("e.dataItem._id " + e.dataItem._id);
-                        alert('not implemented');
-                        return;
                         app.viewModels.orderListViewModel.set("selectedRow", e.dataItem);
                     }
-                });                
+                });
             }
             catch (ex) {
                 console.log("Error in initListView: " + ex);
