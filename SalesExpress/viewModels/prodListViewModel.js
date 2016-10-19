@@ -1,53 +1,44 @@
 //'use strict';
 
 (function (parent) {
-    var productViewModel = kendo.observable({
+    var prodListViewModel = kendo.observable({
         jsdoDataSource: undefined,
         jsdoModel: undefined,
         selectedRow: {},
         origRow: {},
         resourceName: undefined,
-
+        
         // The order of the firing of events is as follows:
         //   before-show
         //   init (fires only once)
         //   show
-        onBeforeShowProdDet: function () {
-            debugger;
-            app.viewModels.productViewModel.createJSDODataSource();
-
-
-        },
-        onBeforeShow: function () {
             
-            var clistView;
-            debugger;
-            //return;
+        onBeforeShow: function() {
+            var clistView;   
+
             clistView = $("#mainListView").data("kendoMobileListView");
-            //if (clistView === undefined) {
-            //    app.viewModels.productViewModel.onInit(this);
-            //} else if (clistView.dataSource && clistView.dataSource.data().length === 0) {
-            //    clistView.dataSource.read();
-            //}
-            clistView.dataSource.read();
+            if (clistView === undefined) {
+                app.viewModels.prodListViewModel.onInit(this);
+            } else if (clistView.dataSource && clistView.dataSource.data().length === 0) {
+                clistView.dataSource.read();
+            }
+
             // Set list title to resource name
-            if (app.viewModels.productViewModel.resourceName !== undefined) {
-                app.changeTitle(app.viewModels.productViewModel.resourceName);
+            if (app.viewModels.prodListViewModel.resourceName !== undefined) {
+                app.changeTitle(app.viewModels.prodListViewModel.resourceName);
             }
         },
-        onInit: function (e) {
-            debugger;
-            if (e.view.inited) return;
+           
+        onInit: function(e) {    
             try {
                 // Create Data Source
-                debugger;
-                app.viewModels.productViewModel.createJSDODataSource();
+                app.viewModels.prodListViewModel.createJSDODataSource();
                 app.views.listView = e.view;
-
+                
                 // Create list
                 if (jsdoSettings && jsdoSettings.displayFields) {
-                    $("#mainListView").kendoMobileListView({
-                        dataSource: app.viewModels.productViewModel.jsdoDataSource,
+                     $("#mainListView").kendoMobileListView({
+                        dataSource: app.viewModels.prodListViewModel.jsdoDataSource,
                         autoBind: false,
                         pullToRefresh: true,
                         style: "display: inline",
@@ -59,25 +50,23 @@
                         },
                         virtualViewSize: 100,
                         template: kendo.template($("#prodTemplate").html()),
-
                         click: function (e) {
                             // console.log("e.dataItem._id " + e.dataItem._id);
-                            app.viewModels.productViewModel.set("selectedRow", e.dataItem);
+                            app.viewModels.prodListViewModel.set("selectedRow", e.dataItem);
                         }
-                    });
+                     });
                 }
                 else {
                     console.log("Warning: jsdoSettings.displayFields not specified");
                 }
             }
-            catch (ex) {
-                console.log("Error in initListView: " + ex);
+            catch (ex) {    
+                console.log("Error in initListView: " + ex);        
             }
         },
-
-        createJSDODataSource: function () {
+        
+        createJSDODataSource: function( ) {
             try {
-                // create JSDO
                 var eProduct = kendo.data.Model.define({
                     id: "id", // the identifier is the "id" field (declared below)
                     fields: {
@@ -101,29 +90,28 @@
                         }
                     }
                 });
-                if (jsdoSettings && jsdoSettings.resourceName) {
-                    this.jsdoModel = new progress.data.JSDO({
-                        name: jsdoSettings.resourceName,
-                        autoFill: false, events: {
-                            'afterFill': [{
-                                scope: this,
-                                fn: function (jsdo, success, request) {
+                // create JSDO
+                if (jsdoSettings && jsdoSettings.resourceName) {   
+                    this.jsdoModel = new progress.data.JSDO({ name : jsdoSettings.resourceName,
+                        autoFill : false, events : {
+                            'afterFill' : [ {
+                                scope : this,
+                                fn : function (jsdo, success, request) {
                                     // afterFill event handler statements ...
                                 }
-                            }],
-                            'beforeFill': [{
-                                scope: this,
-                                fn: function (jsdo, success, request) {
-                                    debugger;
+                            } ],
+                            'beforeFill' : [ {
+                                scope : this,
+                                fn : function (jsdo, success, request) {
                                     // beforeFill event handler statements ...
                                 }
-                            }]
+                            } ]
                         }
                     });
                     this.jsdoDataSource = new kendo.data.DataSource({
                         type: "jsdo",
                         // TO_DO - Enter your filtering and sorting options
-                        serverFiltering: true,
+                        //serverFiltering: true,
                         //serverSorting: true,
                         //filter: { field: "State", operator: "startswith", value: "MA" },
                         //sort: [ { field: "Name", dir: "desc" } ],
@@ -135,7 +123,7 @@
                         schema: {
                             model: eProduct
                         },
-                        error: function (e) {
+                        error: function(e) {
                             console.log("Error: ", e);
                         }
                     });
@@ -144,13 +132,13 @@
                 else {
                     console.log("Warning: jsdoSettings.resourceName not specified");
                 }
-            }
-            catch (ex) {
-                app.viewModels.productViewModel.createDataSourceErrorFn({ errorObject: ex });
-            }
+           }
+           catch(ex) {
+               app.viewModels.prodListViewModel.createDataSourceErrorFn({errorObject: ex});
+           } 
         },
-
-        createDataSourceErrorFn: function (info) {
+        
+        createDataSourceErrorFn: function(info) {
             var msg = "Error on create DataSource";
             app.showError(msg);
             if (info.errorObject !== undefined) {
@@ -158,10 +146,10 @@
             }
             console.log(msg);
         },
-
+        
         clearData: function () {
             var that = this,
-                clistView;
+                clistView; 
             //that.jsdoModel = undefined;
             //that.jsdoDataSource = undefined;
             if (that.jsdoModel) {
@@ -173,10 +161,10 @@
                 clistView.dataSource.data([]);
                 clistView.refresh();
             }
-        }
-
-    });
-
-    parent.productViewModel = productViewModel;
-
+       }
+        
+    });    
+    
+    parent.prodListViewModel = prodListViewModel;
+    
 })(app.viewModels);

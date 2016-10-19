@@ -4,10 +4,11 @@
   <PropertyGroup>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <ProjectHome />
   </PropertyGroup>
   <PropertyGroup>
     <ProjectGuid>8116b4c3-1d44-4c0f-9f7a-ceda231a4eaf</ProjectGuid>
-    <ProjectName>ProgressSample</ProjectName>
+    <ProjectName>SalesExpress</ProjectName>
     <ProjectTypeGuids>{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -70,13 +71,17 @@
     <Content Include="README.txt" />
     <Content Include="scripts\app.js" />
     <Content Include="scripts\jsdoSettings.js" />
-    <Content Include="viewModels\productDetViewModel.js" />
-    <Content Include="viewModels\productViewModel.js" />
+    <Content Include="viewModels\prodDetViewModel.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="viewModels\prodListViewModel.js">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="viewModels\loginViewModel.js" />
     <Content Include="views\home.html" />
-    <Content Include="views\ProdDetView.html" />
-    <Content Include="views\ProdListView.html" />
-    <Content Include="views\LoginView.html" />
+    <Content Include="views\prodDetView.html" />
+    <Content Include="views\prodListView.html" />
+    <Content Include="views\loginView.html" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="App_Resources\Android\drawable-hdpi\icon.png" />

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     // store a reference to the application object that will be created
     // later on so that we can use it if need be
     var app = {
@@ -9,8 +9,8 @@
         viewModels: {}
     };
 
-    var bootstrap = function() {
-        $(function() {
+    var bootstrap = function () {
+        $(function () {
             try {
                 app.mobileApp = new kendo.mobile.Application(document.body, {
 
@@ -20,24 +20,11 @@
                     // and feel of the operating system
                     skin: 'flat',
                     // the application needs to know which view to load first
-                    initial: 'views/LoginView.html',
+                    initial: 'views/loginView.html',
                     layout: "tabstrip-layout",
                     statusBarStyle: 'black-translucent'
                 });
 
-                app.back = function() {
-                    app.mobileApp.navigate("#:back");
-                };
-
-                app.WaitForCatalog = function (pvar) {
-                    if (pvar) {
-                        return;
-                    }
-                    else {
-                        window.setTimeout(app.WaitForCatalog, 100, pvar);
-                    }
-                };
-                debugger;
                 // Session management - behavior deoends on authentication model speecified in JSDO instance for session in jsdoSettings.js
                 progress.util.jsdoSettingsProcessor(jsdoSettings);
 
@@ -51,30 +38,30 @@
                 else {
                     console.log("Error: jsdoSettings.serviceURI must be specified.");
                 }
-               
-                if (app.jsdosession && app.isAnonymous()) {    
+
+                if (app.jsdosession && app.isAnonymous()) {
                     // Login as anonymous automatically, data will be available on list page
                     $('#loginIcon').hide();
                     app.viewModels.loginViewModel.login();
                 }
 
-                if (app.jsdosession &&  app.autoLogin) {
+                if (app.jsdosession && app.autoLogin) {
                     // Login as anonymous automatically, data will be available on list page
                     $('#loginIcon').hide();
                     app.viewModels.loginViewModel.username = "gouser";
                     app.viewModels.loginViewModel.password = "gouser";
                     app.viewModels.loginViewModel.login();
                 }
-            } 
-            catch(ex) { 
-                console.log("Error creating JSDOSession: " + ex);        
-            }    
+            }
+            catch (ex) {
+                console.log("Error creating JSDOSession: " + ex);
+            }
         });
     };
 
     if (window.cordova) {
         // this function is called by Cordova when the application is loaded by the device
-        document.addEventListener('deviceready', function() {
+        document.addEventListener('deviceready', function () {
             // hide the splash screen as soon as the app is ready. otherwise
             // Cordova will wait 5 very long seconds to do it for you.
             if (navigator && navigator.splashscreen) {
@@ -89,20 +76,20 @@
 
     window.app = app;
 
-    app.isOnline = function() {
+    app.isOnline = function () {
         if (!navigator || !navigator.connection) {
             return true;
         } else {
             return navigator.connection.type !== 'none';
         }
     };
-    
-    app.isAnonymous = function() {
+
+    app.isAnonymous = function () {
         // authenticationModel defaults to "ANONYMOUS"
-        if (!jsdoSettings.authenticationModel || 
+        if (!jsdoSettings.authenticationModel ||
              jsdoSettings.authenticationModel.toUpperCase() === "ANONYMOUS") {
             return true;
-        } 
+        }
 
         return false;
     };
@@ -115,10 +102,12 @@
             alert(message);
         }
     };
-    
-    app.changeTitle =  function (customTitle) {
-        app.mobileApp.view().header.find('[data-role="navbar"]').data('kendoMobileNavBar').title(customTitle);
-        //$("#navbar").data("kendoMobileNavBar").title(customTitle);
+
+    app.changeTitle = function (customTitle) {
+        if (app.mobileApp.view()) {
+            app.mobileApp.view().header.find('[data-role="navbar"]').data('kendoMobileNavBar').title(customTitle);
+            //$("#navbar").data("kendoMobileNavBar").title(customTitle);
+        }
     };
 
     app.onSelectTab = function (e) {
@@ -126,9 +115,9 @@
             if (!app.viewModels.loginViewModel.isLoggedIn && !app.isAnonymous()) {
                 app.showError("Please login first.");
                 e.preventDefault();
-            }            
-        }                
+            }
+        }
     };
+
     app.autoLogin = true;
-    
 }());

@@ -1,7 +1,5 @@
-//'use strict';
-
 (function (parent) {
-    var productViewModel = kendo.observable({
+    var prodDetViewModel = kendo.observable({
         jsdoDataSource: undefined,
         jsdoModel: undefined,
         selectedRow: {},
@@ -14,55 +12,22 @@
         //   show
 
         onBeforeShow: function () {
-            var clistView;
-
-            clistView = $("#mainListView").data("kendoMobileListView");
-            if (clistView === undefined) {
-                app.viewModels.productViewModel.onInit(this);
-            } else if (clistView.dataSource && clistView.dataSource.data().length === 0) {
-                clistView.dataSource.read();
-            }
-
-            // Set list title to resource name
-            if (app.viewModels.productViewModel.resourceName !== undefined) {
-                app.changeTitle(app.viewModels.productViewModel.resourceName);
-            }
+            debugger;
+            var location = window.location.toString();
+            var predrecno = location.substring(location.lastIndexOf('?') + 4);
+            app.viewModels.prodDetViewModel.jsdoDataSource.filter({ field: "Prod-RecNo", operator: "eq", value: predrecno });
+            var currentProd = app.viewModels.prodDetViewModel.jsdoDataSource.data.view()[0];
+            kendo.bind($('#prodDetail'), currentProd, kendo.mobile.ui);
         },
         onInit: function (e) {
             try {
                 // Create Data Source
                 debugger;
-                app.viewModels.productViewModel.createJSDODataSource();
-                app.views.listView = e.view;
-                
-                // Create list
-                if (jsdoSettings && jsdoSettings.displayFields) {
-                    $("#mainListView").kendoMobileListView({
-                        dataSource: app.viewModels.productViewModel.jsdoDataSource,
-                        autoBind: false,
-                        pullToRefresh: true,
-                        style: "display: inline",
-                        appendOnRefresh: false,
-                        endlessScroll: true,
-                        filterable: {
-                            placeholder: "Type to search...",
-                            field: "synonym"
-                        },
-                        virtualViewSize: 100,
-                        template: kendo.template($("#prodTemplate").html()),
-
-                        click: function (e) {
-                            // console.log("e.dataItem._id " + e.dataItem._id);
-                            app.viewModels.productViewModel.set("selectedRow", e.dataItem);
-                        }
-                    });
-                }
-                else {
-                    console.log("Warning: jsdoSettings.displayFields not specified");
-                }
+                app.viewModels.prodDetViewModel.createJSDODataSource();
+                app.views.productDetView = e.view;
             }
             catch (ex) {
-                console.log("Error in initListView: " + ex);
+                console.log("Error in initproductDetView: " + ex);
             }
         },
 
@@ -78,6 +43,15 @@
                                 required: true // the field is required
                             },
                             from: "[\"Product-Id\"]",
+                            defaultValue: "<empty>" // default field value
+
+                        },
+                        Prod_Recno: {
+                            type: "string", // the field is a string
+                            validation: { // validation rules
+                                required: true // the field is required
+                            },
+                            from: "[\"Prod-RecNo\"]",
                             defaultValue: "<empty>" // default field value
 
                         }
@@ -140,7 +114,9 @@
             }
             console.log(msg);
         },
-
+        onHide() {
+            this.jsdoDataSource.filter({});
+        },
         clearData: function () {
             var that = this,
                 clistView;
@@ -149,16 +125,11 @@
             if (that.jsdoModel) {
                 that.jsdoModel.addRecords([], progress.data.JSDO.MODE_EMPTY);
             }
-            clistView = $("#mainListView").data("kendoMobileListView");
-            if (clistView && clistView.dataSource) {
-                // Clear ListView
-                clistView.dataSource.data([]);
-                clistView.refresh();
-            }
         }
 
     });
 
-    parent.productViewModel = productViewModel;
+    parent.prodDetViewModel = prodDetViewModel;
 
 })(app.viewModels);
+

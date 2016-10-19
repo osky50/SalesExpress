@@ -11,10 +11,9 @@
 
         onBeforeShow: function(e) {
             // Always clear password
-            debugger;
             app.viewModels.loginViewModel.set("password", "");
-            if (!app.isAnonymous() && !app.autoLogin) {
-                //app.changeTitle(app.viewModels.loginViewModel.loginViewTitle);
+            if (!app.isAnonymous()) {
+                app.changeTitle(app.viewModels.loginViewModel.loginViewTitle);
             }
 
             // If logged in, show welcome message
@@ -33,9 +32,7 @@
             }        
         },
 
-        onInit: function (e) {
-            debugger;
-            if (e.view.inited) return;
+        onInit: function(e) { 
         },
 
         login: function(e) {    
@@ -48,20 +45,15 @@
                     try { 
                         console.log("Success on login()");   
                         that.set("isLoggedIn", true);
-                        //app.viewModels.loginViewModel.loginViewTitle = app.viewModels.loginViewModel.logoutLabel;
-                        //app.viewModels.loginViewModel.onBeforeShow( );
-                        debugger;
-                        app.catalogExist = null;
+                        app.viewModels.loginViewModel.loginViewTitle = app.viewModels.loginViewModel.logoutLabel;
+                        app.viewModels.loginViewModel.onBeforeShow( );
+
                         var catPromise = jsdosession.addCatalog(jsdoSettings.catalogURIs);
-                        catPromise.done(function (jsdosession, result, details) {
-                            app.catalogExist = true;
+                        catPromise.done( function( jsdosession, result, details ) { 
                             console.log("Success on addCatalog()");
-                            debugger;
-                            //app.mobileApp.navigate("views/ProdListView.html");
                          });
 
-                        catPromise.fail(function (jsdosession, result, details) {
-                            app.catalogExist = false;
+                        catPromise.fail( function( jsdosession, result, details) {
                             app.viewModels.loginViewModel.addCatalogErrorFn(app.jsdosession, 
                                                     progress.data.Session.GENERAL_FAILURE, details);
                         });  
@@ -101,9 +93,9 @@
                     app.viewModels.loginViewModel.loginViewTitle = app.viewModels.loginViewModel.loginLabel;
                     app.viewModels.loginViewModel.onBeforeShow();
                     
-                    if (app.viewModels.productViewModel) {
+                    if (app.viewModels.prodListViewModel) {
                         // Remove any leftover data
-                        app.viewModels.productViewModel.clearData();
+                        app.viewModels.prodListViewModel.clearData();
                     }
                 });
                 promise.fail( function(jsdosession, result, info) {

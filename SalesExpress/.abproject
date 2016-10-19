@@ -1,11 +1,11 @@
 {
-  "ProjectName": "ProgressSample",
-  "ProjectGuid": "8116b4c3-1d44-4c0f-9f7a-ceda231a4eaf",
+  "ProjectName": "SalesExpress",
+  "ProjectGuid": "7879e9d9-fdab-40e3-8b64-840e0c4878e7",
   "projectVersion": 1,
-  "AppIdentifier": "com.telerik.ProgressSample",
-  "DisplayName": "ProgressSample",
+  "AppIdentifier": "com.telerik.Borrame",
+  "DisplayName": "Borrame",
   "Author": "",
-  "Description": "ProgressSample",
+  "Description": "Borrame",
   "BundleVersion": "1.0",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [
@@ -32,10 +32,10 @@
     "ID_CAP_WEBBROWSERCOMPONENT"
   ],
   "WP8Requirements": [],
-  "WP8PublisherID": "{d0066b06-3729-4592-8dfd-b26a47099833}",
-  "WP8ProductID": "{7a97f86b-3a69-437b-9c43-c080201d9caf}",
+  "WP8PublisherID": "{681388a2-a3ad-49a1-b276-f20cae382cf5}",
+  "WP8ProductID": "{1ff796d6-a740-460e-8be3-d223597ba8f9}",
   "WPSdk": "8.0",
-  "WP8PackageIdentityName": "1234Telerik.ProgressSample",
+  "WP8PackageIdentityName": "1234Telerik.Borrame",
   "WP8WindowsPublisherName": "CN=Telerik",
   "WP8SupportedResolutions": [
     "ID_RESOLUTION_WVGA",

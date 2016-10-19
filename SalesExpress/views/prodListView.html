@@ -1,0 +1,30 @@
+<!-- List view -->
+
+<div id="mainList"
+     data-role="view" 
+     data-style="inset" 
+     data-init="app.viewModels.prodListViewModel.onInit"
+     data-show="app.viewModels.prodListViewModel.onBeforeShow"
+     data-model="app.viewModels.prodListViewModel">
+    <ul id="mainListView" 
+        data-role="listview" data-style="inset">
+    </ul>     
+    
+    <div id="pager" class="k-pager-wrap"></div>
+
+    <script type="text/x-kendo-template" id="prodTemplate">
+        <a href="views/prodDetView.html?##id=#: Prod_Recno #">
+            <div class="prodImage"><img src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" /></div>
+            <div class="prodDesc">#: description #</div>
+            <div class="prodId">#: Prod_Id #</div>
+            <div class="prodId"><b>Price: </b>#: Price #</div>
+            <div class="prodId"><b>AFS: </b> #: Afs #</div>
+        </a>
+    </script>
+           
+</div>
+
+
+
+
+
