@@ -6,7 +6,7 @@
      data-model="app.viewModels.loginViewModel">
 
     <div>
-        <ul id="logoutListView" data-role="listview" data-style="">
+        <ul id="logoutListView" data-role="listview" data-style="" data-bind="visible: isLoggedIn">
             <li>
                 <h3 id="welcome">
                     Welcome, <span data-bind=" text: username"></span>!
@@ -16,9 +16,9 @@
         </ul>
     </div>
     <form data-bind="events: { keyup: checkEnter }">
-        <img src="img/Progress_RGB.png" id="loginIcon" style="width: 100%;"/>
+        <img data-bind="invisible: isLoggedIn" src="img/Progress_RGB.png" id="loginIcon" style="width: 100%;" />
         <h3 data-bind="invisible: isLoggedIn" id="credentials">Enter your credentials:</h3>
-        <ul id="loginListView" data-role="listview" data-style="inset">
+        <ul data-bind="invisible: isLoggedIn" id="loginListView" data-role="listview" data-style="inset">
             <li>
                 <label>
                     User:

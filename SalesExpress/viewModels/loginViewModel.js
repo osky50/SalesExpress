@@ -1,6 +1,6 @@
 //"use strict";
 
-(function(parent) {
+(function (parent) {
     var loginViewModel = kendo.observable({
         username: "",
         password: "",
@@ -9,7 +9,7 @@
         loginLabel: "Log In",
         logoutLabel: "Log Out",
 
-        onBeforeShow: function(e) {
+        onBeforeShow: function (e) {
             // Always clear password
             app.viewModels.loginViewModel.set("password", "");
             if (!app.isAnonymous()) {
@@ -28,57 +28,52 @@
                 $("#credentials").parent().show();
                 $("#username").parent().show();
                 $("#password").parent().show();
-                $("#welcome").parent().hide();            
-            }        
+                $("#welcome").parent().hide();
+            }
         },
 
-        onInit: function(e) { 
+        onInit: function (e) {
         },
 
-        login: function(e) {    
-            var that = this, 
+        login: function (e) {
+            var that = this,
                 details,
                 promise;
-            try { 
+            try {
                 promise = app.jsdosession.login(this.get("username"), this.get("password"));
-                promise.done( function( jsdosession, result, info ) {
-                    try { 
-                        console.log("Success on login()");   
+                promise.done(function (jsdosession, result, info) {
+                    try {
+                        console.log("Success on login()");
                         that.set("isLoggedIn", true);
-                        app.viewModels.loginViewModel.loginViewTitle = app.viewModels.loginViewModel.logoutLabel;
-                        app.viewModels.loginViewModel.onBeforeShow( );
-
                         var catPromise = jsdosession.addCatalog(jsdoSettings.catalogURIs);
-                        catPromise.done( function( jsdosession, result, details ) { 
+                        catPromise.done(function (jsdosession, result, details) {
                             console.log("Success on addCatalog()");
-                         });
+                            app.mobileApp.navigate("views/prodListView.html");
+                        });
+                        catPromise.fail(function (jsdosession, result, details) {
+                            app.viewModels.loginViewModel.addCatalogErrorFn(app.jsdosession,
+                                progress.data.Session.GENERAL_FAILURE, details);
+                        });
+                    }
+                    catch (ex) {
+                        details = [{ "catalogURI": jsdoSettings.catalogURIs, errorObject: ex }];
+                        app.viewModels.loginViewModel.addCatalogErrorFn(app.jsdosession,
+                            progress.data.Session.GENERAL_FAILURE, details);
+                    }
 
-                        catPromise.fail( function( jsdosession, result, details) {
-                            app.viewModels.loginViewModel.addCatalogErrorFn(app.jsdosession, 
-                                                    progress.data.Session.GENERAL_FAILURE, details);
-                        });  
-                    } 
-                    catch(ex) {
-                        details = [{"catalogURI": jsdoSettings.catalogURIs, errorObject: ex}];
-                        app.viewModels.loginViewModel.addCatalogErrorFn(app.jsdosession, 
-                                                    progress.data.Session.GENERAL_FAILURE, details);
-                    } 
- 
                 });
-
-
-               promise.fail( function(jsdosession, result, info) {
+                promise.fail(function (jsdosession, result, info) {
                     app.viewModels.loginViewModel.loginErrorFn(app.jsdosession, result, info);
                 }); // end promise.fail
             }
-            catch(ex) {
-               app.viewModels.loginViewModel.loginErrorFn(app.jsdosession,
-                                                    progress.data.Session.GENERAL_FAILURE,
-                                                    {errorObject: ex});
+            catch (ex) {
+                app.viewModels.loginViewModel.loginErrorFn(app.jsdosession,
+                    progress.data.Session.GENERAL_FAILURE,
+                    { errorObject: ex });
             }
         },
 
-        logout: function(e) {
+        logout: function (e) {
             var that = this,
                 promise;
 
@@ -87,22 +82,22 @@
             }
             try {
                 promise = app.jsdosession.logout();
-                promise.done( function(jsdosession, result, info) {
-                    console.log("Success on logout()"); 
+                promise.done(function (jsdosession, result, info) {
+                    console.log("Success on logout()");
                     that.set("isLoggedIn", false);
                     app.viewModels.loginViewModel.loginViewTitle = app.viewModels.loginViewModel.loginLabel;
                     app.viewModels.loginViewModel.onBeforeShow();
-                    
+
                     app.clearData(); //cleaning all data
                 });
-                promise.fail( function(jsdosession, result, info) {
-                     app.viewModels.loginViewModel.logoutErrorFn(jsdosession, result, info);
-                });              
+                promise.fail(function (jsdosession, result, info) {
+                    app.viewModels.loginViewModel.logoutErrorFn(jsdosession, result, info);
+                });
             }
-            catch(ex) {
-               app.viewModels.loginViewModel.logoutErrorFn(app.jsdosession,
-                                                progress.data.Session.GENERAL_FAILURE,
-                                                {errorObject: ex});
+            catch (ex) {
+                app.viewModels.loginViewModel.logoutErrorFn(app.jsdosession,
+                                                 progress.data.Session.GENERAL_FAILURE,
+                                                 { errorObject: ex });
             }
         },
 
@@ -115,11 +110,11 @@
             }
         },
 
-        addCatalogErrorFn: function(jsdosession, result, details) {
+        addCatalogErrorFn: function (jsdosession, result, details) {
             var msg = "", i;
-            console.log("Error on addCatalog()");     
-            if (details !== undefined  && Array.isArray(details)){
-                for (i = 0; i < details.length; i += 1){
+            console.log("Error on addCatalog()");
+            if (details !== undefined && Array.isArray(details)) {
+                for (i = 0; i < details.length; i += 1) {
                     msg = msg + "\nresult for " + details[i].catalogURI + ": " +
                             details[i].result + "\n    " + details[i].errorObject;
                 }
@@ -132,7 +127,7 @@
             }
         },
 
-        logoutErrorFn: function(jsdosession, result, info) {
+        logoutErrorFn: function (jsdosession, result, info) {
             var msg = "Error on logout";
             app.showError(msg);
             if (info.errorObject !== undefined) {
@@ -145,7 +140,7 @@
             console.log(msg);
         },
 
-         loginErrorFn: function(jsdosession, result, info) {
+        loginErrorFn: function (jsdosession, result, info) {
             var msg = "Error on login";
 
             if (result === progress.data.Session.LOGIN_AUTHENTICATION_FAILURE) {
@@ -168,7 +163,7 @@
                 msg = msg + "\n" + info.errorObject;
             }
             console.log(msg);
-         }
+        }
     });
 
     parent.loginViewModel = loginViewModel;
