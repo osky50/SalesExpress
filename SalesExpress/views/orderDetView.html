@@ -1,0 +1,80 @@
+<!-- List view -->
+
+<div id="orderDet"
+     data-role="view"
+     data-style="inset"
+     data-layout="back-layout"
+     data-init="app.viewModels.orderDetViewModel.onInit"
+     data-show="app.viewModels.orderDetViewModel.onBeforeShow"
+     data-model="app.viewModels.orderDetViewModel">
+    <div>
+        <h4>Header</h4>
+        <ul data-role="listview" data-style="inset">
+            <li>
+                <div id="orderHeader">
+                    <div>
+                        <label>Trans. No.:</label>
+                        <div class="inline" data-bind="text: TransNo"></div>
+                    </div>
+                    <div>
+                        <label>Trans. Date:</label>
+                        <div class="inline" data-bind="text: TransDate"></div>
+                    </div>
+                    <div>
+                        <label>Status: </label>
+                        <div class="inline" data-bind="text: DocStatus"></div>
+                    </div>
+                    <br />
+                    <div>
+                        <label class="width-90">Order Total:</label>
+                        <div class="inline currency width-90" data-bind="text: OrderAmt"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                    <div>
+                        <label class="width-90">Handling:</label>
+                        <div class="inline currency width-90" data-bind="text: Handling"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                    <div>
+                        <label class="width-90">Shipping:</label>
+                        <div class="inline currency width-90" data-bind="text: Shipping"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                    <div>
+                        <label class="width-90">Discount:</label>
+                        <div class="inline currency width-90" data-bind="text: Discount"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                    <div>
+                        <label class="width-90">Tax:</label>
+                        <div class="inline currency width-90" data-bind="text: Tax"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                    <div>
+                        <label class="width-90">Total:</label>
+                        <div class="inline currency width-90" data-bind="text: TotalAmt"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h4>Lines</h4>
+        <ul id="orderLines"
+            data-role="listview" data-style="inset"></ul>
+    </div>
+    <div id="pager" class="k-pager-wrap"></div>
+    <script type="text/x-kendo-template" id="orderLineTemplate">
+        <div><b>Location: </b>#: LocId #</div>
+        <div><b>Synonym: </b>#: Synonym #</div>
+        <div><b>Qty.: </b>#: OrderQty #</div>
+        <div><b>Price: </b>$#: UnitPrice #</div>
+        <div><b>Line Total: </b>#: ExtPrice #</div>
+    </script>
+</div>
+
+
+
+
+

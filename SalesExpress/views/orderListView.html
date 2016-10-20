@@ -1,22 +1,21 @@
 <!-- List view -->
 
 <div id="orderList"
-     data-role="view" 
-     data-style="inset" 
+     data-role="view"
+     data-style="inset"
      data-init="app.viewModels.orderListViewModel.onInit"
      data-show="app.viewModels.orderListViewModel.onBeforeShow"
      data-model="app.viewModels.orderListViewModel">
-    <ul id="orderListView" 
-        data-role="listview" data-style="inset">
-    </ul>
+
+    <ul id="orderListView"
+        data-role="listview" data-style="inset"></ul>
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="orderTemplate">
-        <a href="views/orderLinesListView.html">
-            <div>#: TransNo #</div>
-            <div>#: TransDate #</div>
-            <div><b>Original Doc.: </b>#: OriginalDoc #</div>
+        <a href="views/orderDetView.html">
+            <div><b>Trans. No.: </b>#: TransNo #</div>
+            <div><b>Trans. Date: </b>#: TransDate #</div>
             <div><b>Status: </b>#: DocStatus #</div>
-            <div><b>Total: </b>#: TotalAmt #</div>
+            <div><b>Total: </b>$#: TotalAmt # #: CurrencyId #</div>
         </a>
     </script>
 </div>

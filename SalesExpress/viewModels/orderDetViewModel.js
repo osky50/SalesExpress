@@ -1,7 +1,7 @@
 //'use strict';
 
 (function (parent) {
-    var orderLinesListViewModel = kendo.observable({
+    var orderDetViewModel = kendo.observable({
         jsdoDataSource: undefined,
         jsdoModel: undefined,
         selectedRow: {},
@@ -15,25 +15,25 @@
         //   show
 
         onBeforeShow: function () {
-            var orderLinesListView = $("#orderLinesListView").data("kendoMobileListView");
-            if (orderLinesListView === undefined) { //extra protection in case onInit have not been fired yet
-                app.viewModels.orderLinesListViewModel.onInit(this);
+            var orderLines = $("#orderLines").data("kendoMobileListView");
+            if (orderLines === undefined) { //extra protection in case onInit have not been fired yet
+                app.viewModels.orderDetViewModel.onInit(this);
             } else {
-                orderLinesListView.dataSource.read();
+                orderLines.dataSource.read();
             }
             // Set list title to resource name
-            if (app.viewModels.orderLinesListViewModel.resourceName !== undefined) {
-                app.changeTitle(app.viewModels.orderLinesListViewModel.resourceName);
+            if (app.viewModels.orderDetViewModel.resourceName !== undefined) {
+                app.changeTitle(app.viewModels.orderDetViewModel.resourceName);
             }
         },
         onInit: function (e) {
             try {
                 // Create Data Source
-                app.viewModels.orderLinesListViewModel.createJSDODataSource();
+                app.viewModels.orderDetViewModel.createJSDODataSource();
                 app.views.listView = e.view;
                 // Create list
-                $("#orderLinesListView").kendoMobileListView({
-                    dataSource: app.viewModels.orderLinesListViewModel.jsdoDataSource,
+                $("#orderLines").kendoMobileListView({
+                    dataSource: app.viewModels.orderDetViewModel.jsdoDataSource,
                     autoBind: false,
                     pullToRefresh: false,
                     style: "display: inline",
@@ -58,6 +58,9 @@
                 //adding custom methods
                 var me = this;
                 this.jsdoDataSource.read = function () {
+                    //binding header
+                    kendo.bind($('#orderHeader'), app.viewModels.orderListViewModel.selectedRow, kendo.mobile.ui);
+                    //binding lines
                     me.jsdoDataSource.data(app.viewModels.orderListViewModel.selectedRow.eOrderLine);
                 }
             }
@@ -67,6 +70,6 @@
         },
     });
 
-    parent.orderLinesListViewModel = orderLinesListViewModel;
+    parent.orderDetViewModel = orderDetViewModel;
 
 })(app.viewModels);

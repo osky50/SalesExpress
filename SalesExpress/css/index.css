@@ -175,3 +175,25 @@ h1 {
     transform: none !important;
 
 }*/
+.width-90{
+    width: 90px;
+}
+.width-130{
+    width:130px;
+}
+label{
+    font-weight:bold;
+    float:left;
+    display:block;
+    margin-right: 5px;
+}
+.inline{
+    display: inline-block;
+}
+.currency{
+    text-align:right;
+}
+.currency:before {
+   content: "$";
+}
+
