@@ -14,6 +14,7 @@
         onBeforeShow: function () {
             var location = window.location.toString();
             var predrecno = location.substring(location.lastIndexOf('?') + 4);
+            debugger;
             app.viewModels.prodDetViewModel.jsdoDataSource.filter({ field: "Prod-RecNo", operator: "eq", value: predrecno });
         },
         onInit: function (e) {
@@ -64,8 +65,6 @@
                                 scope: this,
                                 fn: function (jsdo, success, request) {
                                     // afterFill event handler statements ...
-                                    var currentProd = request.response.dsProd.eProduct[0];
-                                    kendo.bind($('#prodDetail'), currentProd, kendo.mobile.ui);
                                 }
                             }],
                             'beforeFill': [{
@@ -77,30 +76,37 @@
                         }
                     });
                     this.jsdoDataSource = new kendo.data.DataSource({
-                        type: "jsdo",
-                        // TO_DO - Enter your filtering and sorting options
+                        data: [],
                         serverFiltering: true,
-                        //serverSorting: true,
-                        //filter: { field: "State", operator: "startswith", value: "MA" },
-                        //sort: [ { field: "Name", dir: "desc" } ],
-                        transport: {
-                            jsdo: this.jsdoModel
-                            // TO_DO - If resource is multi-table dataset, specify table name for data source
-                            , tableRef: jsdoSettings.tableName
-                        },
                         schema: {
                             model: eProduct
                         },
                         error: function (e) {
                             console.log("Error: ", e);
-                        }
+                        },
                     });
-                    this.resourceName = jsdoSettings.resourceName;
+                    //adding custom methods
+                    var me = this;
+                    this.jsdoDataSource.read = function () {
+                        debugger;
+                        var promisse
+                        var filter = me.jsdoDataSource.filter();
+                        promisse = me.jsdoModel.invoke('ProductDetail', { ProdRecno: filter.filters[0].value, CustId: "masroo" });
+                        promisse.done(function (session, result, details) {
+                            var currentProdList = details.response.dsProd.dsProd.eProduct;
+                            me.jsdoDataSource.data(currentProdList);
+                            if (currentProdList && currentProdList.length > 0) {
+                                kendo.bind($('#prodDetail'), currentProdList[0], kendo.mobile.ui);
+                            }
+                        });
+                    }
                 }
                 else {
                     console.log("Warning: jsdoSettings.resourceName not specified");
                 }
+
             }
+
             catch (ex) {
                 createDataSourceErrorFn({ errorObject: ex });
             }
