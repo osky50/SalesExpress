@@ -15,8 +15,6 @@
             var location = window.location.toString();
             var predrecno = location.substring(location.lastIndexOf('?') + 4);
             app.viewModels.prodDetViewModel.jsdoDataSource.filter({ field: "Prod-RecNo", operator: "eq", value: predrecno });
-            var currentProd = app.viewModels.prodDetViewModel.jsdoDataSource.data.view()[0];
-            kendo.bind($('#prodDetail'), currentProd, kendo.mobile.ui);
         },
         onInit: function (e) {
             try {
@@ -66,6 +64,8 @@
                                 scope: this,
                                 fn: function (jsdo, success, request) {
                                     // afterFill event handler statements ...
+                                    var currentProd = request.response.dsProd.eProduct[0];
+                                    kendo.bind($('#prodDetail'), currentProd, kendo.mobile.ui);
                                 }
                             }],
                             'beforeFill': [{
@@ -106,7 +106,7 @@
             }
         },
         onHide() {
-            this.jsdoDataSource.filter({});
+            app.clearData(prodDetViewModel);
         },
     });
 

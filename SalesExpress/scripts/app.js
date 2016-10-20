@@ -119,14 +119,22 @@
         }
     };
 
-    app.clearData = function () {
-        for (var vmName in app.viewModels) {
-            var vm = app.viewModels[vmName];
-            if (vm.jsdoModel && vm.jsdoModel._clearData) { //cleaning jsdo
-                vm.jsdoModel._clearData()
+    app.clearData = function (vm) {
+        var clearModel = function (m) {
+            if (m.jsdoModel && m.jsdoModel._clearData) { //cleaning jsdo
+                m.jsdoModel._clearData()
             }
-            if (vm.jsdoDataSource && vm.jsdoDataSource.data().length) { //cleaning datasource
-                vm.jsdoDataSource.data([]);
+            if (m.jsdoDataSource && m.jsdoDataSource.data().length) { //cleaning datasource
+                m.jsdoDataSource.data([]);
+            }
+        }
+        if (vm) {
+            clearModel(vm);
+        }
+        else {
+            for (var vmName in app.viewModels) {
+                var vm = app.viewModels[vmName];
+                clearModel(vm);
             }
         }
     }

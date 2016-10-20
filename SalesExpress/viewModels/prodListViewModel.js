@@ -40,7 +40,7 @@
                     style: "display: inline",
                     pageable: true,
                     appendOnRefresh: false,
-                    endlessScroll: true,
+                    loadMore: false,
                     filterable: {
                         placeholder: "Type to search...",
                         field: "synonym"
@@ -107,17 +107,20 @@
                     this.jsdoDataSource = new kendo.data.DataSource({
                         type: "jsdo",
                         // TO_DO - Enter your filtering and sorting options
+                        serverPaging: true,
                         serverFiltering: true,
-                        //serverSorting: true,
+                        serverSorting: true,
                         //filter: { field: "synonym", operator: "contains", value: "MA" },
                         //sort: [ { field: "Name", dir: "desc" } ],
+                        pageSize: 17,
                         transport: {
                             jsdo: this.jsdoModel
                             // TO_DO - If resource is multi-table dataset, specify table name for data source
                             , tableRef: jsdoSettings.tableName
                         },
                         schema: {
-                            model: eProduct
+                            model: eProduct,
+                            total: function () { return 500; }
                         },
                         error: function (e) {
                             console.log("Error: ", e);
