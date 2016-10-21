@@ -7,7 +7,6 @@
         selectedRow: {},
         origRow: {},
         resourceName: 'Order List',
-        kendoListView: null,
 
         // The order of the firing of events is as follows:
         //   before-show

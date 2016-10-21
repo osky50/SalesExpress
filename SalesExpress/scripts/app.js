@@ -93,7 +93,18 @@
 
         return false;
     };
-
+    app.getErrors = function (restResultArr) {
+        var errors = '';
+        for (var i = 0; i < restResultArr.length; i++) {
+            var restResul = restResultArr[i];
+            if (restResul.ErrorNo > 0) {
+                errors += restResul.Description + '\n';
+            }
+        }
+        if (errors)
+            app.showError(errors);
+        return errors;
+    };
     app.showError = function (message) {
         if (navigator && navigator.notification) {
             navigator.notification.alert(message);

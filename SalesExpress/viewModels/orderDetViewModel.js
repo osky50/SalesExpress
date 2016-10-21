@@ -6,8 +6,7 @@
         jsdoModel: undefined,
         selectedRow: {},
         origRow: {},
-        resourceName: 'Order Lines',
-        kendoListView: null,
+        resourceName: 'Order Details',
 
         // The order of the firing of events is as follows:
         //   before-show
