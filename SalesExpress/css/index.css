@@ -206,4 +206,7 @@ label{
 .currency:before {
    content: "$";
 }
+.k-invalid-msg{
+    color: red;
+}
 

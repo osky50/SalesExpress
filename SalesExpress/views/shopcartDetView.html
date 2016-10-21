@@ -56,16 +56,20 @@
     </div>
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="shopcartLineTemplate">
-        <div><b>Synonym: </b>#: Synonym #</div>
-        <div><b>Location: </b>#: LocId #</div>
-        <div><b>AFS: </b>#: AFS #</div>
-        <div>
-            <label class="label-button">Qty.:</label><input type="number" min="1" name="OrderQty" class="relative width-90" value="#: OrderQty #" />
-            <button type="button" data-role="button" name="update-line">Update</button>
-            <button type="button" data-role="button" name="delete-line">Remove</button>
-        </div>
-        <div><b>Price: </b>$#: UnitPrice #</div>
-        <div><b>Line Total: </b>#: ExtPrice #</div>
+        <form>
+            <div><b>Synonym: </b>#: Synonym #</div>
+            <div><b>Location: </b>#: LocId #</div>
+            <div><b>AFS: </b>#: AFS #</div>
+            <div>
+                <label>Quantity:</label><input type="number" min="1" max="#: AFS #" name="Order Quantity" class="relative width-90" value="#: OrderQty #" />
+            </div>
+            <div>
+                <button type="button" data-role="button" name="update-line">Update</button>
+                <button type="button" data-role="button" name="delete-line">Remove</button>
+            </div>
+            <div><b>Price: </b>$#: UnitPrice #</div>
+            <div><b>Line Total: </b>#: ExtPrice #</div>
+        </form>
     </script>
 </div>
 

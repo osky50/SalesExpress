@@ -39,13 +39,24 @@
                     endlessScroll: false,
                     template: kendo.template($("#shopcartLineTemplate").html()),
                     click: function (e) {
-                        app.viewModels.shopcartDetViewModel.set("selectedRow", e.dataItem);
+                        app.viewModels.shopcartDetViewModel.set("selectedRow", e.dataItem);                        
                         if (!e.button)
                             return;
                         try {
                             var button = e.button.element[0];
                             if (button.name == 'update-line') {
-                                var orderQty = parseInt(e.item.find('input').val());
+                                var form = e.item.find('form');
+                                var input = e.item.find('input');
+                                //analizing "enabledBackOrders" parameter
+                                var enabledBackOrders = localStorage.getItem('EnabledBackOrders') || false;
+                                if (enabledBackOrders)
+                                    $(input).removeAttr('max'); //removing max attribute which initially have the AFS
+                                var validator = $(form).kendoValidator({
+                                    validateOnBlur: false
+                                }).data('kendoValidator');
+                                if (!validator.validateInput($(input)))
+                                    return;
+                                var orderQty = parseInt(input.val());
                                 app.viewModels.shopcartDetViewModel.updateLine(orderQty);
                             }
                             else if (button.name == 'delete-line') {
@@ -114,16 +125,6 @@
                 name: jsdoSettings.resourceName,
                 autoFill: false,
             });
-            var afs = parseInt(app.viewModels.shopcartDetViewModel.selectedRow.Afs);
-            if (isNaN(afs))
-                afs = 0;
-            var enabledBackOrders = localStorage.getItem('EnabledBackOrders') || true;
-            enabledBackOrders = enabledBackOrders.toString() == 'true'; //converting to boolean
-            //validating back orders
-            if (!enabledBackOrders && orderQty > afs) {
-                app.showError('Invalid quantity: can not be greater than AFS.');
-                return;
-            }
             var updateLineData = {
                 "dsOrder": {
                     "eOrder": [
