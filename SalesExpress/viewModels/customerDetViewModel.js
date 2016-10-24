@@ -7,7 +7,6 @@
         resourceName: 'Customer Details',
         forceLoad: false,
         onBeforeShow: function () {
-            debugger;
             var customerDetData = $("#customerDetData").data("kendoMobileListView");
             if (customerDetData === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.customerDetViewModel.onInit(this);
@@ -22,7 +21,6 @@
         },
         onInit: function (e) {
             try {
-                debugger;
                 // Create Data Source
                 app.viewModels.customerDetViewModel.createJSDODataSource();
                 app.views.listView = e.view;
@@ -38,7 +36,6 @@
                         app.viewModels.customerDetViewModel.set("selectedRow", e.dataItem);
                         if (!e.button)
                             return;
-                        debugger;
                         app.viewModels.customerDetViewModel.getDirections();                        
                     }
                 });
@@ -69,7 +66,6 @@
                     transport: {
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
-                            debugger;
                             var me = this;
                             var promise = app.viewModels.customerDetViewModel.jsdoModel.invoke('GetCustomer', { "CustomerId": "masroo" });
                             promise.done(function (session, result, details) {
