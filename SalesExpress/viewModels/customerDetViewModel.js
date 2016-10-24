@@ -10,8 +10,7 @@
             var customerDetData = $("#customerDetData").data("kendoMobileListView");
             if (customerDetData === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.customerDetViewModel.onInit(this);
-            } else if (customerDetData.dataSource && customerDetData.dataSource.data().length === 0 ||
-                app.viewModels.customerDetViewModel.forceLoad) {
+            } else if (customerDetData.dataSource.data().length === 0 || app.viewModels.customerDetViewModel.forceLoad) {
                 customerDetData.dataSource.read();
             }
             // Set list title to resource name
@@ -36,7 +35,13 @@
                         app.viewModels.customerDetViewModel.set("selectedRow", e.dataItem);
                         if (!e.button)
                             return;
-                        app.viewModels.customerDetViewModel.getDirections();                        
+                        try {
+                            var button = e.button.element[0];
+                            if (button.name == 'change-customer')
+                                app.viewModels.customerDetViewModel.changeCustomer();
+                            else if (button.name == 'directions')
+                                app.viewModels.customerDetViewModel.getDirections();
+                        } catch (e) { }
                     }
                 });
             }
@@ -46,29 +51,50 @@
         },
         createJSDODataSource: function () {
             try {
-                var eCustomer = kendo.data.Model.define({
-                    fields: {
-                        Cust_Id: {
-                            type: "string", // the field is a string
-                            from: "[\"Cust-Id\"]",
-                        },
-                    }
-                });
                 //configuring JSDO Settings
                 jsdoSettings.resourceName = 'dsCust';
                 jsdoSettings.tableName = 'eCustomer';
                 // create JSDO
                 this.jsdoModel = new progress.data.JSDO({
                     name: jsdoSettings.resourceName,
-                    autoFill: false
+                    autoFill: false,
                 });
                 this.jsdoDataSource = {
                     transport: {
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
                             var me = this;
-                            var promise = app.viewModels.customerDetViewModel.jsdoModel.invoke('GetCustomer', { "CustomerId": "masroo" });
+                            var promise = app.viewModels.customerDetViewModel.jsdoModel.invoke(
+                                'GetCustomer',
+                                {
+                                    "CustomerId": localStorage.getItem('defaultCustomer'),
+                                });
                             promise.done(function (session, result, details) {
+                                //formatting the customer address
+                                for (var i = 0; i < details.response.dsCust.dsCust.eCustomer.length; i++) {
+                                    var eCustomer = details.response.dsCust.dsCust.eCustomer[i];
+
+                                    var address = eCustomer['Address'];
+                                    if (eCustomer['City'] && eCustomer['City'] != '') {
+                                        if (address && address != '')
+                                            address = address + ', ' + eCustomer['City'];
+                                        else
+                                            address = eCustomer['City'];
+                                    }
+                                    if (eCustomer['Province'] && eCustomer['Province'] != '') {
+                                        if (address && address != '')
+                                            address = address + ', ' + eCustomer['Province'];
+                                        else
+                                            address = eCustomer['Province'];
+                                    }
+                                    if (eCustomer['PostalCode'] && eCustomer['PostalCode'] != '') {
+                                        if (address && address != '')
+                                            address = address + ', ' + eCustomer['PostalCode'];
+                                        else
+                                            address = eCustomer['PostalCode'];
+                                    }
+                                    eCustomer.FormattedAddress = address;
+                                }
                                 options.success(details.response.dsCust.dsCust.eCustomer);
                             });
                             promise.fail(function () {
@@ -88,8 +114,11 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
+        changeCustomer: function () {
+            app.mobileApp.navigate('views/customerListView.html');
+        },
         getDirections: function () {
-            alert('get directions');
+            app.mobileApp.navigate('views/customerDetMapView.html');
         },
     });
     parent.customerDetViewModel = customerDetViewModel;

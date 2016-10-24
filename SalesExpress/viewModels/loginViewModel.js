@@ -57,7 +57,6 @@
                         that.set("isLoggedIn", true);
                         var catPromise = jsdosession.addCatalog(jsdoSettings.catalogURIs);
                         catPromise.done(function (jsdosession, result, details) {
-                            console.log("Success on addCatalog()");
                             //getting system parameters
                             jsdoSettings.resourceName = "dsSystem";
                             var jsdoParameters = new progress.data.JSDO({
