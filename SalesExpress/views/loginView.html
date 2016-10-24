@@ -9,14 +9,13 @@
         <ul id="logoutListView" data-role="listview" data-style="" data-bind="visible: isLoggedIn">
             <li>
                 <h3 id="welcome">
-                    Welcome, <span data-bind=" text: username"></span>!
+                    Welcome, <span data-bind="text: username"></span>!
                 </h3>
                 <input style="width: 100%" id="logout" type="submit" data-role="button" data-bind="click: logout, visible: isLoggedIn" value="Logout" class="login-button" />
             </li>
         </ul>
     </div>
     <form data-bind="events: { keyup: checkEnter }">
-        <img data-bind="invisible: isLoggedIn" src="img/Progress_RGB.png" id="loginIcon" style="width: 100%;" />
         <h3 data-bind="invisible: isLoggedIn" id="credentials">Enter your credentials:</h3>
         <ul data-bind="invisible: isLoggedIn" id="loginListView" data-role="listview" data-style="inset">
             <li>

@@ -47,14 +47,45 @@
     <script src="viewModels/orderDetViewModel.js"></script>
     <script src="viewModels/prodDetViewModel.js"></script>
     <script src="viewModels/shopcartDetViewModel.js"></script>
+    <script src="viewModels/customerDetViewModel.js"></script>
 </head>
 <body>
     <!-- Layout -->
     <div data-role="layout" data-id="tabstrip-layout">
         <!-- Header -->
-        <div data-role="header">
+        <div data-role="header" style="background-color:white; padding:5px">
+            <div class="float-left">
+                <img src="img/small_logo.png" />
+                <div style="display:block;text-align:center">
+                    <a class="facebook-info"><img src="img/facebook.png" width="24" title="Follow us in Facebook"></a>
+                    <a class="twitter-info"><img src="img/twitter.png" width="24" title="Follow us in Twitter"></a>
+                </div>
+            </div>
+            <div class="login-info float-right" style="display:none">
+                <div class="login-info-container" style="text-align:right">
+                    <div class="label" style="display:inline-block">
+                        User:
+                    </div>
+                    <div class="user-info" style="margin:8px 3px; display:inline-block"></div>
+                    <div style="margin:8px 5px; display:inline-block">|</div>
+                    <a data-click="app.logout" style="margin:3px 3px; display:inline-block" data-role="button" data-icon="user">Logout</a>
+                </div>
+                <div class="customer-info-container" style="text-align:right">
+                    <div class="label" style="display:inline-block">
+                        Control Ent.:
+                    </div>
+                    <div class="control-ent-info" style="margin:8px 3px; display:inline-block"></div>
+                    <div style="margin:8px 5px; display:inline-block">|</div>
+                    <div class="label" style="display:inline-block">
+                        Customer:
+                    </div>
+                    <div class="customer-info" style="margin:8px 3px; display:inline-block"></div>
+                    <div style="margin:8px 5px; display:inline-block">|</div>
+                    <a data-click="app.customerDetails" style="margin:3px 3px 5px 3px; display:inline-block" data-role="button" data-icon="user">See details</a>
+                </div>
+            </div>
             <div data-role="navbar" id="navbar">
-                <a href="#app-drawer" data-rel="drawer" data-role="button" data-align="left" data-icon="details"></a>
+                <a class="login-info" style="display:none" href="#app-drawer" data-rel="drawer" data-role="button" data-align="left" data-icon="details"></a>
                 <span data-role="view-title"></span>
             </div>
         </div>
@@ -82,7 +113,8 @@
             <li><a href="views/prodListView.html" data-icon="home">Product List</a></li>
             <li><a href="views/orderListView.html" data-icon="home">Order List</a></li>
             <li><a href="views/shopcartDetView.html" data-icon="home">Shopping Cart</a></li>
-            <li><a href="views/LoginView.html" data-icon="user" id="listIcon">Logout</a></li>
+            <li><a href="views/customerDetView.html" data-icon="home">Customer Details</a></li>
+            <li><a href="views/loginView.html" data-icon="user" id="listIcon">Logout</a></li>
         </ul>
     </div>
 </body>

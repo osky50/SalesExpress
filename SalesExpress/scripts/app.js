@@ -6,7 +6,7 @@
         mobileApp: {},
         jsdoSession: {},
         views: {},
-        viewModels: {}
+        viewModels: {},
     };
 
     var bootstrap = function () {
@@ -154,4 +154,12 @@
     };
 
     app.autoLogin = true;
+
+    app.logout = function () {
+        app.mobileApp.navigate('views/loginView.html');
+    }
+
+    app.customerDetails = function () {
+        app.mobileApp.navigate('views/customerDetView.html');
+    }
 }());

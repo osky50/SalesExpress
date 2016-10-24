@@ -197,6 +197,9 @@ label{
     display:block;
     margin-right: 5px;
 }
+.label{
+    font-weight:bold;
+}
 .inline{
     display: inline-block;
 }
@@ -209,4 +212,9 @@ label{
 .k-invalid-msg{
     color: red;
 }
-
+.float-left{
+    float:left;
+}
+.float-right{
+    float:right;
+}

@@ -53,9 +53,12 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="img\cordova.png" />
+    <Content Include="img\facebook.png" />
     <Content Include="img\logo.png" />
     <Content Include="img\Progress_RGB.png" />
     <Content Include="img\Progress_spark100px.png" />
+    <Content Include="img\small_logo.png" />
+    <Content Include="img\twitter.png" />
     <Content Include="index.html" />
     <Content Include="kendo\js\jquery.min.js" />
     <Content Include="kendo\js\kendo.mobile.min.js" />
@@ -72,6 +75,7 @@
     <Content Include="scripts\app.js" />
     <Content Include="scripts\jsdoSettings.js" />
     <Content Include="scripts\jsdoUtils.js" />
+    <Content Include="viewModels\customerDetViewModel.js" />
     <Content Include="viewModels\shopcartDetViewModel.js" />
     <Content Include="viewModels\orderDetViewModel.js" />
     <Content Include="viewModels\prodDetViewModel.js">
@@ -83,6 +87,7 @@
     </Content>
     <Content Include="viewModels\loginViewModel.js" />
     <Content Include="views\home.html" />
+    <Content Include="views\customerDetView.html" />
     <Content Include="views\shopcartDetView.html" />
     <Content Include="views\orderDetView.html" />
     <Content Include="views\prodDetView.html" />
