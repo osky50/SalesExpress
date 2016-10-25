@@ -26,7 +26,6 @@
                 app.changeTitle(app.viewModels.prodListViewModel.resourceName);
             }
         },
-
         onInit: function (e) {
             try {
                 // Create Data Source
@@ -50,6 +49,16 @@
                     click: function (e) {
                         // console.log("e.dataItem._id " + e.dataItem._id);
                         app.viewModels.prodListViewModel.set("selectedRow", e.dataItem);
+                    },
+                    dataBound: function (e) {
+                        $('.rateit').each(function (index, element) {
+                            var ratingValue = parseFloat(element.getAttribute('rating-value'));
+                            var ratingStep = parseFloat(element.getAttribute('step'));
+                            var elementObj = $(element);
+                            elementObj.rateit();
+                            elementObj.rateit('value', ratingValue);
+                            elementObj.rateit('step', ratingStep);
+                        });
                     }
                 });
             }
@@ -86,50 +95,44 @@
                 jsdoSettings.resourceName = 'dsProd';
                 jsdoSettings.tableName = 'eProduct';
                 // create JSDO
-                if (jsdoSettings && jsdoSettings.resourceName) {
-                    this.jsdoModel = new progress.data.JSDO({
-                        name: jsdoSettings.resourceName,
-                        autoFill: false, events: {
-                            'afterFill': [{
-                                scope: this,
-                                fn: function (jsdo, success, request) {
-                                    // afterFill event handler statements ...
-                                }
-                            }],
-                            'beforeFill': [{
-                                scope: this,
-                                fn: function (jsdo, success, request) {
-                                    // beforeFill event handler statements ...
-                                }
-                            }]
-                        }
-                    });
-                    this.jsdoDataSource = new kendo.data.DataSource({
-                        type: "jsdo",
-                        // TO_DO - Enter your filtering and sorting options
-                        serverPaging: true,
-                        serverFiltering: true,
-                        serverSorting: true,
-                        //filter: { field: "synonym", operator: "contains", value: "MA" },
-                        //sort: [ { field: "Name", dir: "desc" } ],
-                        pageSize: 17,
-                        transport: {
-                            jsdo: this.jsdoModel
-                            // TO_DO - If resource is multi-table dataset, specify table name for data source
-                            , tableRef: jsdoSettings.tableName
-                        },
-                        schema: {
-                            model: eProduct,
-                            total: function () { return 500; }
-                        },
-                        error: function (e) {
-                            console.log("Error: ", e);
-                        }
-                    });
-                }
-                else {
-                    console.log("Warning: jsdoSettings.resourceName not specified");
-                }
+                this.jsdoModel = new progress.data.JSDO({
+                    name: jsdoSettings.resourceName,
+                    autoFill: false, events: {
+                        'afterFill': [{
+                            scope: this,
+                            fn: function (jsdo, success, request) {                               
+                            }
+                        }],
+                        'beforeFill': [{
+                            scope: this,
+                            fn: function (jsdo, success, request) {
+                                // beforeFill event handler statements ...
+                            }
+                        }],
+                    }
+                });
+                this.jsdoDataSource = new kendo.data.DataSource({
+                    type: "jsdo",
+                    // TO_DO - Enter your filtering and sorting options
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                    //filter: { field: "synonym", operator: "contains", value: "MA" },
+                    //sort: [ { field: "Name", dir: "desc" } ],
+                    pageSize: 17,
+                    transport: {
+                        jsdo: this.jsdoModel
+                        // TO_DO - If resource is multi-table dataset, specify table name for data source
+                        , tableRef: jsdoSettings.tableName
+                    },
+                    schema: {
+                        model: eProduct,
+                        total: function () { return 500; }
+                    },
+                    error: function (e) {
+                        console.log("Error: ", e);
+                    }
+                });
             }
             catch (ex) {
                 createDataSourceErrorFn({ errorObject: ex });

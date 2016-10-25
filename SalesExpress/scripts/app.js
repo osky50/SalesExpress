@@ -155,7 +155,7 @@
 
     app.autoLogin = true;
 
-    app.logout = function () {
+    app.logout = function () {        
         app.mobileApp.navigate('views/loginView.html');
     }
 
