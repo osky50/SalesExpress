@@ -15,7 +15,7 @@
             var prodDetListView = $("#prodDetailView").data("kendoMobileListView");
             if (prodDetListView === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.prodDetListViewModel.onInit(this);
-            } else if (prodDetListView.dataSource && prodDetListView.dataSource.data().length === 0) {
+            } else {
                 prodDetListView.dataSource.read();
             }
 
