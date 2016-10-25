@@ -3,21 +3,69 @@
      data-init="app.viewModels.prodDetViewModel.onInit"
      data-show="app.viewModels.prodDetViewModel.onBeforeShow"
      data-hide="app.viewModels.prodDetViewModel.onHide"
-     data-layout="back-layout" data-reload="true"
+     data-layout="back-layout"
      data-transition="fade">
 
-    <div id="prodDetail">
-
-
-        <div class="title" data-bind="text: Synonym"></div>
-        <div class="title" data-bind="text: description"></div>
-        <div class="title" data-bind="text: Afs"></div>
-        <div class="bigImage">
-            <img data-bind="attr: { src: imgUrl }" />
-        </div>
+    <div id="shopcartContainer">
+        <ul id="prodDetailView"
+            data-role="listview" data-style="inset"></ul>
         <div>
-            <label for="favorite">Favorite?</label>
+            <h4>Locations</h4>
+            <ul id="prodDetailLocView"
+                data-role="listview" data-style="inset" ></ul>
         </div>
     </div>
 
+    <!--<script type="text/x-kendo-template" id="locHeader">
+        <div><b>Location Id</b></div>
+        <div><b>AFS</b></div>
+        <div><b>ON_PO</b></div>
+        <div><b>Quantity</b></div>
+    </script>-->
+
+    <script type="text/x-kendo-template" id="prodDetailTemplate">
+
+        <div class="prodImage" style="width:100%"><img src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" /></div>
+        <div>
+            <label class="width-130 inline">Description:</label>
+            <div class="inline">#: description#</div>
+        </div>
+        <div class="width-130 float-right">
+            <label class="width-90 inline">Price:</label>
+            <div class="title">#: Price#</div>
+        </div>
+
+        <div>
+            <label class="width-130 inline">Synonym:</label>
+            <div class="inline">#: Synonym#</div>
+        </div>
+        <div class="width-130 float-right">
+            <label class="width-90 inline">AFS:</label>
+            <div class="title">#: Afs#</div>
+        </div>
+        <div>
+            <label class="width-130">Report Synonym:</label>
+            <div class="inline">#: ReportSyn#</div>
+        </div>
+        <div>
+            <label class="width-130 inline">Bar Synonym:</label>
+            <div class="inline">#: BarSyn#</div>
+        </div>
+
+    </script>
+
+    <script type="text/x-kendo-template" id="prodDetLocTemplate">
+        <form>
+            <div><b>Location: </b>#: AFS #</div>
+            <div><b>AFS: </b>#: AFS #</div>
+            <div class=""><b>ON_PO: </b>#: ONPO #</div>
+            <div class="float-right">
+                <label>Quantity:</label>
+                <input type="number" min="1" max="#: AFS #" class="relative width-90" name="Order Quantity" value="#: CartQty #" />
+            </div>
+            <div>
+                <button type="button" data-role="button" name="addToCart">Add To Cart</button>
+            </div>
+        </form>
+    </script>
 </div>
