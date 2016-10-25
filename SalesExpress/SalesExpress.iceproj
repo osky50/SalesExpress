@@ -37,6 +37,7 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="css\index.css" />
+    <Content Include="css\jquery.rateit.css" />
     <Content Include="fonts\fontawesome-webfont.eot">
       <SubType>Content</SubType>
     </Content>
@@ -73,6 +74,7 @@
     <Content Include="lib\progress.all.min.js" />
     <Content Include="README.txt" />
     <Content Include="scripts\app.js" />
+    <Content Include="scripts\jquery.rateit.min.js" />
     <Content Include="scripts\jsdoSettings.js" />
     <Content Include="scripts\jsdoUtils.js" />
     <Content Include="scripts\modelUtils.js" />
