@@ -5,7 +5,7 @@
         selectedRow: {},
         prodLocList: [],
         origRow: {},
-        resourceName: undefined,
+        resourceName: 'Product Details',
 
         // The order of the firing of events is as follows:
         //   before-show
