@@ -3,6 +3,7 @@
         jsdoDataSource: undefined,
         jsdoModel: undefined,
         selectedRow: {},
+        prodLocList: [],
         origRow: {},
         resourceName: undefined,
 
@@ -14,7 +15,7 @@
         onBeforeShow: function () {
             var prodDetListView = $("#prodDetailView").data("kendoMobileListView");
             if (prodDetListView === undefined) { //extra protection in case onInit have not been fired yet
-                app.viewModels.prodDetListViewModel.onInit(this);
+                app.viewModels.prodDetViewModel.onInit(this);
             } else {
                 prodDetListView.dataSource.read();
             }
@@ -33,9 +34,10 @@
                 app.views.productDetView = e.view;
                 $("#prodDetailView").kendoMobileListView({
                     dataSource: app.viewModels.prodDetViewModel.jsdoDataSource,
-                    pullToRefresh: false,
+                    pullToRefresh: true,
                     style: "display: inline",
                     appendOnRefresh: false,
+                    autoBind: false,
                     endlessScroll: false,
                     template: kendo.template($("#prodDetailTemplate").html())
                 });
@@ -45,6 +47,7 @@
                     pullToRefresh: false,
                     style: "display: inline",
                     appendOnRefresh: false,
+                    autoBind: false,
                     endlessScroll: false,
                     template: kendo.template($("#prodDetLocTemplate").html())
                 });
@@ -68,24 +71,19 @@
                     }
                 }
             });
-            this.prodLocDataSource = new kendo.data.DataSource({
+            this.prodLocDataSource = {
                 schema: {
                     model: eLoc,
-                    parse: function (response) {
-                        debbuger;
-                        for (var i = 0; i < response.length; i++) {
-                            el = response[i];
-                            el.Loc_Id = el["Loc-id"];
-                            delete el["Loc-id"];
-                        }
-                        return response;
+                },
+                transport: {
+                    read: function (options) {
+                        options.success(app.viewModels.prodDetViewModel.prodLocList);
                     }
                 },
-                data: [],
                 error: function (e) {
                     console.log('Error: ', e);
                 }
-            });
+            };
         },
         createJSDODataSource: function () {
             try {
@@ -154,14 +152,14 @@
                             // when the grid tries to read data, it will call this function
                             read: function (options) {
                                 var me = app.viewModels.prodDetViewModel;
-                                var location = window.location.toString();
-                                me.jsdoDataSource.prodrecno = location.substring(location.lastIndexOf('?') + 4);
+                                me.jsdoDataSource.prodrecno = app.viewModels.prodListViewModel.selectedRow.Prod_Recno;
                                 var promise = me.jsdoModel.invoke('ProductDetail', me.jsdoDataSource.filter());
                                 promise.done(function (session, result, details) {
                                     var currentProdList = details.response.dsProd.dsProd.eProduct;
                                     options.success(currentProdList);
                                     //assigning location list data
-                                    $("#prodDetailLocView").data("kendoMobileListView").dataSource.data(details.response.dsProd.dsProd.eProductLoc)
+                                    app.viewModels.prodDetViewModel.set("prodLocList", details.response.dsProd.dsProd.eProductLoc);
+                                    $("#prodDetailLocView").data("kendoMobileListView").dataSource.read();
                                 });
                                 promise.fail(function () {
                                     options.success([]);
