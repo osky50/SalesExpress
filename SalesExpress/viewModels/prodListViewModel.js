@@ -41,6 +41,7 @@
                     appendOnRefresh: false,
                     loadMore: false,
                     filterable: {
+                        autoFilter: false,
                         placeholder: "Type to search...",
                         field: "synonym"
                     },

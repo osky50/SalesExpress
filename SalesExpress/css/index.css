@@ -208,3 +208,12 @@ label {
 .float-right {
     float: right;
 }
+#prodDetailImageView li{
+    width: 4em;
+    height:4em;
+    float: left;
+}
+
+#prodDetailImageView img{
+    width:100%;
+}

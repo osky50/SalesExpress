@@ -38,6 +38,7 @@
     </Content>
     <Content Include="css\index.css" />
     <Content Include="css\jquery.rateit.css" />
+    <Content Include="css\swipebox.min.css" />
     <Content Include="fonts\fontawesome-webfont.eot">
       <SubType>Content</SubType>
     </Content>
@@ -55,10 +56,28 @@
     </Content>
     <Content Include="img\cordova.png" />
     <Content Include="img\facebook.png" />
+    <Content Include="img\icons.png" />
+    <Content Include="img\icons.svg" />
+    <Content Include="img\loader.gif" />
     <Content Include="img\logo.png" />
     <Content Include="img\Progress_RGB.png" />
     <Content Include="img\Progress_spark100px.png" />
     <Content Include="img\small_logo.png" />
+    <Content Include="img\star-black32.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="img\star-gold32.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="img\star-red32.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="img\star-white32.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="img\star.gif">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="img\twitter.png" />
     <Content Include="index.html" />
     <Content Include="kendo\js\jquery.min.js" />
@@ -74,7 +93,9 @@
     <Content Include="lib\progress.all.min.js" />
     <Content Include="README.txt" />
     <Content Include="scripts\app.js" />
+    <Content Include="scripts\swipebox\ios-orientationchange-fix.js" />
     <Content Include="scripts\jquery.rateit.min.js" />
+    <Content Include="scripts\swipebox\jquery.swipebox.min.js" />
     <Content Include="scripts\jsdoSettings.js" />
     <Content Include="scripts\jsdoUtils.js" />
     <Content Include="scripts\modelUtils.js" />
@@ -95,6 +116,7 @@
     <Content Include="views\customerDetView.html" />
     <Content Include="views\customerDetMapView.html" />
     <Content Include="views\customerListView.html" />
+    <Content Include="views\HtmlPage1.html" />
     <Content Include="views\shopcartDetView.html" />
     <Content Include="views\orderDetView.html" />
     <Content Include="views\prodDetView.html" />
@@ -208,6 +230,7 @@
     <Folder Include="lib\" />
     <Folder Include="Plugins\" />
     <Folder Include="scripts\" />
+    <Folder Include="scripts\swipebox\" />
     <Folder Include="viewModels\" />
     <Folder Include="views\" />
   </ItemGroup>
