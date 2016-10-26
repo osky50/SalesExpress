@@ -69,29 +69,7 @@
         },
         createJSDODataSource: function () {
             try {
-                var eProduct = kendo.data.Model.define({
-                    id: "id", // the identifier is the "id" field (declared below)
-                    fields: {
-                        Prod_Id: {
-                            type: "string", // the field is a string
-                            validation: { // validation rules
-                                required: true // the field is required
-                            },
-                            from: "[\"Product-Id\"]",
-                            defaultValue: "<empty>" // default field value
-
-                        },
-                        Prod_Recno: {
-                            type: "string", // the field is a string
-                            validation: { // validation rules
-                                required: true // the field is required
-                            },
-                            from: "[\"Prod-RecNo\"]",
-                            defaultValue: "<empty>" // default field value
-
-                        }
-                    }
-                });
+                var eProduct = productModel();
                 //configuring JSDO Settings
                 jsdoSettings.resourceName = 'dsProd';
                 jsdoSettings.tableName = 'eProduct';

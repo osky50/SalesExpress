@@ -54,6 +54,7 @@
                 //configuring JSDO Settings
                 jsdoSettings.resourceName = 'dsCust';
                 jsdoSettings.tableName = 'eCustomer';
+                var eCustomer = customerModel();
                 // create JSDO
                 this.jsdoModel = new progress.data.JSDO({
                     name: jsdoSettings.resourceName,

@@ -106,6 +106,9 @@
         return errors;
     };
     app.showError = function (message) {
+        app.showMessage(message);
+    };
+    app.showMessage = function (message) {
         if (navigator && navigator.notification) {
             navigator.notification.alert(message);
         } else {
@@ -113,7 +116,6 @@
             alert(message);
         }
     };
-
     app.changeTitle = function (customTitle) {
         if (app.mobileApp.view()) {
             app.mobileApp.view().header.find('[data-role="navbar"]').data('kendoMobileNavBar').title(customTitle);
