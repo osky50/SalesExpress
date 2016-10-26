@@ -2,6 +2,7 @@
     var locDetViewModel = kendo.observable({
         jsdoDataSource: undefined,
         jsdoModel: undefined,
+        jsdoStockModel: undefined,
         selectedRow: {},
         resourceName: 'Location Details',
 
@@ -52,12 +53,11 @@
                 console.log("Error in init locDetView: " + ex);
             }
         },
-
         createLocStockDataSource: function () {
             //configuring JSDO Settings
-            jsdoSettings.resourceName = 'dsLocStockDetail';
+            jsdoSettings.resourceName = 'dsLoc';
             jsdoSettings.tableName = 'stockdetail';
-            this.jsdoModel = new progress.data.JSDO({
+            this.jsdoStockModel = new progress.data.JSDO({
                 name: jsdoSettings.resourceName,
                 autoFill: false,
             });
@@ -65,13 +65,23 @@
                 transport: {
                     read: function (options) {
                         var me = app.viewModels.locDetViewModel;
-                        var filter = {"pProdrecno":app.viewModels.prodDetViewModel.selectedRow.Prod_Recno, 
-                            "pLocId": app.viewModels.prodDetViewModel.selectedRow.Loc_Id
+                        var filter = {
+                            "pProdRecno": app.viewModels.prodDetViewModel.currentLoc["Prod-RecNo"],
+                            "pLocId": app.viewModels.prodDetViewModel.currentLoc.Loc_Id
                         };
-                        var promise = me.jsdoModel.invoke('GetLocationDetail', filter);
+                        var promise = me.jsdoStockModel.invoke('GetLocStockDetail', filter);
                         promise.done(function (session, result, details) {
-                            var currentlocStockList = details.response.dsLocStockDetail.dsLocStockDetail.stockdetail;
-                            options.success(currentlocStockList);
+                            var errors = false;
+                            try {
+                                errors = app.getErrors(details.response.dsLocStockDetail.dsLocStockDetail.wsResult);
+                                if (errors)
+                                    return;
+                                var currentlocStockList = details.response.dsLocStockDetail.dsLocStockDetail.stockdetail;
+                                options.success(currentlocStockList);
+                            } catch (e) {
+                                options.success([]);
+                            }
+
                         });
                         promise.fail(function () {
                             options.success([]);
@@ -103,9 +113,8 @@
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
                             var me = app.viewModels.locDetViewModel;
-                            var filter = { "LocationId": app.viewModels.prodDetViewModel.selectedRow.Loc_Id};
-                            me.jsdoDataSource.prodrecno = app.viewModels.prodListViewModel.selectedRow.Prod_Recno;
-                            var promise = me.jsdoModel.invoke('GetLocation', me.jsdoDataSource.filter());
+                            var filter = { "LocationId": app.viewModels.prodDetViewModel.currentLoc.Loc_Id };
+                            var promise = me.jsdoModel.invoke('GetLocation', filter);
                             promise.done(function (session, result, details) {
                                 var currentLocList = details.response.dsLoc.dsLoc.eLocation;
                                 options.success(currentLocList);

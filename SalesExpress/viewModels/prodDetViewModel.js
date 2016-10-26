@@ -2,6 +2,7 @@
     var prodDetViewModel = kendo.observable({
         jsdoDataSource: undefined,
         jsdoModel: undefined,
+        currentLoc: undefined,
         selectedRow: {},
         prodLocList: [],
         origRow: {},
@@ -83,6 +84,10 @@
                                     return;
                                 var cartQty = parseInt(input.val());
                                 app.viewModels.prodDetViewModel.addLineToCart(cartQty);
+                            }
+                            if (button.name == 'locDetails') {
+                                app.viewModels.prodDetViewModel.set("currentLoc", e.dataItem);
+                                app.mobileApp.navigate('views/locDetView.html');
                             }
                         } catch (e) { console.log('Error: ', e); }
                     }
