@@ -7,7 +7,7 @@
      data-transition="fade">
     <div>
         <ul id="prodDetView" data-role="listview" data-style="inset"></ul>
-        <ul id="prodDetReviewsView" data-role="listview" data-style="inset"></ul>
+        <ul id="prodDetReviewsView" data-role="listview" data-style="inset"></ul>        
     </div>
     <script type="text/x-kendo-template" id="prodDetTemplate">
         <div>
@@ -39,15 +39,10 @@
             <div class="float-left">&nbsp;|&nbsp;</div>
             <button data-role="button" name="2-stars-reviews-link" class="link float-left">2 stars</button>
             <div class="float-left">&nbsp;|&nbsp;</div>
-            <button data-role="button" name="1-stars-reviews-link" class="link float-left">1 stars</button>
+            <button data-role="button" name="1-stars-reviews-link" class="link">1 stars</button>
         </div>
-
-        <div>
-            <button data-role="button" name="create-review-link" class="link">Create you own review</button>
-        </div>
-        <div>
-            <div style="height:150px" id="graph"></div>
-        </div>
+        <a data-role="button" name="create-review-link" class="link" href="\\#create_review" data-rel="popover">Create you own review</a>
+        <div style="height:150px" id="graph"></div>
     </script>
     <script type="text/x-kendo-template" id="prodDetReviewTemplate">
         <form>
