@@ -1,7 +1,7 @@
 (function () {
     // store a reference to the application object that will be created
     // later on so that we can use it if need be
-    
+
 
     var app = {
         data: {},
@@ -160,11 +160,24 @@
 
     app.autoLogin = true;
 
-    app.logout = function () {        
+    app.logout = function () {
         app.mobileApp.navigate('views/loginView.html');
-    }
-
+    };
     app.customerDetails = function () {
         app.mobileApp.navigate('views/customerDetView.html');
+    };
+    app.addReview = function (e) {
+        app.viewModels.prodDetViewModel.addReview(e);
+    };
+    app.closeReview = function () {
+        app.viewModels.prodDetViewModel.closeReview();
+    };
+    app.onCloseModal = function (e) {
+        try {
+            var modal = e.sender.element[0];
+            if (modal && modal.dataset.closeconfirmation && !confirm(modal.dataset.closeconfirmation))
+                e.preventDefault();
+        } catch (e) {
+        }
     }
 }());

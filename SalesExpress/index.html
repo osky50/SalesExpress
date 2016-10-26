@@ -27,7 +27,7 @@
     <link href="css/jquery.rateit.css" rel="stylesheet" type="text/css" />
     <link href="css/swipebox.min.css" rel="stylesheet" type="text/css" />
     <!--jqplot-->
-    <link href="css/jquery.jqplot.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/jquery.jqplot.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Libraries used -->
     <script src="kendo/js/jquery.min.js"></script>
@@ -46,21 +46,21 @@
     <script type="text/javascript" src="scripts/modelUtils.js"></script>
     <script type="text/javascript" src="scripts/jquery.rateit.min.js"></script>
     <!--swipebox plugin-->
-    <script type="text/javascript" src="scripts/swipebox/jquery.swipebox.min.js"></script> 
+    <script type="text/javascript" src="scripts/swipebox/jquery.swipebox.min.js"></script>
     <script type="text/javascript" src="scripts/swipebox/ios-orientationchange-fix.js"></script>
     <!--jqplot plugin-->
     <script type="text/javascript" src="scripts/jplot/jquery.jqplot.min.js"></script>
     <script type="text/javascript" src="scripts/jplot/jqplot.barRenderer.min.js"></script>
     <script type="text/javascript" src="scripts/jplot/jqplot.categoryAxisRenderer.min.js"></script>
     <script type="text/javascript" src="scripts/jplot/jqplot.pointLabels.min.js"></script>
-    <script type="text/javascript" src="scripts/jplot/jqplot.highlighter.min.js"></script>    
+    <script type="text/javascript" src="scripts/jplot/jqplot.highlighter.min.js"></script>
     <!-- ViewModels here -->
     <script src="viewModels/loginViewModel.js"></script>
     <script src="viewModels/prodListViewModel.js"></script>
     <script src="viewModels/prodDetViewModel.js"></script>
     <script src="viewModels/prodDetReviewsViewModel.js"></script>
     <script src="viewModels/orderListViewModel.js"></script>
-    <script src="viewModels/orderDetViewModel.js"></script>    
+    <script src="viewModels/orderDetViewModel.js"></script>
     <script src="viewModels/shopcartDetViewModel.js"></script>
     <script src="viewModels/customerDetViewModel.js"></script>
     <script src="viewModels/customerDetMapViewModel.js"></script>
@@ -107,6 +107,28 @@
         </div>
 
         <!-- Application views will be rendered here -->
+        <div data-role="modalview" id="create_review" style="display: none" data-width="80%" data-close="app.onCloseModal"
+             data-closeconfirmation="Are you sure you want to close this screen?">
+            <div data-role="header">
+                <div data-role="navbar">
+                    <span data-role="view-title">New Product review</span>
+                    <a data-role="button" data-click="app.closeReview" data-align="right" data-icon="close">Close</a>
+                </div>
+            </div>
+            <form>
+                <ul data-role="listview" data-style="inset">
+                    <li>
+                        <label>Recommended:</label>
+                        <input type="checkbox" name="recommended" />
+                    </li>
+                    <li>
+                        <label>Comments:</label>
+                        <input type="text" required name="comments" style="width: 100%;" />
+                    </li>
+                </ul>
+                <a data-click="app.addReview" data-role="button" class="float-right" style="margin:0 8px 8px">Add</a>
+            </form>
+        </div>
         <!-- Footer -->
         <div data-role="footer">
 

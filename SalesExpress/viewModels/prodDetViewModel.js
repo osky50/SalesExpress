@@ -43,7 +43,7 @@
                             if (button.name == 'reviews-link') {
                                 app.mobileApp.navigate('views/prodDetReviewsView.html');
                             }
-                        } catch (e) {}
+                        } catch (e) { }
                     },
                     dataBound: function (e) {
                         $('.rateit').each(function (index, element) {
@@ -190,6 +190,22 @@
             catch (ex) {
                 createDataSourceErrorFn({ errorObject: ex });
             }
+        },
+        addReview: function (e) {
+            debugger;
+            try {
+                var form = e.sender.element[0].parentNode;
+                var validator = $(form).kendoValidator({
+                    validateOnBlur: false
+                }).data('kendoValidator');
+                if (!validator.validateInput($(input)) || !validator.validateInput($(textarea)))
+                    return;
+            } catch (e) {
+
+            }
+        },
+        closeReview: function () {
+            $('#create_review').getKendoMobileModalView().close()
         },
     });
 

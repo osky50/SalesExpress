@@ -197,7 +197,7 @@
             } catch (e) {
                 return false;
             };
-        }
+        },
     });
 
     parent.prodDetReviewsViewModel = prodDetReviewsViewModel;
