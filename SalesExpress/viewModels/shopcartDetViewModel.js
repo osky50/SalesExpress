@@ -43,7 +43,6 @@
                         if (!e.button)
                             return;
                         try {
-                            debugger;
                             var button = e.button.element[0];
                             if (button.name == 'update-line') {
                                 var form = e.item.find('form');

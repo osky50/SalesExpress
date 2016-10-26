@@ -1,6 +1,8 @@
 (function () {
     // store a reference to the application object that will be created
     // later on so that we can use it if need be
+    
+
     var app = {
         data: {},
         mobileApp: {},
@@ -12,6 +14,7 @@
     var bootstrap = function () {
         $(function () {
             try {
+                $.jqplot.config.enablePlugins = true;
                 app.mobileApp = new kendo.mobile.Application(document.body, {
 
                     // you can change the default transition (slide, zoom or fade)

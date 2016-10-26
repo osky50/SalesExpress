@@ -208,12 +208,30 @@ label {
 .float-right {
     float: right;
 }
-#prodDetailImageView li{
+
+#prodDetailImageView li {
     width: 4em;
-    height:4em;
+    height: 4em;
     float: left;
 }
 
-#prodDetailImageView img{
-    width:100%;
+#prodDetailImageView img {
+    width: 100%;
+}
+
+.link, .link-off {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    font-size: smaller !important;
+    margin: 0 !important;
+}
+
+.link {
+    color: #005580 !important;
+}
+
+.link-off {
+    font-weight: bold !important;
+    color: #4c5356;
 }

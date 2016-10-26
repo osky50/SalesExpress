@@ -6,12 +6,6 @@
         prodLocList: [],
         origRow: {},
         resourceName: 'Product Details',
-
-        // The order of the firing of events is as follows:
-        //   before-show
-        //   init (fires only once)
-        //   show
-
         onBeforeShow: function () {
             var prodDetListView = $("#prodDetailView").data("kendoMobileListView");
             if (prodDetListView === undefined) { //extra protection in case onInit have not been fired yet
@@ -38,7 +32,28 @@
                     appendOnRefresh: false,
                     autoBind: false,
                     endlessScroll: false,
-                    template: kendo.template($("#prodDetailTemplate").html())
+                    template: kendo.template($("#prodDetailTemplate").html()),
+                    click: function (e) {
+                        app.viewModels.prodDetViewModel.set("selectedRow", e.dataItem);
+                        if (!e.button)
+                            return;
+                        try {
+                            var button = e.button.element[0];
+                            if (button.name == 'reviews-link') {
+                                app.mobileApp.navigate('views/prodDetReviewsView.html');
+                            }
+                        } catch (e) {}
+                    },
+                    dataBound: function (e) {
+                        $('.rateit').each(function (index, element) {
+                            var ratingValue = parseFloat(element.getAttribute('rating-value'));
+                            var ratingStep = parseFloat(element.getAttribute('step'));
+                            var elementObj = $(element);
+                            elementObj.rateit();
+                            elementObj.rateit('value', ratingValue);
+                            elementObj.rateit('step', ratingStep);
+                        });
+                    }
                 });
                 $("#prodDetailLocView").kendoMobileListView({
                     dataSource: app.viewModels.prodDetViewModel.prodLocDataSource,
@@ -49,28 +64,28 @@
                     endlessScroll: false,
                     template: kendo.template($("#prodDetLocTemplate").html()),
                     click: function (e) {
-                    app.viewModels.prodDetViewModel.set("selectedRow", e.dataItem);                        
-                    if (!e.button)
-                        return;
-                    try {
-                        var button = e.button.element[0];
-                        if (button.name == 'addToCart') {
-                            var form = e.item.find('form');
-                            var input = e.item.find('input');
-                            //analizing "enabledBackOrders" parameter
-                            var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
-                            if (enabledBackOrders)
-                                $(input).removeAttr('max'); //removing max attribute which initially have the AFS
-                            var validator = $(form).kendoValidator({
-                                validateOnBlur: false
-                            }).data('kendoValidator');
-                            if (!validator.validateInput($(input)))
-                                return;
-                            var cartQty = parseInt(input.val());
-                            app.viewModels.prodDetViewModel.addLineToCart(cartQty);
-                        }
-                    } catch (e) { console.log('Error: ', e); }
-                }
+                        app.viewModels.prodDetViewModel.set("selectedRow", e.dataItem);
+                        if (!e.button)
+                            return;
+                        try {
+                            var button = e.button.element[0];
+                            if (button.name == 'addToCart') {
+                                var form = e.item.find('form');
+                                var input = e.item.find('input');
+                                //analizing "enabledBackOrders" parameter
+                                var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
+                                if (enabledBackOrders)
+                                    $(input).removeAttr('max'); //removing max attribute which initially have the AFS
+                                var validator = $(form).kendoValidator({
+                                    validateOnBlur: false
+                                }).data('kendoValidator');
+                                if (!validator.validateInput($(input)))
+                                    return;
+                                var cartQty = parseInt(input.val());
+                                app.viewModels.prodDetViewModel.addLineToCart(cartQty);
+                            }
+                        } catch (e) { console.log('Error: ', e); }
+                    }
                 });
             }
             catch (ex) {
@@ -170,9 +185,6 @@
             catch (ex) {
                 createDataSourceErrorFn({ errorObject: ex });
             }
-        },
-        xxonHide() {
-            app.clearData(prodDetViewModel);
         },
     });
 
