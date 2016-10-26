@@ -53,14 +53,53 @@
                     appendOnRefresh: false,
                     autoBind: false,
                     endlessScroll: false,
-                    template: kendo.template($("#prodDetLocTemplate").html())
+                    template: kendo.template($("#prodDetLocTemplate").html()),
+                    click: function (e) {
+                    app.viewModels.prodDetViewModel.set("selectedRow", e.dataItem);                        
+                    if (!e.button)
+                        return;
+                    try {
+                        var button = e.button.element[0];
+                        if (button.name == 'addToCart') {
+                            var form = e.item.find('form');
+                            var input = e.item.find('input');
+                            //analizing "enabledBackOrders" parameter
+                            var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
+                            if (enabledBackOrders)
+                                $(input).removeAttr('max'); //removing max attribute which initially have the AFS
+                            var validator = $(form).kendoValidator({
+                                validateOnBlur: false
+                            }).data('kendoValidator');
+                            if (!validator.validateInput($(input)))
+                                return;
+                            var cartQty = parseInt(input.val());
+                            app.viewModels.prodDetViewModel.addLineToCart(cartQty);
+                        }
+                    } catch (e) { console.log('Error: ', e); }
+                }
                 });
             }
             catch (ex) {
                 console.log("Error in initproductDetView: " + ex);
             }
         },
+        addLineToCart: function (qty) {
+            lineAdded = function () {
+                app.showMessage('Product Added to the Cart');
+            };
+            eOrderobj = new EOrderClass();
+            eOrderobj.setCustId(localStorage.getItem('defaultCustomer'));
+            var eoline = {
+                "ProdRecno": app.viewModels.prodDetViewModel.jsdoDataSource.prodrecno,
+                "OrderQty": qty,
+                "LineNo": 1,
+                "LocId": app.viewModels.prodDetViewModel.selectedRow.Loc_Id
+            }
+            eOrderobj.addLine(eoline);
+            addLineToShoppingCart(eOrderobj.getEOrder(), lineAdded);
+        },
         createProdLocDataSource: function () {
+            var eLoc = locationModel();
             this.prodLocDataSource = {
                 schema: {
                     model: eLoc,
@@ -78,55 +117,20 @@
         createJSDODataSource: function () {
             try {
                 // create JSDO
-                var eProduct = kendo.data.Model.define({
-                    id: "id", // the identifier is the "id" field (declared below)
-                    fields: {
-                        Prod_Id: {
-                            type: "string", // the field is a string
-                            validation: { // validation rules
-                                required: true // the field is required
-                            },
-                            from: "[\"Product-Id\"]",
-                            defaultValue: "<empty>" // default field value
-
-                        },
-                        Prod_Recno: {
-                            type: "string", // the field is a string
-                            validation: { // validation rules
-                                required: true // the field is required
-                            },
-                            from: "[\"Prod-RecNo\"]",
-                            defaultValue: "<empty>" // default field value
-
-                        }
-                    }
-                });
+                var eProduct = productModel();
                 //configuring JSDO Settings
                 jsdoSettings.resourceName = 'dsProd';
                 jsdoSettings.tableName = 'eProduct';
                 this.jsdoModel = new progress.data.JSDO({
                     name: jsdoSettings.resourceName,
-                    autoFill: false, events: {
-                        'afterFill': [{
-                            scope: this,
-                            fn: function (jsdo, success, request) {
-                                // afterFill event handler statements ...
-                            }
-                        }],
-                        'beforeFill': [{
-                            scope: this,
-                            fn: function (jsdo, success, request) {
-                                // beforeFill event handler statements ...
-                            }
-                        }]
-                    }
+                    autoFill: false,
                 });
                 this.jsdoDataSource = {
                     prodrecno: null,
                     schema: {
                         model: eProduct
                     },
-                    custid: "masroo",
+                    custid: localStorage.getItem('defaultCustomer') || false,
                     filter: function () {
                         var f = {};
                         if (this.prodrecno) {

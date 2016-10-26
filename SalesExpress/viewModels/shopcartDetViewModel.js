@@ -39,7 +39,7 @@
                     endlessScroll: false,
                     template: kendo.template($("#shopcartLineTemplate").html()),
                     click: function (e) {
-                        app.viewModels.shopcartDetViewModel.set("selectedRow", e.dataItem);                        
+                        app.viewModels.shopcartDetViewModel.set("selectedRow", e.dataItem);
                         if (!e.button)
                             return;
                         try {
@@ -122,45 +122,22 @@
             }
         },
         updateLine: function (orderQty) {
-            var updatejsdoModel = new progress.data.JSDO({
-                name: jsdoSettings.resourceName,
-                autoFill: false,
-            });
-            var updateLineData = {
-                "dsOrder": {
-                    "eOrder": [
-                        {
-                            "CustId": "masroo",
-                            "eOrderLine": [
-                                {
-                                    "LocId": app.viewModels.shopcartDetViewModel.selectedRow.LocId,
-                                    "ProdRecno": app.viewModels.shopcartDetViewModel.selectedRow.ProdRecno,
-                                    "OrderQty": orderQty,
-                                    "LineNo": app.viewModels.shopcartDetViewModel.selectedRow.LineNo,
-                                    "Checksum": app.viewModels.shopcartDetViewModel.selectedRow.Checksum,
-                                    "Rowid": app.viewModels.shopcartDetViewModel.selectedRow.Rowid
-                                }
-                            ]
-                        }
-                    ]
-                }
-            };
-            var promise = updatejsdoModel.invoke('AddOrderLine', updateLineData);
-            promise.done(function (session, result, details) {
-                if (details.success == true) {
-                    var errors = false;
-                    try {
-                        errors = app.getErrors(details.response.dsOrder.dsOrder.restResult);
-                    } catch (e) { }
-                    if (errors)
-                        return;
-                    app.viewModels.shopcartDetViewModel.forceLoad = true;
-                    app.viewModels.shopcartDetViewModel.onBeforeShow();
-                }
-            });
-            promise.fail(function () {
-                app.showError('Failed to update the shopping cart');
-            });
+            successUpd = function () {
+                app.viewModels.shopcartDetViewModel.forceLoad = true;
+                app.viewModels.shopcartDetViewModel.onBeforeShow();
+            }
+            eOrderobj = new EOrderClass();
+            eOrderobj.setCustId(localStorage.getItem('defaultCustomer'));
+            var eoline = {
+                "LocId": app.viewModels.shopcartDetViewModel.selectedRow.LocId,
+                "ProdRecno": app.viewModels.shopcartDetViewModel.selectedRow.ProdRecno,
+                "OrderQty": orderQty,
+                "LineNo": app.viewModels.shopcartDetViewModel.selectedRow.LineNo,
+                "Checksum": app.viewModels.shopcartDetViewModel.selectedRow.Checksum,
+                "Rowid": app.viewModels.shopcartDetViewModel.selectedRow.Rowid
+            }
+            eOrderobj.addLine(eoline);
+            addLineToShoppingCart(eOrderobj.getEOrder(), successUpd);
         },
     });
     parent.shopcartDetViewModel = shopcartDetViewModel;
