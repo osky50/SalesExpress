@@ -116,7 +116,6 @@
     <Content Include="views\customerDetView.html" />
     <Content Include="views\customerDetMapView.html" />
     <Content Include="views\customerListView.html" />
-    <Content Include="views\HtmlPage1.html" />
     <Content Include="views\shopcartDetView.html" />
     <Content Include="views\orderDetView.html" />
     <Content Include="views\prodDetView.html" />
