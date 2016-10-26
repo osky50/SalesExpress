@@ -3,7 +3,7 @@
         prodDetDataSource: undefined,
         prodDetReviewsDataSource: undefined,
         jsdoReviewsModel: undefined,
-        selectedRow: {},
+        ratingFilter: "0",
         origRow: {},
         resourceName: 'Product Reviews',
         onBeforeShow: function () {
@@ -11,6 +11,7 @@
             if (prodDetView === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.prodDetReviewsViewModel.onInit(this);
             } else {
+                app.viewModels.prodDetReviewsViewModel.ratingFilter = '0'; //all reviews
                 prodDetView.dataSource.read();
             }
             // Set list title to resource name
@@ -31,6 +32,30 @@
                     autoBind: false,
                     endlessScroll: false,
                     template: kendo.template($("#prodDetTemplate").html()),
+                    click: function (e) {
+                        if (!e.button)
+                            return;
+                        try {
+                            debugger;                            
+                            var button = e.button.element[0];
+                            if ($(button).hasClass('link-active'))
+                                return;
+                            if (button.name == '0-stars-reviews-link' ||
+                                button.name == '5-stars-reviews-link' ||
+                                button.name == '4-stars-reviews-link' ||
+                                button.name == '3-stars-reviews-link' ||
+                                button.name == '2-stars-reviews-link' ||
+                                button.name == '1-stars-reviews-link') {
+                                app.viewModels.prodDetReviewsViewModel.ratingFilter =
+                                    button.name.replace('-stars-reviews-link', '');
+                                $("#prodDetReviewsView").data("kendoMobileListView").dataSource.read();
+                                //changing style for curen filter
+                                $('.rating-filter-container .link-active').addClass('link');
+                                $('.rating-filter-container .link-active').removeClass('link-active');
+                                $(button).addClass('link-active');
+                            }
+                        } catch (e) { }
+                    },
                     dataBound: function (e) {
                         $('.rateit').each(function (index, element) {
                             var ratingValue = parseFloat(element.getAttribute('rating-value'));
@@ -99,8 +124,8 @@
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
                             var promise = app.viewModels.prodDetReviewsViewModel.jsdoReviewsModel.invoke('ReadProdReview', {
-                                ProdRecno: app.viewModels.prodListViewModel.selectedRow.Prod_Recno,
-                                Rating: "0"
+                                ProdRecno: app.viewModels.prodDetViewModel.selectedRow.Prod_Recno,
+                                Rating: app.viewModels.prodDetReviewsViewModel.ratingFilter
                             });
                             promise.done(function (session, result, details) {
                                 var errors = false;
@@ -127,24 +152,18 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
-        graphReviewsSummary: function (dsProdReview) {
-            var oneStarsQty = 0;
-            var twoStarsQty = 0;
-            var threeStarsQty = 0;
-            var fourStarsQty = 0;
-            var fiveStarsQty = 0;
+        graphReviewsSummary: function () {
             try {
                 /*this hook is used to make clckable y axis*/
                 $.jqplot.postDrawHooks.push(function () {
                     createFiltersLinks('jqplot-yaxis-tick', ' star', '');
                     $.jqplot.postDrawHooks = [];
                 });
-
-                oneStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview1;
-                twoStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview2
-                threeStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview3
-                fourStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview4
-                fiveStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview5
+                var oneStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview1;
+                var twoStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview2
+                var threeStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview3
+                var fourStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview4
+                var fiveStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview5
                 // For horizontal bar charts, x an y values must will be "flipped"
                 // from their vertical bar counterpart.
                 $("#graph").html('');

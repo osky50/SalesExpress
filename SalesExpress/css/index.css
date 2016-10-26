@@ -219,19 +219,15 @@ label {
     width: 100%;
 }
 
-.link, .link-off {
+.link, .link-active {
     background: none !important;
     border: none !important;
     padding: 0 !important;
     font-size: smaller !important;
     margin: 0 !important;
-}
-
-.link {
     color: #005580 !important;
+    font-weight: normal !important;
 }
-
-.link-off {
+.link-active {
     font-weight: bold !important;
-    color: #4c5356;
 }
