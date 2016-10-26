@@ -19,6 +19,10 @@
                 app.changeTitle(app.viewModels.prodDetViewModel.resourceName);
             }
         },
+        onAfterShow: function () {
+            debugger;
+            setTimeout(app.viewModels.prodDetViewModel.graphReviewsSummary(), 500);
+        },
         onInit: function (e) {
             try {
                 // Create Data Source
@@ -53,28 +57,28 @@
                     endlessScroll: false,
                     template: kendo.template($("#prodDetLocTemplate").html()),
                     click: function (e) {
-                        app.viewModels.prodDetViewModel.set("selectedRow", e.dataItem);
-                        if (!e.button)
-                            return;
-                        try {
-                            var button = e.button.element[0];
-                            if (button.name == 'addToCart') {
-                                var form = e.item.find('form');
-                                var input = e.item.find('input');
-                                //analizing "enabledBackOrders" parameter
-                                var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
-                                if (enabledBackOrders)
-                                    $(input).removeAttr('max'); //removing max attribute which initially have the AFS
-                                var validator = $(form).kendoValidator({
-                                    validateOnBlur: false
-                                }).data('kendoValidator');
-                                if (!validator.validateInput($(input)))
-                                    return;
-                                var cartQty = parseInt(input.val());
-                                app.viewModels.prodDetViewModel.addLineToCart(cartQty);
-                            }
-                        } catch (e) { console.log('Error: ', e); }
-                    }
+                    app.viewModels.prodDetViewModel.set("selectedRow", e.dataItem);                        
+                    if (!e.button)
+                        return;
+                    try {
+                        var button = e.button.element[0];
+                        if (button.name == 'addToCart') {
+                            var form = e.item.find('form');
+                            var input = e.item.find('input');
+                            //analizing "enabledBackOrders" parameter
+                            var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
+                            if (enabledBackOrders)
+                                $(input).removeAttr('max'); //removing max attribute which initially have the AFS
+                            var validator = $(form).kendoValidator({
+                                validateOnBlur: false
+                            }).data('kendoValidator');
+                            if (!validator.validateInput($(input)))
+                                return;
+                            var cartQty = parseInt(input.val());
+                            app.viewModels.prodDetViewModel.addLineToCart(cartQty);
+                        }
+                    } catch (e) { console.log('Error: ', e); }
+                }
                 });
             }
             catch (ex) {
@@ -175,6 +179,58 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
+        graphReviewsSummary: function (dsProdReview) {
+            var oneStarsQty = 0;
+            var twoStarsQty = 0;
+            var threeStarsQty = 0;
+            var fourStarsQty = 0;
+            var fiveStarsQty = 0;
+            try {
+                /*this hook is used to make clckable y axis*/
+                $.jqplot.postDrawHooks.push(function () {
+                    createFiltersLinks('jqplot-yaxis-tick', ' star', '');
+                    $.jqplot.postDrawHooks = [];
+                });
+
+                oneStarsQty = 4; /*dsProdReview.dsProdReview.ProdReview[0]['TotalReview1'];*/
+                twoStarsQty = 7/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview2'];*/
+                threeStarsQty = 16/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview3'];*/
+                fourStarsQty = 11/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview4'];*/
+                fiveStarsQty = 6/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview5'];*/
+                // For horizontal bar charts, x an y values must will be "flipped"
+                // from their vertical bar counterpart.
+                $("#graph").html('');
+                var plot2 = $.jqplot('graph', [
+                    [[oneStarsQty, '1 star'], [twoStarsQty, '2 star'], [threeStarsQty, '3 star'], [fourStarsQty, '4 star'], [fiveStarsQty, '5 star']]],
+                    {
+                        animate: true,
+                        animateReplot: true,
+                        seriesDefaults: {
+                            renderer: $.jqplot.BarRenderer,
+                            // Show point labels to the right ('e'ast) of each bar.
+                            // edgeTolerance of -15 allows labels flow outside the grid
+                            // up to 15 pixels.  If they flow out more than that, they
+                            // will be hidden.
+                            pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
+                            // Rotate the bar shadow as if bar is lit from top right.
+                            shadowAngle: 135,
+                            // Here's where we tell the chart it is oriented horizontally.
+                            rendererOptions: {
+                                barDirection: 'horizontal',
+                                barWidth: 10
+                            }
+                        },
+                        axes: {
+                            yaxis: {
+                                renderer: $.jqplot.CategoryAxisRenderer
+                            }
+                        }
+                    });
+                return true;
+            } catch (e) {
+                return false;
+            };
+        }
     });
 
     parent.prodDetViewModel = prodDetViewModel;

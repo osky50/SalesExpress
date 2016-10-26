@@ -1,0 +1,85 @@
+<div data-role="view" data-title="Proudct Details"
+     data-model="app.viewModels.prodDetViewModel"
+     data-init="app.viewModels.prodDetViewModel.onInit"
+     data-show="app.viewModels.prodDetViewModel.onBeforeShow"
+     data-after-show="app.viewModels.prodDetViewModel.onAfterShow"
+     data-hide="app.viewModels.prodDetViewModel.onHide"
+     data-layout="back-layout"
+     data-transition="fade">
+
+    <div>
+        <ul id="prodDetailView"
+            data-role="listview" data-style="inset"></ul>
+        <div class="float-left" style="width:100%">
+            <h4>Images</h4>
+            <ul id="prodDetailImageView" data-style="inset" data-role="listview"></ul>
+        </div>
+        <div>
+            <h4>Locations</h4>
+            <ul id="prodDetailLocView"
+                data-role="listview" data-style="inset"></ul>
+        </div>
+    </div>
+
+    <!--<script type="text/x-kendo-template" id="locHeader">
+        <div><b>Location Id</b></div>
+        <div><b>AFS</b></div>
+        <div><b>ON_PO</b></div>
+        <div><b>Quantity</b></div>
+    </script>-->
+
+    <script type="text/x-kendo-template" id="prodDetailTemplate">
+        <div>
+            <label>Description:</label>
+            <div class="inline">#: description#</div>
+        </div>
+        <div>
+            <label>Price:</label>
+            <div class="title">#: Price#</div>
+        </div>
+
+        <div>
+            <label>Synonym:</label>
+            <div class="inline">#: Synonym#</div>
+        </div>
+        <div>
+            <label>AFS:</label>
+            <div class="title">#: Afs#</div>
+        </div>
+        <div>
+            <label>Report Synonym:</label>
+            <div class="inline">#: ReportSyn#</div>
+        </div>
+        <div>
+            <label>Bar Synonym:</label>
+            <div class="inline">#: BarSyn#</div>
+        </div>
+        <div>
+            <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
+            <div class="rateit-description">#: AvgRating # out of 5 stars</div>
+            <div class="rateit-description">#: TotalReview # customers reviews</div>
+        </div>
+    </script>
+
+    <script type="text/x-kendo-template" id="prodDetImageTemplate">
+        <li>
+            <a href="#: FileUrl #" class="swipebox" title="#: FileDesc #">
+                <img src="#: FileUrl #" alt="#: FileDesc #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'">
+            </a>
+        </li>
+    </script>
+    <script type="text/x-kendo-template" id="prodDetLocTemplate">
+        <form>
+            <div><b>Location: </b>#: Loc_Id #</div>
+            <div><b>AFS: </b>#: AFS #</div>
+            <div class=""><b>ON_PO: </b>#: ONPO #</div>
+            <div class="">
+                <label>Quantity:</label>
+                <input type="number" min="1" max="#: AFS #" class="relative width-90" name="Order Quantity" value="#: CartQty #" />
+            </div>
+            <div>
+                <button type="button" data-role="button" name="addToCart">Add To Cart</button>
+            </div>
+        </form>
+    </script>
+</div>

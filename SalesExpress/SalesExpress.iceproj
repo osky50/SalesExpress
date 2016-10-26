@@ -94,14 +94,19 @@
     <Content Include="lib\progress.all.min.js" />
     <Content Include="README.txt" />
     <Content Include="scripts\app.js" />
-    <Content Include="scripts\jplot\jqplot.barRenderer.js" />
-    <Content Include="scripts\jplot\jqplot.categoryAxisRenderer.min.js" />
-    <Content Include="scripts\jplot\jqplot.cursor.min.js" />
-    <Content Include="scripts\jplot\jqplot.donutRenderer.min.js" />
-    <Content Include="scripts\jplot\jqplot.highlighter.min.js" />
-    <Content Include="scripts\jplot\jqplot.pieRenderer.min.js" />
+    <Content Include="scripts\jplot\jqplot.barRenderer.min.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="scripts\jplot\jqplot.categoryAxisRenderer.min.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="scripts\jplot\jqplot.highlighter.min.js">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="scripts\jplot\jqplot.pointLabels.min.js" />
-    <Content Include="scripts\jplot\jquery.jqplot.js" />
+    <Content Include="scripts\jplot\jquery.jqplot.min.js">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="scripts\swipebox\ios-orientationchange-fix.js" />
     <Content Include="scripts\jquery.rateit.min.js" />
     <Content Include="scripts\swipebox\jquery.swipebox.min.js" />
@@ -111,6 +116,7 @@
     <Content Include="viewModels\customerDetViewModel.js" />
     <Content Include="viewModels\customerDetMapViewModel.js" />
     <Content Include="viewModels\customerListViewModel.js" />
+    <Content Include="viewModels\prodDetReviewsViewModel.js" />
     <Content Include="viewModels\shopcartDetViewModel.js" />
     <Content Include="viewModels\orderDetViewModel.js" />
     <Content Include="viewModels\prodDetViewModel.js">
@@ -125,6 +131,7 @@
     <Content Include="views\customerDetView.html" />
     <Content Include="views\customerDetMapView.html" />
     <Content Include="views\customerListView.html" />
+    <Content Include="views\prodDetReviewsView.html" />
     <Content Include="views\shopcartDetView.html" />
     <Content Include="views\orderDetView.html" />
     <Content Include="views\prodDetView.html" />
