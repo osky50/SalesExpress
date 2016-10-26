@@ -52,14 +52,8 @@
                         app.viewModels.prodListViewModel.set("selectedRow", e.dataItem);
                     },
                     dataBound: function (e) {
-                        $('.rateit').each(function (index, element) {
-                            var ratingValue = parseFloat(element.getAttribute('rating-value'));
-                            var ratingStep = parseFloat(element.getAttribute('step'));
-                            var elementObj = $(element);
-                            elementObj.rateit();
-                            elementObj.rateit('value', ratingValue);
-                            elementObj.rateit('step', ratingStep);
-                        });
+                        debugger;
+                        scriptsUtils.createRatingsComponent('prod-list-rateit');
                     }
                 });
             }
@@ -79,7 +73,7 @@
                     autoFill: false, events: {
                         'afterFill': [{
                             scope: this,
-                            fn: function (jsdo, success, request) {                               
+                            fn: function (jsdo, success, request) {
                             }
                         }],
                         'beforeFill': [{

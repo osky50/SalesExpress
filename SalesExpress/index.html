@@ -44,6 +44,7 @@
     <script type="text/javascript" src="scripts/jsdoSettings.js"></script>
     <script type="text/javascript" src="scripts/jsdoUtils.js"></script>
     <script type="text/javascript" src="scripts/modelUtils.js"></script>
+    <script type="text/javascript" src="scripts/scriptsUtils.js"></script>
     <script type="text/javascript" src="scripts/jquery.rateit.min.js"></script>
     <!--swipebox plugin-->
     <script type="text/javascript" src="scripts/swipebox/jquery.swipebox.min.js"></script>
@@ -106,7 +107,8 @@
         </div>
 
         <!-- Application views will be rendered here -->
-        <div data-role="modalview" id="create_review" style="display: none" data-width="80%" data-close="app.onCloseModal"
+        <div data-role="modalview" id="create_review" style="display: none" data-width="80%" data-height="290px"
+             data-close="app.onCloseModal" data-open="app.openReview"
              data-closeconfirmation="Are you sure you want to close this screen?">
             <div data-role="header">
                 <div data-role="navbar">
@@ -117,12 +119,17 @@
             <form>
                 <ul data-role="listview" data-style="inset">
                     <li>
-                        <label>Recommended:</label>
-                        <input type="checkbox" name="recommended" />
+                        <div rating-value="1" class="create-review-rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
+                    </li>
+                    <li>
+                        <label style="width:210px">
+                            Recommended:
+                            <input type="checkbox" data-role="switch" data-checked="false" name="recommended" />
+                        </label>
                     </li>
                     <li>
                         <label>Comments:</label>
-                        <input type="text" required name="comments" style="width: 100%;" />
+                        <textarea required name="comments" style="width: 100%;"></textarea>
                     </li>
                 </ul>
                 <a data-click="app.addReview" data-role="button" class="float-right" style="margin:0 8px 8px">Add</a>

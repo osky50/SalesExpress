@@ -172,6 +172,10 @@
     app.closeReview = function () {
         app.viewModels.prodDetViewModel.closeReview();
     };
+    app.openReview = function () {
+        debugger;
+        app.viewModels.prodDetViewModel.openReview();
+    };
     app.onCloseModal = function (e) {
         try {
             var modal = e.sender.element[0];

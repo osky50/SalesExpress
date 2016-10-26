@@ -57,14 +57,7 @@
                         } catch (e) { }
                     },
                     dataBound: function (e) {
-                        $('.rateit').each(function (index, element) {
-                            var ratingValue = parseFloat(element.getAttribute('rating-value'));
-                            var ratingStep = parseFloat(element.getAttribute('step'));
-                            var elementObj = $(element);
-                            elementObj.rateit();
-                            elementObj.rateit('value', ratingValue);
-                            elementObj.rateit('step', ratingStep);
-                        });
+                        scriptsUtils.createRatingsComponent('prod-det-reviews-rateit');                        
                     }
                 });
                 $("#prodDetReviewsView").kendoMobileListView({
@@ -75,14 +68,7 @@
                     endlessScroll: false,
                     template: kendo.template($("#prodDetReviewTemplate").html()),
                     dataBound: function (e) {
-                        $('.rateit').each(function (index, element) {
-                            var ratingValue = parseFloat(element.getAttribute('rating-value'));
-                            var ratingStep = parseFloat(element.getAttribute('step'));
-                            var elementObj = $(element);
-                            elementObj.rateit();
-                            elementObj.rateit('value', ratingValue);
-                            elementObj.rateit('step', ratingStep);
-                        });
+                        scriptsUtils.createRatingsComponent('prod-det-reviews-rateit');
                     }
                 });
             }

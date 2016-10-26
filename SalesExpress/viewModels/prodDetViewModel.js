@@ -45,14 +45,7 @@
                         } catch (e) { }
                     },
                     dataBound: function (e) {
-                        $('.rateit').each(function (index, element) {
-                            var ratingValue = parseFloat(element.getAttribute('rating-value'));
-                            var ratingStep = parseFloat(element.getAttribute('step'));
-                            var elementObj = $(element);
-                            elementObj.rateit();
-                            elementObj.rateit('value', ratingValue);
-                            elementObj.rateit('step', ratingStep);
-                        });
+                        scriptsUtils.createRatingsComponent('prod-det-rateit');
                     }
                 });
                 $("#prodDetailLocView").kendoMobileListView({
@@ -186,6 +179,10 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
+        openReview: function () {
+            debugger;
+            scriptsUtils.createRatingsComponent('create-review-rateit');
+        },
         addReview: function (e) {
             debugger;
             try {
@@ -193,7 +190,7 @@
                 var validator = $(form).kendoValidator({
                     validateOnBlur: false
                 }).data('kendoValidator');
-                if (!validator.validateInput($(input)) || !validator.validateInput($(textarea)))
+                if (!validator.validate())
                     return;
             } catch (e) {
 
