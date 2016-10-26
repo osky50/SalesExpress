@@ -33,6 +33,17 @@
                     autoBind: false,
                     endlessScroll: false,
                     template: kendo.template($("#prodDetailTemplate").html()),
+                    click: function (e) {
+                        app.viewModels.prodDetViewModel.set("selectedRow", e.dataItem);
+                        if (!e.button)
+                            return;
+                        try {
+                            var button = e.button.element[0];
+                            if (button.name == 'reviews-link') {
+                                app.mobileApp.navigate('views/prodDetReviewsView.html');
+                            }
+                        } catch (e) {}
+                    },
                     dataBound: function (e) {
                         $('.rateit').each(function (index, element) {
                             var ratingValue = parseFloat(element.getAttribute('rating-value'));

@@ -55,14 +55,18 @@
     <Content Include="fonts\FontAwesome.otf">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="img\recommended_false.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="img\recommended_true.png">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="img\cordova.png" />
     <Content Include="img\facebook.png" />
     <Content Include="img\icons.png" />
     <Content Include="img\icons.svg" />
     <Content Include="img\loader.gif" />
     <Content Include="img\logo.png" />
-    <Content Include="img\Progress_RGB.png" />
-    <Content Include="img\Progress_spark100px.png" />
     <Content Include="img\small_logo.png" />
     <Content Include="img\star-black32.png">
       <SubType>Content</SubType>

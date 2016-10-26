@@ -1,42 +1,36 @@
 (function (parent) {
-    var prodDetViewModel = kendo.observable({
-        jsdoDataSource: undefined,
-        jsdoModel: undefined,
+    var prodDetReviewsViewModel = kendo.observable({
+        prodDetDataSource: undefined,
+        prodDetReviewsDataSource: undefined,
+        jsdoReviewsModel: undefined,
         selectedRow: {},
-        prodLocList: [],
         origRow: {},
-        resourceName: 'Product Details',
+        resourceName: 'Product Reviews',
         onBeforeShow: function () {
-            var prodDetListView = $("#prodDetailView").data("kendoMobileListView");
-            if (prodDetListView === undefined) { //extra protection in case onInit have not been fired yet
-                app.viewModels.prodDetViewModel.onInit(this);
+            var prodDetView = $("#prodDetView").data("kendoMobileListView");
+            if (prodDetView === undefined) { //extra protection in case onInit have not been fired yet
+                app.viewModels.prodDetReviewsViewModel.onInit(this);
             } else {
-                prodDetListView.dataSource.read();
+                prodDetView.dataSource.read();
             }
-
             // Set list title to resource name
-            if (app.viewModels.prodDetViewModel.resourceName !== undefined) {
-                app.changeTitle(app.viewModels.prodDetViewModel.resourceName);
+            if (app.viewModels.prodDetReviewsViewModel.resourceName !== undefined) {
+                app.changeTitle(app.viewModels.prodDetReviewsViewModel.resourceName);
             }
-        },
-        onAfterShow: function () {
-            debugger;
-            setTimeout(app.viewModels.prodDetViewModel.graphReviewsSummary(), 500);
         },
         onInit: function (e) {
             try {
                 // Create Data Source
-                app.viewModels.prodDetViewModel.createJSDODataSource();
-                app.viewModels.prodDetViewModel.createProdLocDataSource();
-                app.views.productDetView = e.view;
-                $("#prodDetailView").kendoMobileListView({
-                    dataSource: app.viewModels.prodDetViewModel.jsdoDataSource,
+                app.viewModels.prodDetReviewsViewModel.createProdDetDataSource();
+                app.viewModels.prodDetReviewsViewModel.createProdDetReviewsDataSource();
+                $("#prodDetView").kendoMobileListView({
+                    dataSource: app.viewModels.prodDetReviewsViewModel.prodDetDataSource,
                     pullToRefresh: true,
                     style: "display: inline",
                     appendOnRefresh: false,
                     autoBind: false,
                     endlessScroll: false,
-                    template: kendo.template($("#prodDetailTemplate").html()),
+                    template: kendo.template($("#prodDetTemplate").html()),
                     dataBound: function (e) {
                         $('.rateit').each(function (index, element) {
                             var ratingValue = parseFloat(element.getAttribute('rating-value'));
@@ -48,121 +42,76 @@
                         });
                     }
                 });
-                $("#prodDetailLocView").kendoMobileListView({
-                    dataSource: app.viewModels.prodDetViewModel.prodLocDataSource,
-                    pullToRefresh: false,
+                $("#prodDetReviewsView").kendoMobileListView({
+                    dataSource: app.viewModels.prodDetReviewsViewModel.prodDetReviewsDataSource,
                     style: "display: inline",
                     appendOnRefresh: false,
                     autoBind: false,
                     endlessScroll: false,
-                    template: kendo.template($("#prodDetLocTemplate").html()),
-                    click: function (e) {
-                    app.viewModels.prodDetViewModel.set("selectedRow", e.dataItem);                        
-                    if (!e.button)
-                        return;
-                    try {
-                        var button = e.button.element[0];
-                        if (button.name == 'addToCart') {
-                            var form = e.item.find('form');
-                            var input = e.item.find('input');
-                            //analizing "enabledBackOrders" parameter
-                            var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
-                            if (enabledBackOrders)
-                                $(input).removeAttr('max'); //removing max attribute which initially have the AFS
-                            var validator = $(form).kendoValidator({
-                                validateOnBlur: false
-                            }).data('kendoValidator');
-                            if (!validator.validateInput($(input)))
-                                return;
-                            var cartQty = parseInt(input.val());
-                            app.viewModels.prodDetViewModel.addLineToCart(cartQty);
-                        }
-                    } catch (e) { console.log('Error: ', e); }
-                }
+                    template: kendo.template($("#prodDetReviewTemplate").html()),
+                    dataBound: function (e) {
+                        $('.rateit').each(function (index, element) {
+                            var ratingValue = parseFloat(element.getAttribute('rating-value'));
+                            var ratingStep = parseFloat(element.getAttribute('step'));
+                            var elementObj = $(element);
+                            elementObj.rateit();
+                            elementObj.rateit('value', ratingValue);
+                            elementObj.rateit('step', ratingStep);
+                        });
+                    }
                 });
             }
             catch (ex) {
-                console.log("Error in initproductDetView: " + ex);
+                console.log("Error in init view: " + ex);
             }
         },
-        addLineToCart: function (qty) {
-            lineAdded = function () {
-                app.showMessage('Product Added to the Cart');
-            };
-            eOrderobj = new EOrderClass();
-            eOrderobj.setCustId(localStorage.getItem('defaultCustomer'));
-            var eoline = {
-                "ProdRecno": app.viewModels.prodDetViewModel.jsdoDataSource.prodrecno,
-                "OrderQty": qty,
-                "LineNo": 1,
-                "LocId": app.viewModels.prodDetViewModel.selectedRow.Loc_Id
-            }
-            eOrderobj.addLine(eoline);
-            addLineToShoppingCart(eOrderobj.getEOrder(), lineAdded);
-        },
-        createProdLocDataSource: function () {
-            var eLoc = locationModel();
-            this.prodLocDataSource = {
-                schema: {
-                    model: eLoc,
-                },
-                transport: {
-                    read: function (options) {
-                        options.success(app.viewModels.prodDetViewModel.prodLocList);
-                    }
-                },
-                error: function (e) {
-                    console.log('Error: ', e);
-                }
-            };
-        },
-        createJSDODataSource: function () {
+        createProdDetDataSource: function () {
             try {
-                // create JSDO
-                var eProduct = productModel();
-                //configuring JSDO Settings
-                jsdoSettings.resourceName = 'dsProd';
-                jsdoSettings.tableName = 'eProduct';
-                this.jsdoModel = new progress.data.JSDO({
-                    name: jsdoSettings.resourceName,
-                    autoFill: false,
-                });
-                this.jsdoDataSource = {
-                    prodrecno: null,
-                    schema: {
-                        model: eProduct
-                    },
-                    custid: localStorage.getItem('defaultCustomer') || false,
-                    filter: function () {
-                        var f = {};
-                        if (this.prodrecno) {
-                            f.ProdRecno = this.prodrecno;
-                        }
-                        if (this.custid) {
-                            f.CustId = this.custid;
-                        }
-                        return f;
-                    },
+                this.prodDetDataSource = {
                     transport: {
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
-                            var me = app.viewModels.prodDetViewModel;
-                            me.jsdoDataSource.prodrecno = app.viewModels.prodListViewModel.selectedRow.Prod_Recno;
-                            var promise = me.jsdoModel.invoke('ProductDetail', me.jsdoDataSource.filter());
+                            options.success([app.viewModels.prodDetViewModel.selectedRow]);
+                            setTimeout(app.viewModels.prodDetReviewsViewModel.graphReviewsSummary(), 500);
+                            $("#prodDetReviewsView").data("kendoMobileListView").dataSource.read();
+                        }
+                    },
+                    error: function (e) {
+                        console.log('Error: ', e);
+                    }
+                };
+            }
+            catch (ex) {
+                createDataSourceErrorFn({ errorObject: ex });
+            }
+        },
+        createProdDetReviewsDataSource: function () {
+            try {
+                //configuring JSDO Settings
+                jsdoSettings.resourceName = 'dsProd';
+                jsdoSettings.tableName = 'ProdReview';
+                this.jsdoReviewsModel = new progress.data.JSDO({
+                    name: jsdoSettings.resourceName,
+                    autoFill: false,
+                });
+                this.prodDetReviewsDataSource = {
+                    transport: {
+                        // when the grid tries to read data, it will call this function
+                        read: function (options) {
+                            var promise = app.viewModels.prodDetReviewsViewModel.jsdoReviewsModel.invoke('ReadProdReview', {
+                                ProdRecno: app.viewModels.prodListViewModel.selectedRow.Prod_Recno,
+                                Rating: "0"
+                            });
                             promise.done(function (session, result, details) {
-                                var currentProdList = details.response.dsProd.dsProd.eProduct;
-                                options.success(currentProdList);
-                                //rendering images list data
-                                var imagesHtml = '';
-                                var template = kendo.template($("#prodDetImageTemplate").html());
-                                details.response.dsProd.dsProd.eProductImg.forEach(function (img) {
-                                    imagesHtml += template(img); //applying template
-                                });
-                                $("#prodDetailImageView").html(imagesHtml); //display the result
-                                $('.swipebox').swipebox();
-                                //assigning location list data
-                                app.viewModels.prodDetViewModel.set("prodLocList", details.response.dsProd.dsProd.eProductLoc);
-                                $("#prodDetailLocView").data("kendoMobileListView").dataSource.read();
+                                var errors = false;
+                                try {
+                                    errors = app.getErrors(details.response.dsProdReview.dsProdReview.wsReviewResult);
+                                    if (errors)
+                                        return;
+                                    options.success(details.response.dsProdReview.dsProdReview.ProdReview[0].ProdReviewDet);
+                                } catch (e) {
+                                    options.success([]);
+                                }
                             });
                             promise.fail(function () {
                                 options.success([]);
@@ -174,7 +123,6 @@
                     }
                 };
             }
-
             catch (ex) {
                 createDataSourceErrorFn({ errorObject: ex });
             }
@@ -192,11 +140,11 @@
                     $.jqplot.postDrawHooks = [];
                 });
 
-                oneStarsQty = 4; /*dsProdReview.dsProdReview.ProdReview[0]['TotalReview1'];*/
-                twoStarsQty = 7/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview2'];*/
-                threeStarsQty = 16/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview3'];*/
-                fourStarsQty = 11/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview4'];*/
-                fiveStarsQty = 6/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview5'];*/
+                oneStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview1;
+                twoStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview2
+                threeStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview3
+                fourStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview4
+                fiveStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview5
                 // For horizontal bar charts, x an y values must will be "flipped"
                 // from their vertical bar counterpart.
                 $("#graph").html('');
@@ -233,7 +181,7 @@
         }
     });
 
-    parent.prodDetViewModel = prodDetViewModel;
+    parent.prodDetReviewsViewModel = prodDetReviewsViewModel;
 
 })(app.viewModels);
 

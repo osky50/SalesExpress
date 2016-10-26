@@ -14,7 +14,6 @@
     var bootstrap = function () {
         $(function () {
             try {
-                debugger;
                 $.jqplot.config.enablePlugins = true;
                 app.mobileApp = new kendo.mobile.Application(document.body, {
 

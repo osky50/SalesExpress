@@ -57,9 +57,10 @@
     <!-- ViewModels here -->
     <script src="viewModels/loginViewModel.js"></script>
     <script src="viewModels/prodListViewModel.js"></script>
-    <script src="viewModels/orderListViewModel.js"></script>
-    <script src="viewModels/orderDetViewModel.js"></script>
     <script src="viewModels/prodDetViewModel.js"></script>
+    <script src="viewModels/prodDetReviewsViewModel.js"></script>
+    <script src="viewModels/orderListViewModel.js"></script>
+    <script src="viewModels/orderDetViewModel.js"></script>    
     <script src="viewModels/shopcartDetViewModel.js"></script>
     <script src="viewModels/customerDetViewModel.js"></script>
     <script src="viewModels/customerDetMapViewModel.js"></script>
@@ -78,26 +79,26 @@
                 </div>
             </div>
             <div class="login-info float-right" style="display:none">
-                <div class="login-info-container" style="text-align:right">
+                <div class="login-info-container" style="text-align:right; padding-right:5px">
                     <div class="label" style="display:inline-block">
                         User:
                     </div>
                     <div class="user-info" style="margin:8px 3px; display:inline-block"></div>
-                    <div style="margin:8px 5px; display:inline-block">|</div>
-                    <a data-click="app.logout" style="margin:3px 3px; display:inline-block" data-role="button" data-icon="user">Logout</a>
+                    <div style="display:inline-block">|</div>
+                    <a data-click="app.logout" class="link" style="display:inline-block" data-role="button" data-icon="home">Logout</a>
                 </div>
-                <div class="customer-info-container" style="text-align:right">
+                <div class="customer-info-container" style="text-align:right; padding-right:5px">
                     <div class="label" style="display:inline-block">
                         Control Ent.:
                     </div>
                     <div class="control-ent-info" style="margin:8px 3px; display:inline-block"></div>
-                    <div style="margin:8px 5px; display:inline-block">|</div>
+                    <div style="display:inline-block">|</div>
                     <div class="label" style="display:inline-block">
                         Customer:
                     </div>
                     <div class="customer-info" style="margin:8px 3px; display:inline-block"></div>
                     <div style="margin:8px 5px; display:inline-block">|</div>
-                    <a data-click="app.customerDetails" style="margin:3px 3px 5px 3px; display:inline-block" data-role="button" data-icon="user">See details</a>
+                    <a data-click="app.customerDetails" class="link" style="display:inline-block" data-role="button" data-icon="home">See details</a>
                 </div>
             </div>
             <div data-role="navbar" id="navbar">

@@ -1,85 +1,64 @@
-<div data-role="view" data-title="Proudct Details"
-     data-model="app.viewModels.prodDetViewModel"
-     data-init="app.viewModels.prodDetViewModel.onInit"
-     data-show="app.viewModels.prodDetViewModel.onBeforeShow"
-     data-after-show="app.viewModels.prodDetViewModel.onAfterShow"
-     data-hide="app.viewModels.prodDetViewModel.onHide"
+<div data-role="view" data-title="Proudct Reviews"
+     data-model="app.viewModels.prodDetReviewsViewModel"
+     data-init="app.viewModels.prodDetReviewsViewModel.onInit"
+     data-show="app.viewModels.prodDetReviewsViewModel.onBeforeShow"
+     data-hide="app.viewModels.prodDetReviewsViewModel.onHide"
      data-layout="back-layout"
      data-transition="fade">
-
     <div>
-        <ul id="prodDetailView"
-            data-role="listview" data-style="inset"></ul>
-        <div class="float-left" style="width:100%">
-            <h4>Images</h4>
-            <ul id="prodDetailImageView" data-style="inset" data-role="listview"></ul>
-        </div>
-        <div>
-            <h4>Locations</h4>
-            <ul id="prodDetailLocView"
-                data-role="listview" data-style="inset"></ul>
-        </div>
+        <ul id="prodDetView" data-role="listview" data-style="inset"></ul>
+        <ul id="prodDetReviewsView" data-role="listview" data-style="inset"></ul>
     </div>
-
-    <!--<script type="text/x-kendo-template" id="locHeader">
-        <div><b>Location Id</b></div>
-        <div><b>AFS</b></div>
-        <div><b>ON_PO</b></div>
-        <div><b>Quantity</b></div>
-    </script>-->
-
-    <script type="text/x-kendo-template" id="prodDetailTemplate">
+    <script type="text/x-kendo-template" id="prodDetTemplate">
         <div>
             <label>Description:</label>
             <div class="inline">#: description#</div>
         </div>
         <div>
-            <label>Price:</label>
-            <div class="title">#: Price#</div>
-        </div>
-
-        <div>
             <label>Synonym:</label>
             <div class="inline">#: Synonym#</div>
         </div>
         <div>
-            <label>AFS:</label>
-            <div class="title">#: Afs#</div>
-        </div>
-        <div>
-            <label>Report Synonym:</label>
-            <div class="inline">#: ReportSyn#</div>
-        </div>
-        <div>
-            <label>Bar Synonym:</label>
-            <div class="inline">#: BarSyn#</div>
-        </div>
-        <div>
             <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
-            <div class="rateit-description">#: AvgRating # out of 5 stars</div>
+        </div>
+        <div style="margin-bottom:5px">
+            <div class="rateit-description float-left">#: AvgRating # out of 5 stars&nbsp;|&nbsp;</div>
             <div class="rateit-description">#: TotalReview # customers reviews</div>
         </div>
-    </script>
+        <div>
+            <label>Filter:</label>
+        </div>
+        <div style="padding-top:3px">
+            <button data-role="button" name="all-reviews-link" class="link-off float-left">All</button>
+            <div class="float-left">&nbsp;|&nbsp;</div>
+            <button data-role="button" name="5-stars-reviews-link" class="link float-left">5 stars</button>
+            <div class="float-left">&nbsp;|&nbsp;</div>
+            <button data-role="button" name="4-stars-reviews-link" class="link float-left">4 stars</button>
+            <div class="float-left">&nbsp;|&nbsp;</div>
+            <button data-role="button" name="3-stars-reviews-link" class="link float-left">3 stars</button>
+            <div class="float-left">&nbsp;|&nbsp;</div>
+            <button data-role="button" name="2-stars-reviews-link" class="link float-left">2 stars</button>
+            <div class="float-left">&nbsp;|&nbsp;</div>
+            <button data-role="button" name="1-stars-reviews-link" class="link float-left">1 stars</button>
+        </div>
 
-    <script type="text/x-kendo-template" id="prodDetImageTemplate">
-        <li>
-            <a href="#: FileUrl #" class="swipebox" title="#: FileDesc #">
-                <img src="#: FileUrl #" alt="#: FileDesc #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'">
-            </a>
-        </li>
+        <div>
+            <button data-role="button" name="create-review-link" class="link">Create you own review</button>
+        </div>
+        <div>
+            <div style="height:150px" id="graph"></div>
+        </div>
     </script>
-    <script type="text/x-kendo-template" id="prodDetLocTemplate">
+    <script type="text/x-kendo-template" id="prodDetReviewTemplate">
         <form>
-            <div><b>Location: </b>#: Loc_Id #</div>
-            <div><b>AFS: </b>#: AFS #</div>
-            <div class=""><b>ON_PO: </b>#: ONPO #</div>
-            <div class="">
-                <label>Quantity:</label>
-                <input type="number" min="1" max="#: AFS #" class="relative width-90" name="Order Quantity" value="#: CartQty #" />
-            </div>
+            <div><b>Customer Id: </b>#: Cust_ID #</div>
+            <div data-rateit-readonly="true" rating-value="#: Rating #" class="float-right rateit a" data-rateit-starwidth="16" data-rateit-starheight="16" step="1"></div>
+            <div><b>Date: </b>#: Log_date #</div>
             <div>
-                <button type="button" data-role="button" name="addToCart">Add To Cart</button>
+                <div style="margin-top:5px" class="float-left"><b>Recommended: </b></div>
+                <img height="24" src="../img/recommended_#: Recommended #.png" />
             </div>
+            <div><b>Comments: </b>#: Review_text #</div>
         </form>
     </script>
 </div>
