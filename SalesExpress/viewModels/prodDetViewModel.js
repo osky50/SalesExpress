@@ -6,12 +6,6 @@
         prodLocList: [],
         origRow: {},
         resourceName: 'Product Details',
-
-        // The order of the firing of events is as follows:
-        //   before-show
-        //   init (fires only once)
-        //   show
-
         onBeforeShow: function () {
             var prodDetListView = $("#prodDetailView").data("kendoMobileListView");
             if (prodDetListView === undefined) { //extra protection in case onInit have not been fired yet
@@ -38,7 +32,19 @@
                     appendOnRefresh: false,
                     autoBind: false,
                     endlessScroll: false,
-                    template: kendo.template($("#prodDetailTemplate").html())
+                    template: kendo.template($("#prodDetailTemplate").html()),
+                    dataBound: function (e) {
+                        $('.rateit').each(function (index, element) {
+                            var ratingValue = parseFloat(element.getAttribute('rating-value'));
+                            var ratingStep = parseFloat(element.getAttribute('step'));
+                            var elementObj = $(element);
+                            elementObj.rateit();
+                            elementObj.rateit('value', ratingValue);
+                            elementObj.rateit('step', ratingStep);
+                        });
+                        debugger;
+                        app.viewModels.prodDetViewModel.graphReviewsSummary();
+                    }
                 });
                 $("#prodDetailLocView").kendoMobileListView({
                     dataSource: app.viewModels.prodDetViewModel.prodLocDataSource,
@@ -167,9 +173,57 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
-        xxonHide() {
-            app.clearData(prodDetViewModel);
-        },
+        graphReviewsSummary: function (dsProdReview) {
+            debugger;
+            var oneStarsQty = 0;
+            var twoStarsQty = 0;
+            var threeStarsQty = 0;
+            var fourStarsQty = 0;
+            var fiveStarsQty = 0;
+            try {
+                /*this hook is used to make clckable y axis*/
+                $.jqplot.postDrawHooks.push(function () {
+                    createFiltersLinks('jqplot-yaxis-tick', ' star', '');
+                    $.jqplot.postDrawHooks = [];
+                });
+
+                oneStarsQty = 4; /*dsProdReview.dsProdReview.ProdReview[0]['TotalReview1'];*/
+                twoStarsQty = 7/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview2'];*/
+                threeStarsQty = 16/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview3'];*/
+                fourStarsQty = 11/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview4'];*/
+                fiveStarsQty = 6/*dsProdReview.dsProdReview.ProdReview[0]['TotalReview5'];*/
+                // For horizontal bar charts, x an y values must will be "flipped"
+                // from their vertical bar counterpart.
+                $("#graph").html('');
+                var plot2 = $.jqplot('graph', [
+                    [[oneStarsQty, '1 star'], [twoStarsQty, '2 star'], [threeStarsQty, '3 star'], [fourStarsQty, '4 star'], [fiveStarsQty, '5 star']]], {
+                        animate: true,
+                        seriesDefaults: {
+                            renderer: $.jqplot.BarRenderer,
+                            // Show point labels to the right ('e'ast) of each bar.
+                            // edgeTolerance of -15 allows labels flow outside the grid
+                            // up to 15 pixels.  If they flow out more than that, they
+                            // will be hidden.
+                            pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
+                            // Rotate the bar shadow as if bar is lit from top right.
+                            shadowAngle: 135,
+                            // Here's where we tell the chart it is oriented horizontally.
+                            rendererOptions: {
+                                barDirection: 'horizontal',
+                                barWidth: 10
+                            }
+                        },
+                        axes: {
+                            yaxis: {
+                                renderer: $.jqplot.CategoryAxisRenderer
+                            }
+                        }
+                    });
+                return true;
+            } catch (e) {
+                return false;
+            };
+        }
     });
 
     parent.prodDetViewModel = prodDetViewModel;

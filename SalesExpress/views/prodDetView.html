@@ -11,8 +11,7 @@
             data-role="listview" data-style="inset"></ul>
         <div class="float-left" style="width:100%">
             <h4>Images</h4>
-            <ul id="prodDetailImageView" data-style="inset" data-role="listview">
-            </ul>
+            <ul id="prodDetailImageView" data-style="inset" data-role="listview"></ul>
         </div>
         <div>
             <h4>Locations</h4>
@@ -30,31 +29,36 @@
 
     <script type="text/x-kendo-template" id="prodDetailTemplate">
         <div>
-            <label class="width-130 inline">Description:</label>
+            <label>Description:</label>
             <div class="inline">#: description#</div>
         </div>
-        <div class="width-130 float-right">
-            <label class="width-90 inline">Price:</label>
+        <div>
+            <label>Price:</label>
             <div class="title">#: Price#</div>
         </div>
 
         <div>
-            <label class="width-130 inline">Synonym:</label>
+            <label>Synonym:</label>
             <div class="inline">#: Synonym#</div>
         </div>
-        <div class="width-130 float-right">
-            <label class="width-90 inline">AFS:</label>
+        <div>
+            <label>AFS:</label>
             <div class="title">#: Afs#</div>
         </div>
         <div>
-            <label class="width-130">Report Synonym:</label>
+            <label>Report Synonym:</label>
             <div class="inline">#: ReportSyn#</div>
         </div>
         <div>
-            <label class="width-130 inline">Bar Synonym:</label>
+            <label>Bar Synonym:</label>
             <div class="inline">#: BarSyn#</div>
         </div>
-
+        <div>
+            <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
+            <div class="rateit-description">#: AvgRating # out of 5 stars</div>
+            <div class="rateit-description">#: TotalReview # customers reviews</div>
+        </div>
+        <div id="graph"></div>
     </script>
 
     <script type="text/x-kendo-template" id="prodDetImageTemplate">
