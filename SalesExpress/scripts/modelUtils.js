@@ -24,6 +24,15 @@ var locationModel = function () {
                 from: "[\"Loc-id\"]",
                 defaultValue: "<empty>" // default field value
 
+            },
+            Loc_Id1: {
+                type: "string", // the field is a string
+                validation: { // validation rules
+                    required: true // the field is required
+                },
+                from: "[\"Loc-Id\"]",
+                defaultValue: "<empty>" // default field value
+
             }
         }
     })
@@ -56,20 +65,20 @@ var productModel = function () {
 };
 
 
-var EOrderClass = function() {
+var EOrderClass = function () {
     this.eOrder = {
         "CustId": null,
         "eOrderLine": []
     }
 
-    this.setCustId = function(custid){
+    this.setCustId = function (custid) {
         this.eOrder.CustId = custid
     }
-    this.addLine = function(lineno,locid,prodrecno,orderqty,checksum,rowid) {
+    this.addLine = function (lineno, locid, prodrecno, orderqty, checksum, rowid) {
         var eOrderLine = {};
         if (arguments.length == 0) return;
         // allow signature overloading for the method
-        if (typeof lineno === "object"){
+        if (typeof lineno === "object") {
             //lineno is actually an object use it as is
             eOrderLine = lineno;
         }
@@ -83,7 +92,7 @@ var EOrderClass = function() {
         }
         this.eOrder.eOrderLine.push(eOrderLine);
     }
-    this.getEOrder = function() {
+    this.getEOrder = function () {
         return this.eOrder;
     }
 
@@ -107,7 +116,7 @@ var addLineToShoppingCart = function (eOrder, callBackFn) {
             var errors = false;
             try {
                 errors = app.getErrors(details.response.dsOrder.dsOrder.restResult);
-            } catch (e) { 
+            } catch (e) {
                 console.log("Error", e)
             }
             if (errors)
