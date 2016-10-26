@@ -1,0 +1,52 @@
+<div data-role="view" data-title="Location Details"
+     data-model="app.viewModels.locDetViewModel"
+     data-init="app.viewModels.locDetViewModel.onInit"
+     data-show="app.viewModels.locDetViewModel.onBeforeShow"
+     data-hide="app.viewModels.locDetViewModel.onHide"
+     data-layout="back-layout"
+     data-transition="fade">
+
+    <div>
+        <ul id="locDetailView"
+            data-role="listview" data-style="inset"></ul>
+        <div>
+            <h4>Locations</h4>
+            <ul id="locStockView"
+                data-role="listview" data-style="inset"></ul>
+        </div>
+    </div>
+
+    <!--<script type="text/x-kendo-template" id="locHeader">
+        <div><b>Location Id</b></div>
+        <div><b>AFS</b></div>
+        <div><b>ON_PO</b></div>
+        <div><b>Quantity</b></div>
+    </script>-->
+
+    <script type="text/x-kendo-template" id="locDetailTemplate">
+        <div>
+            <label class="width-130 inline">location:</label>
+            <div class="inline">#: Loc_Id#</div>
+        </div>
+        <div class="width-130 float-right">
+            <label class="width-90 inline">Name:</label>
+            <div class="title">#: Name#</div>
+        </div>
+
+        <div>
+            <label class="width-130 inline">Address:</label>
+            <div class="inline">#: Address#</div>
+        </div>
+        <div class="width-130 float-right">
+            <label class="width-90 inline">Phones:</label>
+            <div class="title">#Phone#</div>
+        </div>
+    </script>
+
+
+    <script type="text/x-kendo-template" id="locStockTemplate">
+            <div><b>Description: </b>#: Description #</div>
+            <div><b>Quantity: </b>#: Quantity #</div>
+            <div><b>Quantity Type: </b>#: Quantity Type #</div>
+    </script>
+</div>
