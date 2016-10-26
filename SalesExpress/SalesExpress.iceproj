@@ -102,6 +102,7 @@
     <Content Include="viewModels\customerDetViewModel.js" />
     <Content Include="viewModels\customerDetMapViewModel.js" />
     <Content Include="viewModels\customerListViewModel.js" />
+    <Content Include="viewModels\locDetViewModel.js" />
     <Content Include="viewModels\shopcartDetViewModel.js" />
     <Content Include="viewModels\orderDetViewModel.js" />
     <Content Include="viewModels\prodDetViewModel.js">
@@ -116,6 +117,7 @@
     <Content Include="views\customerDetView.html" />
     <Content Include="views\customerDetMapView.html" />
     <Content Include="views\customerListView.html" />
+    <Content Include="views\locDetView.html" />
     <Content Include="views\shopcartDetView.html" />
     <Content Include="views\orderDetView.html" />
     <Content Include="views\prodDetView.html" />
