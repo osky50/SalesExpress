@@ -1,7 +1,7 @@
 (function (parent) {
     var prodDetViewModel = kendo.observable({
         jsdoDataSource: undefined,
-        jsdoModel: undefined,        
+        jsdoModel: undefined,
         currentLoc: undefined,
         selectedRow: {},
         prodLocList: [],
@@ -24,7 +24,7 @@
             try {
                 // Create Data Source
                 app.viewModels.prodDetViewModel.createJSDODataSource();
-                app.viewModels.prodDetViewModel.createProdLocDataSource();                
+                app.viewModels.prodDetViewModel.createProdLocDataSource();
                 app.views.productDetView = e.view;
                 $("#prodDetailView").kendoMobileListView({
                     dataSource: app.viewModels.prodDetViewModel.jsdoDataSource,
@@ -183,7 +183,11 @@
             catch (ex) {
                 createDataSourceErrorFn({ errorObject: ex });
             }
-        },        
+        },
+        addReviewCallback: function (prodReviewDet) {
+            app.viewModels.prodDetViewModel.onBeforeShow();
+            app.showMessage('Thanks for giving us your opinion.')
+        },
     });
 
     parent.prodDetViewModel = prodDetViewModel;

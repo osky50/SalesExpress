@@ -41,7 +41,10 @@
             <div class="float-left">&nbsp;|&nbsp;</div>
             <button data-role="button" name="1-stars-reviews-link" class="link">1 stars</button>
         </div>
-        <a data-role="button" name="create-review-link" class="link" href="\\#create_review" data-rel="popover">Create you own review</a>
+        <button data-role="button" name="create-review-link" class="link" data-click="app.openReview"
+                data-callback="app.viewModels.prodDetReviewsViewModel.addReviewCallback">
+            Create you own review
+        </button>
         <div style="height:150px" id="graph"></div>
     </script>
     <script type="text/x-kendo-template" id="prodDetReviewTemplate">

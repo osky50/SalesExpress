@@ -8,6 +8,7 @@
         selectedRow: {},
         origRow: {},
         resourceName: 'Product List',
+        forceLoad: false,
 
         // The order of the firing of events is as follows:
         //   before-show
@@ -18,7 +19,7 @@
             var prodListView = $("#productListView").data("kendoMobileListView");
             if (prodListView === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.prodListViewModel.onInit(this);
-            } else if (prodListView.dataSource && prodListView.dataSource.data().length === 0) {
+            } else if (prodListView.dataSource && prodListView.dataSource.data().length === 0 || app.viewModels.prodListViewModel.forceLoad) {
                 prodListView.dataSource.read();
             }
 
@@ -132,9 +133,6 @@
                 autoFill: false,
             });
         },
-        openReview: function () {
-            scriptsUtils.createRatingsComponent('create-review-rateit');
-        },
         addReview: function (e, successCallback) {
             try {
                 var form = e.sender.element[0].parentNode;
@@ -144,18 +142,21 @@
                 if (!validator.validate())
                     return;
                 var rating = scriptsUtils.getRatingValue('.create-review-rateit', 32);
+                if (rating == 0)
+                    rating = 1;
+                var prodReviewDet = {
+                    "Prod_recno": app.viewModels.prodListViewModel.selectedRow.Prod_Recno,
+                    "cust_id": localStorage.getItem('selectedCustomer'),
+                    "rating": rating,
+                    "recommended": form.recommended.value == 'on' ? 'yes' : 'no',
+                    "review_text": form.comments.value,
+                    "web_user_id": app.viewModels.loginViewModel.username
+                };
                 var request = {
                     "dsProdReview": {
                         "ProdReview": [
                             {
-                                "ProdReviewDet": [{
-                                    "Prod_recno": app.viewModels.prodListViewModel.selectedRow.Prod_Recno,
-                                    "cust_id": localStorage.getItem('selectedCustomer'),
-                                    "rating": rating,
-                                    "recommended": form.recommended.value == 'on' ? 'yes' : 'no',
-                                    "review_text": form.comments.value,
-                                    "web_user_id": app.viewModels.loginViewModel.username
-                                }]
+                                "ProdReviewDet": [prodReviewDet]
                             }
                         ]
                     }
@@ -165,7 +166,6 @@
                 promise.done(function (session, result, details) {
                     var errors = false;
                     try {
-                        debugger;
                         if (details.success)
                             errors = app.getErrors(details.response.dsProdReview.dsProdReview.wsReviewResult);
                         else {
@@ -178,11 +178,12 @@
                     }
                     if (errors)
                         return;
-
-                    if (details.success) {
-                        $('#create_review').getKendoMobileModalView().close();
-                        if (successCallback)
-                            successCallback();
+                    var callback = app.reviewScreen.callback; //taking callback before closing the screen
+                    app.reviewScreen.close();
+                    if (callback) {
+                        try {
+                            callback(prodReviewDet);
+                        } catch (e) { }
                     }
                 });
                 promise.fail(function () {
@@ -192,6 +193,11 @@
         },
         closeReview: function () {
             $('#create_review').getKendoMobileModalView().close();
+        },
+        addReviewCallback: function (prodReviewDet) {
+            app.viewModels.prodListViewModel.forceLoad = true;
+            app.viewModels.prodListViewModel.onBeforeShow();
+            app.showMessage('Thanks for giving us your opinion.')
         },
     });
 

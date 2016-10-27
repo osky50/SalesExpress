@@ -56,7 +56,7 @@
                         } catch (e) { }
                     },
                     dataBound: function (e) {
-                        scriptsUtils.createRatingsComponent('prod-det-reviews-rateit');                        
+                        scriptsUtils.createRatingsComponent('prod-det-reviews-rateit');
                     }
                 });
                 $("#prodDetReviewsView").kendoMobileListView({
@@ -182,6 +182,12 @@
             } catch (e) {
                 return false;
             };
+        },
+        addReviewCallback: function (prodReviewDet) {
+            var prodDetView = $("#prodDetView").data("kendoMobileListView");
+            app.viewModels.prodDetReviewsViewModel.ratingFilter = prodReviewDet.rating.toString(); //all reviews
+            prodDetView.dataSource.read();
+            app.showMessage('Thanks for giving us your opinion.')
         },
     });
 

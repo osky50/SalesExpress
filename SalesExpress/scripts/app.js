@@ -172,15 +172,19 @@
     app.closeReview = function () {
         app.viewModels.prodListViewModel.closeReview();
     };
-    app.openReview = function () {
-        app.viewModels.prodListViewModel.openReview();
-    };
-    app.onCloseModal = function (e) {
-        try {
-            var modal = e.sender.element[0];
-            if (modal && modal.dataset.closeconfirmation && !confirm(modal.dataset.closeconfirmation))
-                e.preventDefault();
-        } catch (e) {
+    app.openReview = function (e) {
+        app.reviewScreen = $("#create_review").data("kendoMobileModalView");
+        if (!app.reviewScreen)
+            return;
+        app.reviewScreen.open();
+        if (e.sender.element[0].dataset.callback) {
+            try {
+                app.reviewScreen.callback = eval(e.sender.element[0].dataset.callback);
+            } catch (e) { }
         }
+        scriptsUtils.createRatingsComponent('create-review-rateit');
+    };
+    app.onCloseReview = function (e) {
+        app.reviewScreen = null;
     };
 }());

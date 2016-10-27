@@ -23,7 +23,8 @@
                 <div style="margin-top:3px" class="rateit-description float-left">#: AvgRating # out of 5 stars&nbsp;|&nbsp;</div>
                 <button data-role="button" name="reviews-link" class="link rateit-description">#: TotalReview # customers reviews</button>
             </div>
-            <a data-role="button" name="create-review-link" class="link" href="\\#create_review" data-rel="popover">Create you own review</a>
+            <button data-role="button" name="create-review-link" class="link" data-click="app.openReview"
+                    data-callback="app.viewModels.prodListViewModel.addReviewCallback">Create you own review</button>
         </div>
     </script>
 
