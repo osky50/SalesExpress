@@ -36,7 +36,6 @@
                         if (!e.button)
                             return;
                         try {
-                            debugger;                            
                             var button = e.button.element[0];
                             if ($(button).hasClass('link-active'))
                                 return;
@@ -82,7 +81,7 @@
                     transport: {
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
-                            options.success([app.viewModels.prodDetViewModel.selectedRow]);
+                            options.success([app.viewModels.prodListViewModel.selectedRow]);
                             setTimeout(app.viewModels.prodDetReviewsViewModel.graphReviewsSummary(), 500);
                             $("#prodDetReviewsView").data("kendoMobileListView").dataSource.read();
                         }
@@ -110,7 +109,7 @@
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
                             var promise = app.viewModels.prodDetReviewsViewModel.jsdoReviewsModel.invoke('ReadProdReview', {
-                                ProdRecno: app.viewModels.prodDetViewModel.selectedRow.Prod_Recno,
+                                ProdRecno: app.viewModels.prodListViewModel.selectedRow.Prod_Recno,
                                 Rating: app.viewModels.prodDetReviewsViewModel.ratingFilter
                             });
                             promise.done(function (session, result, details) {
@@ -145,11 +144,11 @@
                     createFiltersLinks('jqplot-yaxis-tick', ' star', '');
                     $.jqplot.postDrawHooks = [];
                 });
-                var oneStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview1;
-                var twoStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview2
-                var threeStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview3
-                var fourStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview4
-                var fiveStarsQty = app.viewModels.prodDetViewModel.selectedRow.TotalReview5
+                var oneStarsQty = app.viewModels.prodListViewModel.selectedRow.TotalReview1;
+                var twoStarsQty = app.viewModels.prodListViewModel.selectedRow.TotalReview2
+                var threeStarsQty = app.viewModels.prodListViewModel.selectedRow.TotalReview3
+                var fourStarsQty = app.viewModels.prodListViewModel.selectedRow.TotalReview4
+                var fiveStarsQty = app.viewModels.prodListViewModel.selectedRow.TotalReview5
                 // For horizontal bar charts, x an y values must will be "flipped"
                 // from their vertical bar counterpart.
                 $("#graph").html('');

@@ -109,8 +109,7 @@
 
         <!-- Application views will be rendered here -->
         <div data-role="modalview" id="create_review" style="display: none" data-width="80%" data-height="290px"
-             data-close="app.onCloseModal" data-open="app.openReview"
-             data-closeconfirmation="Are you sure you want to close this screen?">
+             data-close="app.onCloseModal" data-open="app.openReview">
             <div data-role="header">
                 <div data-role="navbar">
                     <span data-role="view-title">New Product review</span>
@@ -120,12 +119,12 @@
             <form>
                 <ul data-role="listview" data-style="inset">
                     <li>
-                        <div rating-value="1" class="create-review-rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
+                        <div class="create-review-rateit bigstars" rating-value="1" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
                     </li>
                     <li>
                         <label style="width:210px">
                             Recommended:
-                            <input type="checkbox" data-role="switch" data-checked="false" name="recommended" />
+                            <input type="checkbox" data-role="switch" data-checked="false" data-off-label="No" data-on-label="Yes" name="recommended" />
                         </label>
                     </li>
                     <li>

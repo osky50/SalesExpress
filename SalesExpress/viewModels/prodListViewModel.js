@@ -4,6 +4,7 @@
     var prodListViewModel = kendo.observable({
         jsdoDataSource: undefined,
         jsdoModel: undefined,
+        jsdoReviewsModel: undefined,
         selectedRow: {},
         origRow: {},
         resourceName: 'Product List',
@@ -14,7 +15,7 @@
         //   show
 
         onBeforeShow: function () {
-            var prodListView = $("#mainListView").data("kendoMobileListView");
+            var prodListView = $("#productListView").data("kendoMobileListView");
             if (prodListView === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.prodListViewModel.onInit(this);
             } else if (prodListView.dataSource && prodListView.dataSource.data().length === 0) {
@@ -30,9 +31,10 @@
             try {
                 // Create Data Source
                 app.viewModels.prodListViewModel.createJSDODataSource();
+                app.viewModels.prodListViewModel.createProdReviewsJSDO();
                 app.views.listView = e.view;
                 // Create list
-                $("#mainListView").kendoMobileListView({
+                $("#productListView").kendoMobileListView({
                     dataSource: app.viewModels.prodListViewModel.jsdoDataSource,
                     autoBind: false,
                     pullToRefresh: true,
@@ -48,11 +50,21 @@
                     virtualViewSize: 100,
                     template: kendo.template($("#prodTemplate").html()),
                     click: function (e) {
-                        // console.log("e.dataItem._id " + e.dataItem._id);
                         app.viewModels.prodListViewModel.set("selectedRow", e.dataItem);
+                        if (!e.button) {
+                            app.mobileApp.navigate('views/prodDetView.html');
+                            return;
+                        }
+                        try {
+                            var button = e.button.element[0];
+                            if (button.name == 'reviews-link') {
+                                app.mobileApp.navigate('views/prodDetReviewsView.html');
+                                return;
+                            } else if (button.name == 'create-review-link')
+                                return;
+                        } catch (e) { }
                     },
                     dataBound: function (e) {
-                        debugger;
                         scriptsUtils.createRatingsComponent('prod-list-rateit');
                     }
                 });
@@ -110,6 +122,76 @@
             catch (ex) {
                 createDataSourceErrorFn({ errorObject: ex });
             }
+        },
+        createProdReviewsJSDO: function () {
+            //configuring JSDO Settings
+            jsdoSettings.resourceName = 'dsProd';
+            jsdoSettings.tableName = 'ProdReview';
+            this.jsdoReviewsModel = new progress.data.JSDO({
+                name: jsdoSettings.resourceName,
+                autoFill: false,
+            });
+        },
+        openReview: function () {
+            scriptsUtils.createRatingsComponent('create-review-rateit');
+        },
+        addReview: function (e, successCallback) {
+            try {
+                var form = e.sender.element[0].parentNode;
+                var validator = $(form).kendoValidator({
+                    validateOnBlur: false
+                }).data('kendoValidator');
+                if (!validator.validate())
+                    return;
+                var rating = scriptsUtils.getRatingValue('.create-review-rateit', 32);
+                var request = {
+                    "dsProdReview": {
+                        "ProdReview": [
+                            {
+                                "ProdReviewDet": [{
+                                    "Prod_recno": app.viewModels.prodListViewModel.selectedRow.Prod_Recno,
+                                    "cust_id": localStorage.getItem('selectedCustomer'),
+                                    "rating": rating,
+                                    "recommended": form.recommended.value == 'on' ? 'yes' : 'no',
+                                    "review_text": form.comments.value,
+                                    "web_user_id": app.viewModels.loginViewModel.username
+                                }]
+                            }
+                        ]
+                    }
+                };
+                var promise = app.viewModels.prodListViewModel.jsdoReviewsModel.invoke(
+                    'AddProdReview', request);
+                promise.done(function (session, result, details) {
+                    var errors = false;
+                    try {
+                        debugger;
+                        if (details.success)
+                            errors = app.getErrors(details.response.dsProdReview.dsProdReview.wsReviewResult);
+                        else {
+                            errors = true;
+                            app.showMessage('Adding the review failed.');
+                        }
+                    } catch (e) {
+                        errors = true;
+                        app.showMessage('Adding the review failed.');
+                    }
+                    if (errors)
+                        return;
+
+                    if (details.success) {
+                        $('#create_review').getKendoMobileModalView().close();
+                        if (successCallback)
+                            successCallback();
+                    }
+                });
+                promise.fail(function () {
+                    app.showMessage('Adding the review failed.');
+                });
+            } catch (e) { }
+        },
+        closeReview: function () {
+            $('#create_review').getKendoMobileModalView().close();
         },
     });
 

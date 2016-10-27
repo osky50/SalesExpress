@@ -167,14 +167,13 @@
         app.mobileApp.navigate('views/customerDetView.html');
     };
     app.addReview = function (e) {
-        app.viewModels.prodDetViewModel.addReview(e);
+        app.viewModels.prodListViewModel.addReview(e);
     };
     app.closeReview = function () {
-        app.viewModels.prodDetViewModel.closeReview();
+        app.viewModels.prodListViewModel.closeReview();
     };
     app.openReview = function () {
-        debugger;
-        app.viewModels.prodDetViewModel.openReview();
+        app.viewModels.prodListViewModel.openReview();
     };
     app.onCloseModal = function (e) {
         try {
@@ -183,5 +182,5 @@
                 e.preventDefault();
         } catch (e) {
         }
-    }
+    };
 }());
