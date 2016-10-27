@@ -4,6 +4,7 @@
         prodDetReviewsDataSource: undefined,
         jsdoReviewsModel: undefined,
         ratingFilter: "0",
+        overridenRatingFilter: undefined,
         origRow: {},
         resourceName: 'Product Reviews',
         onBeforeShow: function () {
@@ -11,7 +12,11 @@
             if (prodDetView === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.prodDetReviewsViewModel.onInit(this);
             } else {
-                app.viewModels.prodDetReviewsViewModel.ratingFilter = '0'; //all reviews
+                if (app.viewModels.prodDetReviewsViewModel.overridenRatingFilter) {
+                    app.viewModels.prodDetReviewsViewModel.ratingFilter = app.viewModels.prodDetReviewsViewModel.overridenRatingFilter;
+                    app.viewModels.prodDetReviewsViewModel.overridenRatingFilter = undefined;
+                } else
+                    app.viewModels.prodDetReviewsViewModel.ratingFilter = '0'; //all reviews
                 prodDetView.dataSource.read();
             }
             // Set list title to resource name
@@ -52,6 +57,15 @@
                                 $('.rating-filter-container .link-active').addClass('link');
                                 $('.rating-filter-container .link-active').removeClass('link-active');
                                 $(button).addClass('link-active');
+                            } else if (button.name == 'create-review-link') {
+                                var addReviewCallback = function (prodReviewDet) {
+                                    var prodDetView = $("#prodDetView").data("kendoMobileListView");
+                                    app.viewModels.prodDetReviewsViewModel.overridenRatingFilter = prodReviewDet.rating.toString(); //all reviews
+                                    app.mobileApp.navigate('views/prodDetReviewsView.html');
+                                };
+                                app.viewModels.prodAddReviewViewModel.set("selectedProduct", e.dataItem);
+                                app.viewModels.prodAddReviewViewModel.successCallback = addReviewCallback;
+                                app.mobileApp.navigate('views/prodAddReviewView.html');
                             }
                         } catch (e) { }
                     },
@@ -182,12 +196,6 @@
             } catch (e) {
                 return false;
             };
-        },
-        addReviewCallback: function (prodReviewDet) {
-            var prodDetView = $("#prodDetView").data("kendoMobileListView");
-            app.viewModels.prodDetReviewsViewModel.ratingFilter = prodReviewDet.rating.toString(); //all reviews
-            prodDetView.dataSource.read();
-            app.showMessage('Thanks for giving us your opinion.')
         },
     });
 

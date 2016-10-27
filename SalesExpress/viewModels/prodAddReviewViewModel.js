@@ -34,7 +34,6 @@
             });
         },
         save: function (e) {
-            debugger;
             try {
                 var form = e.sender.element[0].closest('form');
                 var validator = $(form).kendoValidator({
