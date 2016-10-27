@@ -6,7 +6,7 @@
   "DisplayName": "Sale Express",
   "Author": "apero solutions",
   "Description": "Sales Express",
-  "BundleVersion": "1.0",
+  "BundleVersion": "3.0",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [
     "1",
