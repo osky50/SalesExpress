@@ -88,7 +88,6 @@
     <Content Include="img\twitter.png" />
     <Content Include="index.html" />
     <Content Include="kendo\js\jquery.min.js" />
-    <Content Include="kendo\js\kendo.all.min.js" />
     <Content Include="kendo\js\kendo.mobile.min.js" />
     <Content Include="kendo\styles\images\back.png" />
     <Content Include="kendo\styles\images\kendoui.svg" />
@@ -96,8 +95,6 @@
     <Content Include="kendo\styles\images\kendoui.woff" />
     <Content Include="kendo\styles\images\wp8_icons.png" />
     <Content Include="kendo\styles\images\wp8_inverseicons.png" />
-    <Content Include="kendo\styles\kendo.common.min.css" />
-    <Content Include="kendo\styles\kendo.default.min.css" />
     <Content Include="kendo\styles\kendo.mobile.all.min.css" />
     <Content Include="lib\progress.all.js" />
     <Content Include="lib\progress.all.min.js" />

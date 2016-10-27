@@ -39,27 +39,14 @@
                     endlessScroll: false,
                     template: kendo.template($("#locDetailTemplate").html())
                 });
-                //$("#locStockView").kendoMobileListView({
-                //    dataSource: app.viewModels.locDetViewModel.locStockDataSource,
-                //    pullToRefresh: false,
-                //    style: "display: inline",
-                //    appendOnRefresh: false,
-                //    autoBind: false,
-                //    endlessScroll: false,
-                //    template: kendo.template($("#locStockTemplate").html()),
-                //});
-                $("#locStockGrid").kendoGrid({
-                    columns: [
-                      { field: "Quantity_Type", title: "Type" , width : "20%"},
-                      { field: "Quantity", title: "Qty", width : "20%" },
-                      { field: "Description", title: "Description" }
-                      
-                    ],
+                $("#locStockView").kendoMobileListView({
                     dataSource: app.viewModels.locDetViewModel.locStockDataSource,
-                    filterable: false,
-                    columnMenu: false,
-                    sortable: false,
-                    mobile: true
+                    pullToRefresh: false,
+                    style: "display: inline",
+                    appendOnRefresh: false,
+                    autoBind: false,
+                    endlessScroll: false,
+                    template: kendo.template($("#locStockTemplate").html()),
                 });
             }
             catch (ex) {
@@ -131,7 +118,7 @@
                             promise.done(function (session, result, details) {
                                 var currentLocList = details.response.dsLoc.dsLoc.eLocation;
                                 options.success(currentLocList);
-                                //$("#locStockView").data("kendoMobileListView").dataSource.read();
+                                $("#locStockView").data("kendoMobileListView").dataSource.read();
                             });
                             promise.fail(function () {
                                 options.success([]);
