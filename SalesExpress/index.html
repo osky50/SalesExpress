@@ -62,6 +62,7 @@
     <script src="viewModels/prodListViewModel.js"></script>
     <script src="viewModels/prodDetViewModel.js"></script>
     <script src="viewModels/prodDetReviewsViewModel.js"></script>
+    <script src="viewModels/prodAddReviewViewModel.js"></script>
     <script src="viewModels/orderListViewModel.js"></script>
     <script src="viewModels/orderDetViewModel.js"></script>
     <script src="viewModels/shopcartDetViewModel.js"></script>
@@ -110,33 +111,6 @@
         </div>
 
         <!-- Application views will be rendered here -->
-        <div data-role="modalview" id="create_review" style="display: none" data-width="80%" data-height="290px"
-             data-close="app.onCloseReview">
-            <div data-role="header">
-                <div data-role="navbar">
-                    <span data-role="view-title">New Product review</span>
-                    <a data-role="button" data-click="app.closeReview" data-align="right" data-icon="close">Close</a>
-                </div>
-            </div>
-            <form>
-                <ul data-role="listview" data-style="inset">
-                    <li>
-                        <div class="create-review-rateit bigstars" rating-value="1" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
-                    </li>
-                    <li>
-                        <label style="width:210px">
-                            Recommended:
-                            <input type="checkbox" data-role="switch" data-checked="false" data-off-label="No" data-on-label="Yes" name="recommended" />
-                        </label>
-                    </li>
-                    <li>
-                        <label>Comments:</label>
-                        <textarea required name="comments" style="width: 100%;"></textarea>
-                    </li>
-                </ul>
-                <a data-click="app.addReview" data-role="button" class="float-right" style="margin:0 8px 8px">Add</a>
-            </form>
-        </div>
         <!-- Footer -->
         <div data-role="footer">
 
@@ -147,6 +121,14 @@
         <div data-role="header">
             <div data-role="navbar">
                 <a data-click="app.back" data-role="button" data-align="right" data-icon="rewind">Back</a>
+                <span data-role="view-title"></span>
+            </div>
+        </div>
+    </div>
+    <!--Save/Cancel Layout-->
+    <div data-role="layout" data-id="popup">
+        <div data-role="header">
+            <div data-role="navbar">
                 <span data-role="view-title"></span>
             </div>
         </div>

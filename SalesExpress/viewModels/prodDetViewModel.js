@@ -42,6 +42,15 @@
                             var button = e.button.element[0];
                             if (button.name == 'reviews-link') {
                                 app.mobileApp.navigate('views/prodDetReviewsView.html');
+                            } else if (button.name == 'create-review-link') {
+                                debugger;
+                                var addReviewCallback = function (prodReviewDet) {
+                                    debugger;
+                                    app.mobileApp.navigate('views/prodDetView.html');
+                                };
+                                app.viewModels.prodAddReviewViewModel.set("selectedProduct", e.dataItem);
+                                app.viewModels.prodAddReviewViewModel.successCallback = addReviewCallback;
+                                app.mobileApp.navigate('views/prodAddReviewView.html');
                             }
                         } catch (e) { }
                     },
@@ -92,7 +101,9 @@
             }
         },
         addLineToCart: function (qty) {
+            app.mobileApp.showLoading();
             lineAdded = function () {
+                app.mobileApp.hideLoading();
                 app.showMessage('Product Added to the Cart');
             };
             eOrderobj = new EOrderClass();

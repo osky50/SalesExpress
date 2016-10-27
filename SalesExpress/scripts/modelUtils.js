@@ -126,6 +126,7 @@ var addLineToShoppingCart = function (eOrder, callBackFn) {
         }
     });
     promise.fail(function () {
+        app.mobileApp.hideLoading();
         app.showError('Failed to update the shopping cart');
     });
 };

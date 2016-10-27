@@ -141,6 +141,35 @@
             eOrderobj.addLine(eoline);
             addLineToShoppingCart(eOrderobj.getEOrder(), successUpd);
         },
+        placeOrder: function () {
+            app.mobileApp.showLoading();
+            var promise = app.viewModels.shopcartDetViewModel.jsdoModel.invoke('FinOrder', {});
+            promise.done(function (session, result, details) {
+                var errors = false;
+                try {
+                    if (details.success)
+                        errors = app.getErrors(details.response.dsOrder.dsOrder.restResult);
+                    else {
+                        errors = true;
+                        app.showMessage('Placing the order failed.');
+                    }
+                } catch (e) {
+                    errors = true;
+                    app.showMessage('Placing the order failed.');
+                }
+                if (errors) {
+                    app.mobileApp.hideLoading();
+                    return;
+                }
+                app.viewModels.shopcartDetViewModel.forceLoad = true;
+                app.viewModels.shopcartDetViewModel.onBeforeShow();
+                app.mobileApp.hideLoading();
+            });
+            promise.fail(function () {
+                app.mobileApp.hideLoading();
+                app.showMessage('Placing the order failed.');
+            });
+        }
     });
     parent.shopcartDetViewModel = shopcartDetViewModel;
 

@@ -1,0 +1,38 @@
+<div id="prodAddReview"
+     data-role="view"
+     data-style="inset"
+     data-init="app.viewModels.prodAddReviewViewModel.onInit"
+     data-show="app.viewModels.prodAddReviewViewModel.onBeforeShow"
+     data-after-show="app.viewModels.prodAddReviewViewModel.onAfterShow"
+     data-model="app.viewModels.prodAddReviewViewModel"
+     data-layout="popup">
+    <div id="create_review">
+        <form>
+            <ul data-role="listview" data-style="inset">
+                <li>
+                    <div class="create-review-rateit bigstars" rating-value="1" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
+                </li>
+                <li>
+                    <label style="width:210px">
+                        Recommended:
+                        <input type="checkbox" data-role="switch" data-checked="false" data-off-label="No" data-on-label="Yes" name="recommended" />
+                    </label>
+                </li>
+                <li>
+                    <label>Comments:</label>
+                    <textarea required name="comments" style="width: 100%;"></textarea>
+                </li>
+                <li>
+                    <a data-bind="click: cancel" data-role="button" class="float-right" data-icon="rewind">Cancel</a>
+                    <a data-bind="click: save" data-role="button" class="float-right" data-icon="">Save</a>                    
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+<div id="pager" class="k-pager-wrap"></div>
+
+
+
+
+
