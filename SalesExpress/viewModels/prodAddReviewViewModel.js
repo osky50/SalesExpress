@@ -48,7 +48,7 @@
                     "Prod_recno": app.viewModels.prodAddReviewViewModel.selectedProduct.Prod_Recno,
                     "cust_id": localStorage.getItem('selectedCustomer'),
                     "rating": rating,
-                    "recommended": form.recommended.value == 'on' ? 'yes' : 'no',
+                    "recommended": form.recommended.checked ? 'yes' : 'no',
                     "review_text": form.comments.value,
                     "web_user_id": app.viewModels.loginViewModel.username
                 };
