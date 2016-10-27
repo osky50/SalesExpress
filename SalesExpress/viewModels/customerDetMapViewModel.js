@@ -12,30 +12,38 @@
             }
         },
         onInit: function (e) {
-            try {
-                app.views.listView = e.view;
-                // Create list
-                $("#map").kendoMap({
-                    center: [30.268107, -97.744821],
-                    zoom: 3,
-                    layers: [{
-                        type: "tile",
-                        urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
-                        subdomains: ["a", "b", "c"],
-                        attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
-                    }],
-                    markers: [{
-                        location: [30.268107, -97.744821],
-                        shape: "pinTarget",
-                        tooltip: {
-                            content: "Austin, TX"
-                        }
-                    }]
+            debugger;
+            var drawMap = function (latlng) {
+                var myOptions = {
+                    zoom: 10,
+                    center: latlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                app.DirectionsService = new google.maps.DirectionsService();
+                app.DirectionsDisplay = new google.maps.DirectionsRenderer();
+                var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+                // Add an overlay to the map of current lat/lng
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map,
+                    title: "Greetings!"
                 });
             }
-            catch (ex) {
-                app.showError(ex.message);
+            var defaultLatLng = new google.maps.LatLng(34.0983425, -118.3267434);  // Default to Hollywood, CA when no geolocation support
+            if (navigator.geolocation) {
+                function success(pos) {
+                    // Location found, show map with these coordinates
+                    drawMap(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+                }
+                function fail(error) {
+                    drawMap(defaultLatLng);  // Failed to find location, show default map
+                }
+                // Find the users current position.  Cache the location for 5 minutes, timeout after 6 seconds
+                navigator.geolocation.getCurrentPosition(success, fail, { maximumAge: 500000, enableHighAccuracy: true, timeout: 6000 });
+            } else {
+                drawMap(defaultLatLng);  // No geolocation support, show default map
             }
+            
         },
     });
     parent.customerDetMapViewModel = customerDetMapViewModel;

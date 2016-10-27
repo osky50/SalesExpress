@@ -54,13 +54,16 @@
             <div class="inline">#: BarSyn#</div>
         </div>
         <div>
-            <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
+            <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="prod-det-rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
         </div>
         <div>
             <div style="margin-top:3px" class="rateit-description float-left">#: AvgRating # out of 5 stars&nbsp;|&nbsp;</div>
             <button data-role="button" name="reviews-link" class="link rateit-description">#: TotalReview # customers reviews</button>
         </div>
-        <a data-role="button" name="create-review-link" class="link" href="\\#create_review" data-rel="popover">Create you own review</a>
+        <button data-role="button" name="create-review-link" class="link" data-click="app.openReview"
+                data-callback="app.viewModels.prodDetViewModel.addReviewCallback">
+            Create you own review
+        </button>
     </script>
 
     <script type="text/x-kendo-template" id="prodDetImageTemplate">
@@ -80,7 +83,7 @@
             <div class=""><b>ON_PO: </b>#: ONPO #</div>
             <div class="">
                 <label>Quantity:</label>
-                <input type="number" min="1" max="#: AFS #" class="relative width-90" name="Order Quantity" value="#: CartQty #" />
+                <input type="number" min="1" class="relative width-90" name="Order Quantity" value="#: CartQty #" />
             </div>
             <div>
                 <button type="button" data-role="button" name="addToCart">Add To Cart</button>

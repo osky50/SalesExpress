@@ -1,29 +1,31 @@
 <!-- List view -->
 
-<div id="mainList"
+<div id="productList"
      data-role="view"
      data-style="inset"
      data-init="app.viewModels.prodListViewModel.onInit"
      data-show="app.viewModels.prodListViewModel.onBeforeShow"
      data-model="app.viewModels.prodListViewModel">
-    <ul id="mainListView"
+    <ul id="productListView"
         data-role="listview" data-style="inset"></ul>
 
     <div id="pager" class="k-pager-wrap"></div>
 
     <script type="text/x-kendo-template" id="prodTemplate">
-        <a href="views/prodDetView.html">
-            <div class="prod-list-item-image"><img src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" /></div>
-            <div class="prod-list-item-details">
-                <div>#: description #</div>
-                <div>#: Prod_Id #</div>
-                <div><b>Price: </b>#: Price #</div>
-                <div><b>AFS: </b> #: Afs #</div>                
-                <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="float-left rateit a" data-rateit-starwidth="16" data-rateit-starheight="16" step="1"></div>
-                <div class="rateit-description">#: AvgRating # out of 5 stars</div>
-                <div class="rateit-description">#: TotalReview # customers reviews</div>
+        <div class="prod-list-item-image"><img src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" /></div>
+        <div class="prod-list-item-details">
+            <div>#: description #</div>
+            <div>#: Prod_Id #</div>
+            <div><b>Price: </b>#: Price #</div>
+            <div><b>AFS: </b> #: Afs #</div>
+            <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="prod-list-rateit a" data-rateit-starwidth="16" data-rateit-starheight="16" step="1"></div>
+            <div>
+                <div style="margin-top:3px" class="rateit-description float-left">#: AvgRating # out of 5 stars&nbsp;|&nbsp;</div>
+                <button data-role="button" name="reviews-link" class="link rateit-description">#: TotalReview # customers reviews</button>
             </div>
-        </a>
+            <button data-role="button" name="create-review-link" class="link" data-click="app.openReview"
+                    data-callback="app.viewModels.prodListViewModel.addReviewCallback">Create you own review</button>
+        </div>
     </script>
 
 </div>

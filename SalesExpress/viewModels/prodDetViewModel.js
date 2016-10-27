@@ -46,14 +46,7 @@
                         } catch (e) { }
                     },
                     dataBound: function (e) {
-                        $('.rateit').each(function (index, element) {
-                            var ratingValue = parseFloat(element.getAttribute('rating-value'));
-                            var ratingStep = parseFloat(element.getAttribute('step'));
-                            var elementObj = $(element);
-                            elementObj.rateit();
-                            elementObj.rateit('value', ratingValue);
-                            elementObj.rateit('step', ratingStep);
-                        });
+                        scriptsUtils.createRatingsComponent('prod-det-rateit');
                     }
                 });
                 $("#prodDetailLocView").kendoMobileListView({
@@ -75,8 +68,9 @@
                                 var input = e.item.find('input');
                                 //analizing "enabledBackOrders" parameter
                                 var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
-                                if (enabledBackOrders)
-                                    $(input).removeAttr('max'); //removing max attribute which initially have the AFS
+                                if (!enabledBackOrders || enabledBackOrders == 'false') {
+                                    $(input).attr('max', app.viewModels.prodDetViewModel.selectedRow.AFS); //removing max attribute which initially have the AFS
+                                }
                                 var validator = $(form).kendoValidator({
                                     validateOnBlur: false
                                 }).data('kendoValidator');
@@ -191,21 +185,9 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
-        addReview: function (e) {
-            debugger;
-            try {
-                var form = e.sender.element[0].parentNode;
-                var validator = $(form).kendoValidator({
-                    validateOnBlur: false
-                }).data('kendoValidator');
-                if (!validator.validateInput($(input)) || !validator.validateInput($(textarea)))
-                    return;
-            } catch (e) {
-
-            }
-        },
-        closeReview: function () {
-            $('#create_review').getKendoMobileModalView().close()
+        addReviewCallback: function (prodReviewDet) {
+            app.viewModels.prodDetViewModel.onBeforeShow();
+            app.showMessage('Thanks for giving us your opinion.')
         },
     });
 
