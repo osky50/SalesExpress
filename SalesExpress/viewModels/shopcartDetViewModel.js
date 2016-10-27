@@ -49,8 +49,10 @@
                                 var input = e.item.find('input');
                                 //analizing "enabledBackOrders" parameter
                                 var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
-                                if (enabledBackOrders)
-                                    $(input).removeAttr('max'); //removing max attribute which initially have the AFS
+                                if (!enabledBackOrders || enabledBackOrders == 'false') {
+                                    var afs = parseFloat(button.dataset.afs);
+                                    $(input).attr('max', afs); //adding max attribute which AFS
+                                }
                                 var validator = $(form).kendoValidator({
                                     validateOnBlur: false
                                 }).data('kendoValidator');
@@ -124,6 +126,7 @@
             successUpd = function () {
                 app.viewModels.shopcartDetViewModel.forceLoad = true;
                 app.viewModels.shopcartDetViewModel.onBeforeShow();
+                app.showMessage('Shopping cart updated successfully');
             }
             eOrderobj = new EOrderClass();
             eOrderobj.setCustId(localStorage.getItem('defaultCustomer'));

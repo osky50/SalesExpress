@@ -60,10 +60,10 @@
             <div><b>Location: </b>#: LocId #</div>
             <div><b>AFS: </b>#: AFS #</div>
             <div>
-                <label>Quantity:</label><input type="number" min="1" max="#: AFS #" name="Order Quantity" class="relative width-90" value="#: OrderQty #" />
+                <label>Quantity:</label><input type="number" min="1" name="Order Quantity" class="relative width-90" value="#: OrderQty #" />
             </div>
             <div>
-                <button type="button" data-role="button" name="update-line">Update</button>
+                <button type="button" data-role="button" name="update-line" data-afs="#: AFS #">Update</button>
                 <button type="button" data-role="button" name="delete-line">Remove</button>
             </div>
             <div><b>Price: </b>$#: UnitPrice #</div>
