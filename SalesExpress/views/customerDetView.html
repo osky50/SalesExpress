@@ -1,8 +1,9 @@
 <div id="customerDet"
      data-role="view"
      data-style="inset"
-     data-init="app.viewModels.customerDetViewModel.onInit"
+     data-init="app.viewModels.customerDetViewModel.onInit"     
      data-show="app.viewModels.customerDetViewModel.onBeforeShow"
+     data-hide="app.viewModels.customerDetViewModel.onHide"
      data-model="app.viewModels.customerDetViewModel">
     <div>
         <ul id="customerDetData"
@@ -46,7 +47,7 @@
     <div><b>Last Payment Amt.: </b>#: Last_Paid_Amt #</div>
     <div><b>Last Payment Date: </b>#: Last_Paid_Date #</div>
     <div><b>S/O Balance: </b>#: So_Balance #</div>
-    <div id="perf_graph" style="margin:5px"></div>
+    <div id="perf_graph" style="margin:5px; width:100%; height:150px"></div>
 </script>
 
 

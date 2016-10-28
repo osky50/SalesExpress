@@ -7,18 +7,26 @@
         perfData: undefined,
         origRow: {},
         resourceName: 'Customer Details',
-        forceLoad: false,
         onBeforeShow: function () {
+            $(window).on("orientationchange", app.viewModels.customerDetViewModel.devOrientHandler);
             var customerDetData = $("#customerDetData").data("kendoMobileListView");
             if (customerDetData === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.customerDetViewModel.onInit(this);
-            } else if (customerDetData.dataSource.data().length === 0 || app.viewModels.customerDetViewModel.forceLoad) {
+            } else {
                 customerDetData.dataSource.read();
             }
             // Set list title to resource name
             if (app.viewModels.customerDetViewModel.resourceName !== undefined) {
                 app.changeTitle(app.viewModels.customerDetViewModel.resourceName);
             }
+        },
+        devOrientHandler: function () {
+            setTimeout(function () {
+                app.viewModels.customerDetViewModel.createPerfGraph();
+            }, 100)
+        },
+        onHide: function () {
+            $(window).off("orientationchange", app.viewModels.customerDetViewModel.devOrientHandler);
         },
         onInit: function (e) {
             try {
@@ -183,9 +191,7 @@
                 for (var i = 0; i < eSeries.length; i++) {
                     var serie = {
                         label: eSeries[i].Name,
-                        barWidth: 15,
-                        barPadding: -15,
-                        barMargin: 0,
+                        barMargin: 1,
                         highlightMouseOver: true
                     }
                     series.push(serie);
@@ -193,7 +199,7 @@
                 }
                 $('#perf_graph').html('');
 
-                var plot1 = $.jqplot('perf_graph', seriesValues, {
+                $.jqplot('perf_graph', seriesValues, {
                     animate: false,
                     animateReplot: false,
                     // The "seriesDefaults" option is an options object that will

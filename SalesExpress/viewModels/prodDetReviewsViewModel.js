@@ -8,6 +8,7 @@
         origRow: {},
         resourceName: 'Product Reviews',
         onBeforeShow: function () {
+            $(window).on("orientationchange", app.viewModels.prodDetReviewsViewModel.devOrientHandler);
             var prodDetView = $("#prodDetView").data("kendoMobileListView");
             if (prodDetView === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.prodDetReviewsViewModel.onInit(this);
@@ -23,6 +24,15 @@
             if (app.viewModels.prodDetReviewsViewModel.resourceName !== undefined) {
                 app.changeTitle(app.viewModels.prodDetReviewsViewModel.resourceName);
             }
+        },
+        devOrientHandler: function () {
+            setTimeout(function () {
+                debugger;
+                app.viewModels.prodDetReviewsViewModel.createReviewsGraph();
+            }, 100)
+        },
+        onHide: function () {
+            $(window).off("orientationchange", app.viewModels.prodDetReviewsViewModel.devOrientHandler);
         },
         onInit: function (e) {
             try {
@@ -96,7 +106,7 @@
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
                             options.success([app.viewModels.prodListViewModel.selectedRow]);
-                            app.viewModels.prodDetReviewsViewModel.graphReviewsSummary();
+                            app.viewModels.prodDetReviewsViewModel.createReviewsGraph();
                             $("#prodDetReviewsView").data("kendoMobileListView").dataSource.read();
                         }
                     },
@@ -151,7 +161,7 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
-        graphReviewsSummary: function () {
+        createReviewsGraph: function () {
             try {
                 /*this hook is used to make clckable y axis*/
                 $.jqplot.postDrawHooks.push(function () {
@@ -166,7 +176,7 @@
                 // For horizontal bar charts, x an y values must will be "flipped"
                 // from their vertical bar counterpart.
                 $("#reviews_graph").html('');
-                var plot2 = $.jqplot('reviews_graph', [
+                $.jqplot('reviews_graph', [
                     [[oneStarsQty, '1 star'], [twoStarsQty, '2 star'], [threeStarsQty, '3 star'], [fourStarsQty, '4 star'], [fiveStarsQty, '5 star']]],
                     {
                         animate: false,
@@ -183,7 +193,7 @@
                             // Here's where we tell the chart it is oriented horizontally.
                             rendererOptions: {
                                 barDirection: 'horizontal',
-                                barWidth: 10
+                                barWidth: 10,
                             }
                         },
                         axes: {
