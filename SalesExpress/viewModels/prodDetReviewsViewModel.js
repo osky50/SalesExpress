@@ -61,7 +61,7 @@
                                 var addReviewCallback = function (prodReviewDet) {
                                     var prodDetView = $("#prodDetView").data("kendoMobileListView");
                                     app.viewModels.prodDetReviewsViewModel.overridenRatingFilter = prodReviewDet.rating.toString(); //all reviews
-                                    app.mobileApp.navigate('views/prodDetReviewsView.html');
+                                    app.back();
                                 };
                                 app.viewModels.prodAddReviewViewModel.set("selectedProduct", e.dataItem);
                                 app.viewModels.prodAddReviewViewModel.successCallback = addReviewCallback;
@@ -96,7 +96,7 @@
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
                             options.success([app.viewModels.prodListViewModel.selectedRow]);
-                            setTimeout(app.viewModels.prodDetReviewsViewModel.graphReviewsSummary(), 500);
+                            app.viewModels.prodDetReviewsViewModel.graphReviewsSummary();
                             $("#prodDetReviewsView").data("kendoMobileListView").dataSource.read();
                         }
                     },
@@ -165,12 +165,12 @@
                 var fiveStarsQty = app.viewModels.prodListViewModel.selectedRow.TotalReview5
                 // For horizontal bar charts, x an y values must will be "flipped"
                 // from their vertical bar counterpart.
-                $("#graph").html('');
-                var plot2 = $.jqplot('graph', [
+                $("#reviews_graph").html('');
+                var plot2 = $.jqplot('reviews_graph', [
                     [[oneStarsQty, '1 star'], [twoStarsQty, '2 star'], [threeStarsQty, '3 star'], [fourStarsQty, '4 star'], [fiveStarsQty, '5 star']]],
                     {
-                        animate: true,
-                        animateReplot: true,
+                        animate: false,
+                        animateReplot: false,
                         seriesDefaults: {
                             renderer: $.jqplot.BarRenderer,
                             // Show point labels to the right ('e'ast) of each bar.
