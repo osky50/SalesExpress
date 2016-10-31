@@ -123,7 +123,15 @@
                 },
                 transport: {
                     read: function (options) {
-                        options.success(app.viewModels.prodDetViewModel.prodLocList);
+                        var prodLocList = app.viewModels.prodDetViewModel.prodLocList || [];
+                        if (prodLocList.length) {
+                            $('.locations-info').show();
+                            $('.locations-placeholder').hide();
+                        } else {
+                            $('.locations-info').hide();
+                            $('.locations-placeholder').show();
+                        }
+                        options.success(prodLocList);
                     }
                 },
                 error: function (e) {
@@ -167,14 +175,22 @@
                             promise.done(function (session, result, details) {
                                 var currentProdList = details.response.dsProd.dsProd.eProduct;
                                 options.success(currentProdList);
-                                //rendering images list data
-                                var imagesHtml = '';
-                                var template = kendo.template($("#prodDetImageTemplate").html());
-                                details.response.dsProd.dsProd.eProductImg.forEach(function (img) {
-                                    imagesHtml += template(img); //applying template
-                                });
-                                $("#prodDetailImageView").html(imagesHtml); //display the result
-                                $('.swipebox').swipebox();
+
+                                var imagesList = details.response.dsProd.dsProd.eProductImg || [];
+                                if (imagesList.length) {
+                                    var imagesHtml = '';
+                                    var template = kendo.template($("#prodDetImageTemplate").html());
+                                    imagesList.forEach(function (img) {
+                                        imagesHtml += template(img); //applying template
+                                    });
+                                    $("#prodDetailImageView").html(imagesHtml); //display the result
+                                    $('.swipebox').swipebox();
+                                    $('.images-info').show();
+                                    $('.images-placeholder').hide();
+                                } else {
+                                    $('.images-info').hide();
+                                    $('.images-placeholder').show();
+                                }
                                 //assigning location list data
                                 app.viewModels.prodDetViewModel.set("prodLocList", details.response.dsProd.dsProd.eProductLoc);
                                 $("#prodDetailLocView").data("kendoMobileListView").dataSource.read();

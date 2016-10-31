@@ -10,23 +10,26 @@
         <ul id="prodDetailView"
             data-role="listview" data-style="inset"></ul>
         <div class="float-left" style="width:100%">
-            <h4>Images</h4>
-            <ul id="prodDetailImageView" data-style="inset" data-role="listview"></ul>
+            <div class="images-info">
+                <h4>Images</h4>
+                <ul id="prodDetailImageView" data-style="inset" data-role="listview"></ul>
+            </div>
+            <div class="images-placeholder placeholder">
+                <h4>No Images available</h4>
+            </div>
         </div>
         <div>
-            <h4>Locations</h4>
-            <ul id="prodDetailLocView"
-                data-role="listview" data-style="inset"></ul>
+            <div class="locations-info">
+                <h4>Locations</h4>
+                <ul id="prodDetailLocView"
+                    data-role="listview" data-style="inset"></ul>
+            </div>
+            <div class="locations-placeholder placeholder">
+                <h4>No Locations information available</h4>
+            </div>
         </div>
+
     </div>
-
-    <!--<script type="text/x-kendo-template" id="locHeader">
-        <div><b>Location Id</b></div>
-        <div><b>AFS</b></div>
-        <div><b>ON_PO</b></div>
-        <div><b>Quantity</b></div>
-    </script>-->
-
     <script type="text/x-kendo-template" id="prodDetailTemplate">
         <div>
             <label>Description:</label>

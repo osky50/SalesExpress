@@ -212,18 +212,32 @@ label {
 #prodDetailImageView img {
     width: 100%;
 }
-.font-smaller{
+
+.font-smaller {
     font-size: smaller !important;
 }
+
 .link, .link-active {
     background: none !important;
     border: none !important;
-    padding: 0 !important;    
+    padding: 0 !important;
     margin: 0 !important;
     color: #247bbd !important;
     font-weight: normal !important;
 }
+
 .link-active {
     font-weight: bold !important;
 }
-#map-canvas { position:absolute; width: 100%; height: 100%; padding: 0; }
+
+.placeholder{
+    font-style: italic !important;
+    opacity: 0.8 !important;
+}
+
+#map-canvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}

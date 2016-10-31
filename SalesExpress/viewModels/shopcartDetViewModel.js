@@ -97,14 +97,14 @@
                                         shopcart = null;
                                 }
                                 if (shopcart) {
-                                    $('#shopcartContainer').show();
-                                    $('#shopcartPlaceholder').hide();
+                                    $('.shopcart-info').show();
+                                    $('.shopcart-placeholder').hide();
                                     options.success(shopcart.eOrderLine);
                                     //binding header
                                     kendo.bind($('#shopcartHeader'), shopcart, kendo.mobile.ui);
                                 } else {
-                                    $('#shopcartContainer').hide();
-                                    $('#shopcartPlaceholder').show();
+                                    $('.shopcart-info').hide();
+                                    $('.shopcart-placeholder').show();
                                     options.success([]);
                                 }
                             });
