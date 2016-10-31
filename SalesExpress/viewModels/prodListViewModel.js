@@ -105,7 +105,8 @@
                             fn: function (jsdo, success, request) {
                                 try {
                                     request.response.dsProd.eProduct.forEach(function (eProduct) {
-                                        eProduct.BuyDisabled = eProduct.DefaultAfs == 0 ? 'disabled' : '';
+                                        var enableBackOrder = localStorage.getItem('enabledBackOrder').toString();
+                                        eProduct.BuyDisabled = eProduct.DefaultAfs == 0 && localStorage.getItem('enabledBackOrder') == 'false' ? 'disabled' : '';
                                     });
                                 } catch (e) {
 
