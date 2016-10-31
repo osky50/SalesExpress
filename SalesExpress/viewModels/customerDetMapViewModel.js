@@ -2,61 +2,53 @@
     var customerDetMapViewModel = kendo.observable({
         resourceName: 'Customer Directions',
         onBeforeShow: function () {
-            var map = $("#map").data("kendoMap");
-            if (map === undefined || app.viewModels.customerDetMapViewModel.forceLoad) { //extra protection in case onInit have not been fired yet
+            if (app.viewModels.customerDetMapViewModel.map === undefined) {
                 app.viewModels.customerDetMapViewModel.onInit(this);
-            }
+            } else
+                app.viewModels.customerDetMapViewModel.getDirections();
             // Set list title to resource name
             if (app.viewModels.customerDetMapViewModel.resourceName !== undefined) {
                 app.changeTitle(app.viewModels.customerDetMapViewModel.resourceName);
             }
         },
         onInit: function (e) {
-            var drawMap = function (latlng) {
-                var myOptions = {
-                    zoom: 10,
-                    center: latlng,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                app.DirectionsService = new google.maps.DirectionsService();
-                app.DirectionsDisplay = new google.maps.DirectionsRenderer();
-                app.DirectionsDisplay.setMap(map);
-                var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-                // Add an overlay to the map of current lat/lng
-                var marker = new google.maps.Marker({
-                    position: latlng,
-                    map: map,
-                    title: "Current Location"
-                });
-                //routing
-                debugger;
+            var startLocation = '4918, Roper Road NW, Edmonton, AB, T6B3T7';  // Default to Hollywood, CA when no geolocation support
+            app.viewModels.customerDetMapViewModel.DirectionsService = new google.maps.DirectionsService();
+            app.viewModels.customerDetMapViewModel.DirectionsDisplay = new google.maps.DirectionsRenderer();
+            var mapOptions = {
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            app.viewModels.customerDetMapViewModel.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+            app.viewModels.customerDetMapViewModel.DirectionsDisplay.setMap(app.viewModels.customerDetMapViewModel.map);
+        },
+        getDirections: function () {
+            var drawMap = function (origin) {
                 var request = {
-                    origin: latlng,
-                    destination: 'Los Angeles, CA',
+                    origin: origin,
+                    destination: app.viewModels.customerDetViewModel.selectedRow.FormattedAddress,
                     travelMode: 'DRIVING'
                 };
-                app.DirectionsService.route(request, function (result, status) {
+                app.viewModels.customerDetMapViewModel.DirectionsService.route(request, function (result, status) {
                     if (status == 'OK') {
-                        app.DirectionsDisplay.setDirections(result);
+                        app.viewModels.customerDetMapViewModel.DirectionsDisplay.setDirections(result);
                     }
                 });
             }
-            var defaultLatLng = new google.maps.LatLng(34.0983425, -118.3267434);  // Default to Hollywood, CA when no geolocation support
             if (navigator.geolocation) {
                 function success(pos) {
                     // Location found, show map with these coordinates
                     drawMap(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
                 }
                 function fail(error) {
-                    drawMap(defaultLatLng);  // Failed to find location, show default map
+                    drawMap(startLocation);  // Failed to find location, show default map
                 }
                 // Find the users current position.  Cache the location for 5 minutes, timeout after 6 seconds
                 navigator.geolocation.getCurrentPosition(success, fail, { maximumAge: 500000, enableHighAccuracy: true, timeout: 6000 });
             } else {
-                drawMap(defaultLatLng);  // No geolocation support, show default map
+                drawMap(startLocation);  // No geolocation support, show default map
             }
-            
-        },
+        }
     });
     parent.customerDetMapViewModel = customerDetMapViewModel;
 

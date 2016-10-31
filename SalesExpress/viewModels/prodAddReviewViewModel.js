@@ -6,7 +6,6 @@
         successCallback: undefined,
         onBeforeShow: function (e) {
             //clear the form
-            debugger;
             var view = e.view;
             // Set list title to resource name
             if (app.viewModels.prodAddReviewViewModel.resourceName !== undefined) {

@@ -27,7 +27,6 @@
         },
         devOrientHandler: function () {
             setTimeout(function () {
-                debugger;
                 app.viewModels.prodDetReviewsViewModel.createReviewsGraph();
             }, 100)
         },
