@@ -112,7 +112,6 @@
                                 if (details.success) {
                                     localStorage.setItem('defaultCustomer', selectedCustomer.Cust_Id); //changing customer in localStorage
                                     $(".customer-info").html(localStorage.getItem('defaultCustomer'));
-                                    app.viewModels.customerDetViewModel.forceLoad = true;
                                     app.mobileApp.navigate('views/customerDetView.html');
                                 }
                             });
@@ -124,7 +123,6 @@
                 } else {
                     localStorage.setItem('defaultCustomer', selectedCustomer.Cust_Id); //changing customer in localStorage
                     $(".customer-info").html(localStorage.getItem('defaultCustomer'));
-                    app.viewModels.customerDetViewModel.forceLoad = true;
                     app.mobileApp.navigate('views/customerDetView.html');
                 }
             });

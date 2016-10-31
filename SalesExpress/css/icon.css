@@ -1,0 +1,41 @@
+.fa .km-icon:after,
+.fa .km-icon:before,
+.fa:before {
+    font: 1em/1em 'FontAwesome' !important;
+}
+
+.fa-recommended-true:before {
+  content: "\f087";
+  font-size: 24px !important;
+}
+.fa-recommended-false:before {
+  content: "\f088";
+  font-size: 24px !important;
+}
+
+.km-fa-twitter:after,
+.km-fa-twitter:before {
+  content: "\F099";
+}
+.km-fa-signin:after,
+.km-fa-signin:before {
+  content: "\f090";
+}
+.km-fa-sign-out:after,
+.km-fa-sign-out:before {
+  content: "\f08b";
+}
+.km-fa-customer:after,
+.km-fa-customer:before {
+  content: "\f2bc";
+}
+.km-fa-shopping-cart:after,
+.km-fa-shopping-cart:before {
+  content: "\f07a";
+} 
+.km-fa-list-ul:after,
+.km-fa-list-ul:before {
+  content: "\f0ca";
+} 
+ 
+ 

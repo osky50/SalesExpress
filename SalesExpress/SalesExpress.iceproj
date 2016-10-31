@@ -33,30 +33,20 @@
     <Content Include="cordova.android.js" />
     <Content Include="cordova.ios.js" />
     <Content Include="cordova.wp8.js" />
-    <Content Include="css\font-awesome.min.css">
-      <SubType>Content</SubType>
-    </Content>
+    <Content Include="css\font-awesome.min.css" />
+    <Content Include="css\icon.css" />
     <Content Include="css\index.css" />
     <Content Include="css\jquery.jqplot.min.css">
       <SubType>Content</SubType>
     </Content>
     <Content Include="css\jquery.rateit.css" />
     <Content Include="css\swipebox.min.css" />
-    <Content Include="fonts\fontawesome-webfont.eot">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="fonts\fontawesome-webfont.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="fonts\fontawesome-webfont.ttf">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="fonts\fontawesome-webfont.woff">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="fonts\FontAwesome.otf">
-      <SubType>Content</SubType>
-    </Content>
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <Content Include="img\cordova.png" />
     <Content Include="img\facebook.png" />
     <Content Include="img\icons.png" />

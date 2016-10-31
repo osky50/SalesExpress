@@ -66,7 +66,7 @@
                             } else if (button.name == 'create-review-link') {
                                 var addReviewCallback = function (prodReviewDet) {
                                     app.viewModels.prodListViewModel.forceLoad = true;
-                                    app.mobileApp.navigate('views/prodListView.html');
+                                    app.back();
                                 };
                                 app.viewModels.prodAddReviewViewModel.set("selectedProduct", e.dataItem);
                                 app.viewModels.prodAddReviewViewModel.successCallback = addReviewCallback;

@@ -4,20 +4,35 @@
         prodDetReviewsDataSource: undefined,
         jsdoReviewsModel: undefined,
         ratingFilter: "0",
+        overridenRatingFilter: undefined,
         origRow: {},
         resourceName: 'Product Reviews',
         onBeforeShow: function () {
+            $(window).on("orientationchange", app.viewModels.prodDetReviewsViewModel.devOrientHandler);
             var prodDetView = $("#prodDetView").data("kendoMobileListView");
             if (prodDetView === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.prodDetReviewsViewModel.onInit(this);
             } else {
-                app.viewModels.prodDetReviewsViewModel.ratingFilter = '0'; //all reviews
+                if (app.viewModels.prodDetReviewsViewModel.overridenRatingFilter) {
+                    app.viewModels.prodDetReviewsViewModel.ratingFilter = app.viewModels.prodDetReviewsViewModel.overridenRatingFilter;
+                    app.viewModels.prodDetReviewsViewModel.overridenRatingFilter = undefined;
+                } else
+                    app.viewModels.prodDetReviewsViewModel.ratingFilter = '0'; //all reviews
                 prodDetView.dataSource.read();
             }
             // Set list title to resource name
             if (app.viewModels.prodDetReviewsViewModel.resourceName !== undefined) {
                 app.changeTitle(app.viewModels.prodDetReviewsViewModel.resourceName);
             }
+        },
+        devOrientHandler: function () {
+            setTimeout(function () {
+                debugger;
+                app.viewModels.prodDetReviewsViewModel.createReviewsGraph();
+            }, 100)
+        },
+        onHide: function () {
+            $(window).off("orientationchange", app.viewModels.prodDetReviewsViewModel.devOrientHandler);
         },
         onInit: function (e) {
             try {
@@ -52,6 +67,15 @@
                                 $('.rating-filter-container .link-active').addClass('link');
                                 $('.rating-filter-container .link-active').removeClass('link-active');
                                 $(button).addClass('link-active');
+                            } else if (button.name == 'create-review-link') {
+                                var addReviewCallback = function (prodReviewDet) {
+                                    var prodDetView = $("#prodDetView").data("kendoMobileListView");
+                                    app.viewModels.prodDetReviewsViewModel.overridenRatingFilter = prodReviewDet.rating.toString(); //all reviews
+                                    app.back();
+                                };
+                                app.viewModels.prodAddReviewViewModel.set("selectedProduct", e.dataItem);
+                                app.viewModels.prodAddReviewViewModel.successCallback = addReviewCallback;
+                                app.mobileApp.navigate('views/prodAddReviewView.html');
                             }
                         } catch (e) { }
                     },
@@ -82,7 +106,7 @@
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
                             options.success([app.viewModels.prodListViewModel.selectedRow]);
-                            setTimeout(app.viewModels.prodDetReviewsViewModel.graphReviewsSummary(), 500);
+                            app.viewModels.prodDetReviewsViewModel.createReviewsGraph();
                             $("#prodDetReviewsView").data("kendoMobileListView").dataSource.read();
                         }
                     },
@@ -137,7 +161,7 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
-        graphReviewsSummary: function () {
+        createReviewsGraph: function () {
             try {
                 /*this hook is used to make clckable y axis*/
                 $.jqplot.postDrawHooks.push(function () {
@@ -151,12 +175,12 @@
                 var fiveStarsQty = app.viewModels.prodListViewModel.selectedRow.TotalReview5
                 // For horizontal bar charts, x an y values must will be "flipped"
                 // from their vertical bar counterpart.
-                $("#graph").html('');
-                var plot2 = $.jqplot('graph', [
+                $("#reviews_graph").html('');
+                $.jqplot('reviews_graph', [
                     [[oneStarsQty, '1 star'], [twoStarsQty, '2 star'], [threeStarsQty, '3 star'], [fourStarsQty, '4 star'], [fiveStarsQty, '5 star']]],
                     {
-                        animate: true,
-                        animateReplot: true,
+                        animate: false,
+                        animateReplot: false,
                         seriesDefaults: {
                             renderer: $.jqplot.BarRenderer,
                             // Show point labels to the right ('e'ast) of each bar.
@@ -169,7 +193,7 @@
                             // Here's where we tell the chart it is oriented horizontally.
                             rendererOptions: {
                                 barDirection: 'horizontal',
-                                barWidth: 10
+                                barWidth: 10,
                             }
                         },
                         axes: {
@@ -182,12 +206,6 @@
             } catch (e) {
                 return false;
             };
-        },
-        addReviewCallback: function (prodReviewDet) {
-            var prodDetView = $("#prodDetView").data("kendoMobileListView");
-            app.viewModels.prodDetReviewsViewModel.ratingFilter = prodReviewDet.rating.toString(); //all reviews
-            prodDetView.dataSource.read();
-            app.showMessage('Thanks for giving us your opinion.')
         },
     });
 

@@ -4,8 +4,10 @@
         resourceName: 'Add Review',
         selectedProduct: undefined,
         successCallback: undefined,
-        onBeforeShow: function () {
+        onBeforeShow: function (e) {
             //clear the form
+            debugger;
+            var view = e.view;
             // Set list title to resource name
             if (app.viewModels.prodAddReviewViewModel.resourceName !== undefined) {
                 app.changeTitle(app.viewModels.prodAddReviewViewModel.resourceName);
@@ -48,7 +50,7 @@
                     "Prod_recno": app.viewModels.prodAddReviewViewModel.selectedProduct.Prod_Recno,
                     "cust_id": localStorage.getItem('selectedCustomer'),
                     "rating": rating,
-                    "recommended": form.recommended.value == 'on' ? 'yes' : 'no',
+                    "recommended": form.recommended.checked ? 'yes' : 'no',
                     "review_text": form.comments.value,
                     "web_user_id": app.viewModels.loginViewModel.username
                 };

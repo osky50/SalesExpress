@@ -1,38 +1,53 @@
 <div id="customerDet"
      data-role="view"
      data-style="inset"
-     data-init="app.viewModels.customerDetViewModel.onInit"
+     data-init="app.viewModels.customerDetViewModel.onInit"     
      data-show="app.viewModels.customerDetViewModel.onBeforeShow"
+     data-hide="app.viewModels.customerDetViewModel.onHide"
      data-model="app.viewModels.customerDetViewModel">
     <div>
         <ul id="customerDetData"
             data-role="listview" data-style="inset"></ul>
+        <div>
+            <h4>Performance</h4>
+            <ul id="customerPerfData"
+                data-role="listview" data-style="inset"></ul>
+        </div>        
     </div>
 </div>
 <div id="pager" class="k-pager-wrap"></div>
 <script type="text/x-kendo-template" id="customerDetTemplate">
-    <form>
-        <div class="float-left" style="margin-top:8px; margin-right: 8px"><b>Customer ID: </b>#: Cust_Id #</div>
-        <div>
-            <button type="button" data-role="button" name="change-customer">Change</button>            
-        </div>
-        <div><b>Email: </b>#: Email #</div>
-        <div><b>Full Name: </b>#: Name #</div>
-        <div><b>Search Name: </b>#: SearchName #</div>
-        <div class="float-left" style="margin-top:8px; margin-right: 8px"><b>Address: </b>#: FormattedAddress #</div>
-        <div>
-            <button type="button" data-role="button" name="directions">Get Directions</button>
-        </div>
-        <div>
-            <b>Phones: </b>
-            <div>#: Cell # (cell)</div><div>#: Phone #</div><div>#: Phone2 #</div>
-        </div>
-        <div><b>Tax Reg-No.: </b>#: TaxRegNo #</div>
-        <div><b>Level: </b>#: LevelId # (#: LevelDesc #)</div>
-        <div><b>Term: </b>#: TermId # (#: TermDesc #)</div>
-        <div><b>Default Currency: </b>#: CurrencyId # (#: CurrencyDesc #)</div>
-        <div><b>Currency Vals: </b>#: CurrencyVals #</div>
-    </form>
+    <div class="float-left" style="margin-top:8px; margin-right: 8px"><b>Customer ID: </b>#: Cust_Id #</div>
+    <div>
+        <button type="button" data-role="button" name="change-customer">Change</button>
+    </div>
+    <div><b>Email: </b>#: Email #</div>
+    <div><b>Full Name: </b>#: Name #</div>
+    <div><b>Search Name: </b>#: SearchName #</div>
+    <div class="float-left" style="margin-top:8px; margin-right: 8px"><b>Address: </b>#: FormattedAddress #</div>
+    <div>
+        <button type="button" data-role="button" name="directions">Get Directions</button>
+    </div>
+    <div>
+        <b>Phones: </b>
+        <div>#: Cell # (cell)</div><div>#: Phone #</div><div>#: Phone2 #</div>
+    </div>
+    <div><b>Tax Reg-No.: </b>#: TaxRegNo #</div>
+    <div><b>Level: </b>#: LevelId # (#: LevelDesc #)</div>
+    <div><b>Term: </b>#: TermId # (#: TermDesc #)</div>
+    <div><b>Default Currency: </b>#: CurrencyId # (#: CurrencyDesc #)</div>
+    <div><b>Currency Vals: </b>#: CurrencyVals #</div>
+</script>
+<script type="text/x-kendo-template" id="customerPerfTemplate">
+    <div><b>A/R Balance: </b>#: AR_Balance #</div>
+    <div><b>Charge Balance: </b>#: Charge_Balance #</div>
+    <div><b>Credit Limit: </b>#: Credit_Limit #</div>
+    <div><b>High Credit: </b>#: High_Credit #</div>
+    <div><b>High Credit Date: </b>#: High_Credit_Date #</div>
+    <div><b>Last Payment Amt.: </b>#: Last_Paid_Amt #</div>
+    <div><b>Last Payment Date: </b>#: Last_Paid_Date #</div>
+    <div><b>S/O Balance: </b>#: So_Balance #</div>
+    <div id="perf_graph" style="margin:5px; width:100%"></div>
 </script>
 
 
