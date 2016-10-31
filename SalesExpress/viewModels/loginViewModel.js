@@ -9,6 +9,7 @@
         loginLabel: "Log In",
         logoutLabel: "Log Out",
         sysParametersList: [
+            { number: -3, name: 'defaultLocation', doNotRequest: true },
             { number: -2, name: 'defaultControlEnt', doNotRequest: true },
             { number: -1, name: 'defaultCustomer', doNotRequest: true },
             { number: 2265, name: 'enabledBuyMultiLocations' },
@@ -128,6 +129,7 @@
             $(".user-info").html(app.viewModels.loginViewModel.get("username"));
             $(".control-ent-info").html(localStorage.getItem('defaultControlEnt'));
             $(".customer-info").html(localStorage.getItem('defaultCustomer'));
+            $(".location-info").html(localStorage.getItem("defaultLocation"));
             $(".facebook-info").attr('href', localStorage.getItem('facebookUrl'));
             $(".twitter-info").attr('href', localStorage.getItem("twitterUrl"));
             $(".login-info").show();

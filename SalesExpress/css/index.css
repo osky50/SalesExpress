@@ -212,14 +212,15 @@ label {
 #prodDetailImageView img {
     width: 100%;
 }
-
+.font-smaller{
+    font-size: smaller !important;
+}
 .link, .link-active {
     background: none !important;
     border: none !important;
-    padding: 0 !important;
-    font-size: smaller !important;
+    padding: 0 !important;    
     margin: 0 !important;
-    color: #005580 !important;
+    color: #247bbd !important;
     font-weight: normal !important;
 }
 .link-active {

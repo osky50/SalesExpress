@@ -7,7 +7,7 @@
      data-transition="fade">
     <div>
         <ul id="prodDetView" data-role="listview" data-style="inset"></ul>
-        <ul id="prodDetReviewsView" data-role="listview" data-style="inset"></ul>        
+        <ul id="prodDetReviewsView" data-role="listview" data-style="inset"></ul>
     </div>
     <script type="text/x-kendo-template" id="prodDetTemplate">
         <div>
@@ -28,21 +28,23 @@
         <div>
             <label>Filter:</label>
         </div>
-        <div class="rating-filter-container" style="padding-top:3px">
-            <button data-role="button" name="0-stars-reviews-link" class="link-active float-left">All</button>
+        <div class="rating-filter-container" style="padding-top:3px; width:100%">
+            <button data-role="button" name="0-stars-reviews-link" class="font-smaller link-active float-left">All</button>
             <div class="float-left">&nbsp;|&nbsp;</div>
-            <button data-role="button" name="5-stars-reviews-link" class="link float-left">5 stars</button>
+            <button data-role="button" name="5-stars-reviews-link" class="font-smaller link float-left">5 stars</button>
             <div class="float-left">&nbsp;|&nbsp;</div>
-            <button data-role="button" name="4-stars-reviews-link" class="link float-left">4 stars</button>
+            <button data-role="button" name="4-stars-reviews-link" class="font-smaller link float-left">4 stars</button>
             <div class="float-left">&nbsp;|&nbsp;</div>
-            <button data-role="button" name="3-stars-reviews-link" class="link float-left">3 stars</button>
+            <button data-role="button" name="3-stars-reviews-link" class="font-smaller link float-left">3 stars</button>
             <div class="float-left">&nbsp;|&nbsp;</div>
-            <button data-role="button" name="2-stars-reviews-link" class="link float-left">2 stars</button>
+            <button data-role="button" name="2-stars-reviews-link" class="font-smaller link float-left">2 stars</button>
             <div class="float-left">&nbsp;|&nbsp;</div>
-            <button data-role="button" name="1-stars-reviews-link" class="link">1 stars</button>
+            <button data-role="button" name="1-stars-reviews-link" class="font-smaller link float-left">1 stars</button>
         </div>
-        <button data-role="button" name="create-review-link" class="link">Create you own review</button>
-        <div style="margin:5px; width:100%; height:150px" id="reviews_graph"></div>
+        <div class="float-left" style="width:100%">
+            <button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button>
+        </div>
+        <div class="float-left" style="margin:5px; width:100%; height:150px" id="reviews_graph"></div>
     </script>
     <script type="text/x-kendo-template" id="prodDetReviewTemplate">
         <form>
@@ -51,7 +53,7 @@
             <div><b>Date: </b>#: Log_date #</div>
             <div>
                 <div style="margin-top:5px" class="float-left"><b>Recommended: </b></div>
-                <b style="margin-left:3px; margin-top:2px" class="fa fa-recommended-#: Recommended #">&nbsp;</b>                
+                <b style="margin-left:3px; margin-top:2px" class="fa fa-recommended-#: Recommended #">&nbsp;</b>
             </div>
             <div><b>Comments: </b>#: Review_text #</div>
         </form>
