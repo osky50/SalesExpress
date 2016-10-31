@@ -43,9 +43,7 @@
                             if (button.name == 'reviews-link') {
                                 app.mobileApp.navigate('views/prodDetReviewsView.html');
                             } else if (button.name == 'create-review-link') {
-                                debugger;
                                 var addReviewCallback = function (prodReviewDet) {
-                                    debugger;
                                     app.mobileApp.navigate('views/prodDetView.html');
                                 };
                                 app.viewModels.prodAddReviewViewModel.set("selectedProduct", e.dataItem);

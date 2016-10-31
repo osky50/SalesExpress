@@ -12,7 +12,6 @@
             }
         },
         onInit: function (e) {
-            debugger;
             var drawMap = function (latlng) {
                 var myOptions = {
                     zoom: 10,

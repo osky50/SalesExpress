@@ -40,7 +40,7 @@ var locationModel = function () {
 
 var productModel = function () {
     return kendo.data.Model.define({
-        id: "id", // the identifier is the "id" field (declared below)
+        id: "Synonym", // the identifier is the "id" field (declared below)
         fields: {
             Prod_Id: {
                 type: "string", // the field is a string
@@ -57,6 +57,24 @@ var productModel = function () {
                     required: true // the field is required
                 },
                 from: "[\"Prod-RecNo\"]",
+                defaultValue: "<empty>" // default field value
+
+            },
+            Synonym: {
+                type: "string", // the field is a string
+                validation: { // validation rules
+                    required: true // the field is required
+                },
+                from: "Synonym",
+                defaultValue: "<empty>" // default field value
+
+            },
+            ImgUrl: {
+                type: "string", // the field is a string
+                validation: { // validation rules
+                    required: true // the field is required
+                },
+                from: "ImgUrl",
                 defaultValue: "<empty>" // default field value
 
             }
