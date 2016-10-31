@@ -71,6 +71,8 @@
                                 app.viewModels.prodAddReviewViewModel.set("selectedProduct", e.dataItem);
                                 app.viewModels.prodAddReviewViewModel.successCallback = addReviewCallback;
                                 app.mobileApp.navigate('views/prodAddReviewView.html');
+                            } else if (button.name == 'addToCart') {
+                                app.viewModels.prodListViewModel.addLineToCart();
                             }
                         } catch (e) { }
                     },
@@ -85,7 +87,7 @@
         },
         loadMore: function () {
             var prodListView = $("#productListView").data("kendoMobileListView");
-            app.viewModels.prodListViewModel.set("fromLoadMore",true);
+            app.viewModels.prodListViewModel.set("fromLoadMore", true);
             prodListView.dataSource.read();
         },
         createJSDODataSource: function () {
@@ -101,6 +103,13 @@
                         'afterFill': [{
                             scope: this,
                             fn: function (jsdo, success, request) {
+                                try {
+                                    request.response.dsProd.eProduct.forEach(function (eProduct) {
+                                        eProduct.BuyDisabled = eProduct.DefaultAfs == 0 ? 'disabled' : '';
+                                    });
+                                } catch (e) {
+
+                                }
                             }
                         }],
                         'beforeFill': [{
@@ -140,17 +149,17 @@
                             promise.done(function (session, result, details) {
                                 var currentProdList = details.response.dsProd.eProduct;
                                 if (currentProdList && currentProdList.length > 0) {
-                                    me.set("lastRowid",currentProdList[currentProdList.length - 1].TextRowID);
-                                    me.set("moreRecords",currentProdList.length === me.pageSize);
+                                    me.set("lastRowid", currentProdList[currentProdList.length - 1].TextRowID);
+                                    me.set("moreRecords", currentProdList.length === me.pageSize);
                                 }
                                 else {
-                                    me.set("moreRecords",false);
+                                    me.set("moreRecords", false);
                                 }
 
                                 kendo.bind($("#loadMore"), me);
 
                                 if (me.fromLoadMore) {
-                                    me.set("fromLoadMore",false);
+                                    me.set("fromLoadMore", false);
                                 }
                                 else {
                                     me.loadedProduct = [];
@@ -177,6 +186,23 @@
             catch (ex) {
                 createDataSourceErrorFn({ errorObject: ex });
             }
+        },
+        addLineToCart: function () {
+            app.mobileApp.showLoading();
+            lineAdded = function () {
+                app.mobileApp.hideLoading();
+                app.showMessage('Product Added to the Cart');
+            };
+            eOrderobj = new EOrderClass();
+            eOrderobj.setCustId(localStorage.getItem('defaultCustomer'));
+            var eoline = {
+                "ProdRecno": app.viewModels.prodListViewModel.selectedRow.Prod_Recno,
+                "OrderQty": 1,
+                "LineNo": 1,
+                "LocId": localStorage.getItem('defaultLocation')
+            }
+            eOrderobj.addLine(eoline);
+            addLineToShoppingCart(eOrderobj.getEOrder(), lineAdded);
         },
     });
 

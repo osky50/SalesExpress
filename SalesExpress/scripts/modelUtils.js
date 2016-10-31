@@ -137,8 +137,10 @@ var addLineToShoppingCart = function (eOrder, callBackFn) {
             } catch (e) {
                 console.log("Error", e)
             }
-            if (errors)
+            if (errors) {
+                app.mobileApp.hideLoading();
                 return;
+            }
             // Executing call back as everything finshed successfully
             callBackFn.apply(callBackFn);
         }

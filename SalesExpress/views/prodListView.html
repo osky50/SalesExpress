@@ -9,29 +9,32 @@
 
     <ul id="productListView"
         data-role="listview" data-style="inset"></ul>
-    
+
     <div style="text-align:center">
         <button data-role="button" id="loadMore" data-bind="click: loadMore, visible: moreRecords">Load More</button>
     </div>
 
-        <div id="pager" class="k-pager-wrap"></div>
+    <div id="pager" class="k-pager-wrap"></div>
 
-        <script type="text/x-kendo-template" id="prodTemplate">
-            <div class="prod-list-item-image"><img src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" /></div>
-            <div class="prod-list-item-details">
-                <div>#: description #</div>
-                <div><b>Prod. Id.: </b>#: Prod_Id #</div>
-                <div><b>Price: </b>#: Price #</div>
-                <div><b>Default Loc. AFS: </b> #: DefaultAfs #</div>
-                <div><b>All Loc. AFS: </b> #: Afs #</div>
-                <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="prod-list-rateit a" data-rateit-starwidth="16" data-rateit-starheight="16" step="1"></div>
-                <div>
-                    <div style="margin-top:3px" class="font-smaller rateit-description float-left">#: AvgRating # out of 5 stars&nbsp;|&nbsp;</div>
-                    <button data-role="button" name="reviews-link" class="font-smaller link rateit-description">#: TotalReview # customers reviews</button>
-                </div>
-                <button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button>
+    <script type="text/x-kendo-template" id="prodTemplate">
+        <div class="prod-list-item-image"><img src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" /></div>
+        <div class="prod-list-item-details">
+            <div>#: description #</div>
+            <div><b>Prod. Id.: </b>#: Prod_Id #</div>
+            <div><b>Price: </b>#: Price #</div>
+            <div><b>Default Loc. AFS: </b> #: DefaultAfs #</div>
+            <div><b>All Loc. AFS: </b> #: Afs #</div>
+            <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="prod-list-rateit a" data-rateit-starwidth="16" data-rateit-starheight="16" step="1"></div>
+            <div>
+                <div style="margin-top:3px" class="font-smaller rateit-description float-left">#: AvgRating # out of 5 stars&nbsp;|&nbsp;</div>
+                <button data-role="button" name="reviews-link" class="font-smaller link rateit-description">#: TotalReview # customers reviews</button>
             </div>
-        </script>
+            <div><button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button></div>
+            <div class="float-left">
+                <button type="button" data-role="button" #: BuyDisabled # name="addToCart">Buy</button>
+            </div>
+        </div>
+    </script>
 
 </div>
 

@@ -241,3 +241,9 @@ label {
     height: 100%;
     padding: 0;
 }
+.k-widget.k-tooltip.k-tooltip-validation.k-invalid-msg{
+    float:right;
+}
+.border-1{
+    border: solid 1px !important;
+}
