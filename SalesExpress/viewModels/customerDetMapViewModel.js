@@ -12,7 +12,6 @@
             }
         },
         onInit: function (e) {
-            debugger;
             var drawMap = function (latlng) {
                 var myOptions = {
                     zoom: 10,
@@ -21,12 +20,25 @@
                 };
                 app.DirectionsService = new google.maps.DirectionsService();
                 app.DirectionsDisplay = new google.maps.DirectionsRenderer();
+                app.DirectionsDisplay.setMap(map);
                 var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
                 // Add an overlay to the map of current lat/lng
                 var marker = new google.maps.Marker({
                     position: latlng,
                     map: map,
-                    title: "Greetings!"
+                    title: "Current Location"
+                });
+                //routing
+                debugger;
+                var request = {
+                    origin: latlng,
+                    destination: 'Los Angeles, CA',
+                    travelMode: 'DRIVING'
+                };
+                app.DirectionsService.route(request, function (result, status) {
+                    if (status == 'OK') {
+                        app.DirectionsDisplay.setDirections(result);
+                    }
                 });
             }
             var defaultLatLng = new google.maps.LatLng(34.0983425, -118.3267434);  // Default to Hollywood, CA when no geolocation support
