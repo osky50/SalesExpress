@@ -9,6 +9,10 @@
     <ul id="customerListView"
         data-role="listview" data-style="inset"></ul>
 
+    <div style="text-align:center">
+        <button data-role="button" id="loadMore" data-bind="click: loadMore, visible: moreRecords">Load More</button>
+    </div>
+
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="customerListTemplate">
         <div style="margin-top:8px; margin-right: 8px"><b>Customer ID: </b>#: Cust_Id #</div>

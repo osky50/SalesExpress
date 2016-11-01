@@ -166,4 +166,6 @@
     app.customerDetails = function () {
         app.mobileApp.navigate('views/customerDetView.html');
     };
+
+    app.pageSize = 10;
 }());
