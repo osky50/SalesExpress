@@ -59,33 +59,42 @@
             jsdoSettings.tableName = 'stockdetail';
             this.jsdoStockModel = new progress.data.JSDO({
                 name: jsdoSettings.resourceName,
-                autoFill: false,
+                autoFill: false,                
             });
             this.locStockDataSource = {
                 transport: {
                     read: function (options) {
-                        var me = app.viewModels.locDetViewModel;
-                        var filter = {
-                            "pProdRecno": app.viewModels.prodDetViewModel.currentLoc["Prod-RecNo"],
-                            "pLocId": app.viewModels.prodDetViewModel.currentLoc.Loc_Id
-                        };
-                        var promise = me.jsdoStockModel.invoke('GetLocStockDetail', filter);
-                        promise.done(function (session, result, details) {
-                            var errors = false;
-                            try {
-                                errors = app.getErrors(details.response.dsLocStockDetail.dsLocStockDetail.wsResult);
-                                if (errors)
-                                    return;
-                                var currentlocStockList = details.response.dsLocStockDetail.dsLocStockDetail.stockdetail;
-                                options.success(currentlocStockList);
-                            } catch (e) {
+                        if (app.viewModels.locDetViewModel.selectedRow) {
+                            var filter = {
+                                "pProdRecno": app.viewModels.prodDetViewModel.currentLoc["Prod-RecNo"],
+                                "pLocId": app.viewModels.locDetViewModel.selectedRow.Loc_Id1 //is defined like that in the model
+                            };
+                            var promise = app.viewModels.locDetViewModel.jsdoStockModel.invoke('GetLocStockDetail', filter);
+                            promise.done(function (session, result, details) {
+                                var errors = false;
+                                try {
+                                    errors = app.getErrors(details.response.dsLocStockDetail.dsLocStockDetail.wsResult);
+                                    if (errors) {
+                                        options.success([]);
+                                        return;
+                                    }
+                                    var currentlocStockList = details.response.dsLocStockDetail.dsLocStockDetail.stockdetail;
+                                    currentlocStockList.forEach(function (stockDetail) {
+                                        stockDetail.ShortDescription = stockDetail.Description.replace(
+                                            ' for ' + app.viewModels.locDetViewModel.selectedRow.Name, "");
+                                        stockDetail.ShortDescription = stockDetail.ShortDescription.replace(
+                                            ' to ' + app.viewModels.locDetViewModel.selectedRow.Name, "");
+                                    });
+                                    options.success(currentlocStockList);
+                                } catch (e) {
+                                    options.success([]);
+                                }
+                            });
+                            promise.fail(function () {
                                 options.success([]);
-                            }
-
-                        });
-                        promise.fail(function () {
+                            });
+                        } else
                             options.success([]);
-                        });
                     }
                 },
                 error: function (e) {
@@ -112,12 +121,15 @@
                     transport: {
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
-                            var me = app.viewModels.locDetViewModel;
                             var filter = { "LocationId": app.viewModels.prodDetViewModel.currentLoc.Loc_Id };
-                            var promise = me.jsdoModel.invoke('GetLocation', filter);
+                            var promise = app.viewModels.locDetViewModel.jsdoModel.invoke('GetLocation', filter);
                             promise.done(function (session, result, details) {
                                 var currentLocList = details.response.dsLoc.dsLoc.eLocation;
                                 options.success(currentLocList);
+                                if (currentLocList.length)
+                                    app.viewModels.locDetViewModel.set('selectedRow', currentLocList[0]);
+                                else
+                                    app.viewModels.locDetViewModel.set('selectedRow', undefined);
                                 $("#locStockView").data("kendoMobileListView").dataSource.read();
                             });
                             promise.fail(function () {
