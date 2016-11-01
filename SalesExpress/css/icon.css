@@ -37,5 +37,10 @@
 .km-fa-list-ul:before {
   content: "\f0ca";
 } 
+.km-fa-info-circle:after,
+.km-fa-info-circle:before {
+  content: "\f05a";
+}
+
  
  

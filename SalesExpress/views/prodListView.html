@@ -30,9 +30,14 @@
                 <button data-role="button" name="reviews-link" class="font-smaller link rateit-description">#: TotalReview # customers reviews</button>
             </div>
             <div><button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button></div>
-            <div class="float-left">
-                <button type="button" data-role="button" #: BuyDisabled # name="addToCart">Buy</button>
-            </div>
+            <form>
+                <div class="float-left">
+                    <input type="number" min="1" required style="display: #: BuyDisplay #" class="width-70 border-1 relative" name="Quantity"
+                           value="1" />
+                    <button type="button" data-role="button" style="display: #: BuyDisplay #" name="addToCart" class="fa" data-icon="fa-shopping-cart">Buy</button>
+                    <button type="button" data-role="button" name="details" class="fa" data-icon="fa-info-circle">Details</button>
+                </div>
+            </form>
         </div>
     </script>
 

@@ -164,6 +164,11 @@ h1 {
     width: 90px !important;
 }
 
+.width-70 {
+    width: 70px !important;
+    min-width: 70px !important;
+}
+
 .width-130 {
     width: 130px;
 }
@@ -243,7 +248,8 @@ label {
 }
 
 .k-widget.k-tooltip.k-tooltip-validation.k-invalid-msg {
-    float: right;
+    float: left;
+    width: 100%;
 }
 
 .border-1 {

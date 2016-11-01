@@ -53,16 +53,15 @@
                     },
                     template: kendo.template($("#prodTemplate").html()),
                     click: function (e) {
-                        app.viewModels.prodListViewModel.set("selectedRow", e.dataItem);
-                        if (!e.button) {
-                            app.mobileApp.navigate('views/prodDetView.html');
+                        if (!e.button)
                             return;
-                        }
+                        app.viewModels.prodListViewModel.set("selectedRow", e.dataItem);
                         try {
                             var button = e.button.element[0];
-                            if (button.name == 'reviews-link') {
+                            if (button.name == 'details') {
+                                app.mobileApp.navigate('views/prodDetView.html');
+                            } else if (button.name == 'reviews-link') {
                                 app.mobileApp.navigate('views/prodDetReviewsView.html');
-                                return;
                             } else if (button.name == 'create-review-link') {
                                 var addReviewCallback = function (prodReviewDet) {
                                     app.viewModels.prodListViewModel.forceLoad = true;
@@ -72,7 +71,20 @@
                                 app.viewModels.prodAddReviewViewModel.successCallback = addReviewCallback;
                                 app.mobileApp.navigate('views/prodAddReviewView.html');
                             } else if (button.name == 'addToCart') {
-                                app.viewModels.prodListViewModel.addLineToCart();
+                                var form = e.item.find('form');
+                                var input = e.item.find('input');
+                                //analizing "enabledBackOrders" parameter
+                                var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
+                                if (!enabledBackOrders || enabledBackOrders == 'false') {
+                                    $(input).attr('max', app.viewModels.prodListViewModel.selectedRow.DefaultAfs); //removing max attribute which initially have the AFS
+                                }
+                                var validator = $(form).kendoValidator({
+                                    validateOnBlur: false
+                                }).data('kendoValidator');
+                                if (!validator.validateInput($(input)))
+                                    return;
+                                var qty = parseInt(input.val());
+                                app.viewModels.prodListViewModel.addLineToCart(qty);
                             }
                         } catch (e) { }
                     },
@@ -106,7 +118,7 @@
                                 try {
                                     request.response.dsProd.eProduct.forEach(function (eProduct) {
                                         var enableBackOrder = localStorage.getItem('enabledBackOrder').toString();
-                                        eProduct.BuyDisabled = eProduct.DefaultAfs == 0 && localStorage.getItem('enabledBackOrder') == 'false' ? 'disabled' : '';
+                                        eProduct.BuyDisplay = eProduct.DefaultAfs == 0 && localStorage.getItem('enabledBackOrder') == 'false' ? 'none' : 'visible';
                                     });
                                 } catch (e) {
 
@@ -188,7 +200,7 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
-        addLineToCart: function () {
+        addLineToCart: function (qty) {
             app.mobileApp.showLoading();
             lineAdded = function () {
                 app.mobileApp.hideLoading();
@@ -198,7 +210,7 @@
             eOrderobj.setCustId(localStorage.getItem('defaultCustomer'));
             var eoline = {
                 "ProdRecno": app.viewModels.prodListViewModel.selectedRow.Prod_Recno,
-                "OrderQty": 1,
+                "OrderQty": qty,
                 "LineNo": 1,
                 "LocId": localStorage.getItem('defaultLocation')
             }
