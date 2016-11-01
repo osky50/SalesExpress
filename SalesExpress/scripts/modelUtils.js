@@ -150,3 +150,28 @@ var addLineToShoppingCart = function (eOrder, callBackFn) {
         app.showError('Failed to update the shopping cart');
     });
 };
+
+var getFormattedAddress = function (eObject) {
+    var address = eObject['Address'];
+    if (eObject['City'] && eObject['City'] != '') {
+        if (address && address != '')
+            address = address + ', ' + eObject['City'];
+        else
+            address = eObject['City'];
+    }
+    address.trim();
+    if (eObject['Province'] && eObject['Province'] != '') {
+        if (address && address != '')
+            address = address + ', ' + eObject['Province'];
+        else
+            address = eObject['Province'];
+    }
+    address.trim();
+    if (eObject['PostalCode'] && eObject['PostalCode'] != '') {
+        if (address && address != '')
+            address = address + ', ' + eObject['PostalCode'];
+        else
+            address = eObject['PostalCode'];
+    }
+    return address.trim();
+}

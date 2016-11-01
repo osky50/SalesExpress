@@ -75,12 +75,12 @@
     </script>
     <script type="text/x-kendo-template" id="prodDetLocTemplate">
         <form>
-            <div><b>Location: </b>#: Loc_Id #</div>            
+            <div><b>Location: </b>#: Loc_Id #</div>
             <div><b>AFS: </b>#: AFS # (#: UnitId #)</div>
-            <div class=""><b>ON_PO: </b>#: ONPO #</div>
+            <div class=""><b>ON_PO: </b>#: ONPO # (#: UnitId #)</div>
             <div class="float-left">
-                <label style="margin-top:8px">Quantity:</label>
-                <input type="number" min="1" required class="border-1 relative width-70" name="Quantity" value="1"                        />
+                <label style="margin-top:8px">Qty.:</label>
+                <input type="number" min="1" required class="border-1 relative width-70" name="quantity" value="1" />
                 <button type="button" data-role="button" name="addToCart" class="fa" data-icon="fa-shopping-cart">Buy</button>
                 <button type="button" data-role="button" name="locDetails" class="fa" data-icon="fa-info-circle">Details</button>
             </div>

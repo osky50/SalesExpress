@@ -41,6 +41,18 @@
 .km-fa-info-circle:before {
   content: "\f05a";
 }
+.km-fa-pencil:after,
+.km-fa-pencil:before {
+  content: "\f040";
+}
+.km-fa-trash-o:after,
+.km-fa-trash-o:before {
+  content: "\f014";
+}
+.km-fa-check:after,
+.km-fa-check:before {
+  content: "\f00c";
+}
 
  
  
