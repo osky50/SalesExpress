@@ -37,7 +37,7 @@
         </div>
         <div>
             <label>Price:</label>
-            <div class="title">#: Price#</div>
+            <div class="title">$#: Price#</div>
         </div>
 
         <div>
@@ -45,8 +45,8 @@
             <div class="inline">#: Synonym#</div>
         </div>
         <div>
-            <label>AFS:</label>
-            <div class="title">#: Afs#</div>
+            <label>All Loc. AFS:</label>
+            <div class="title">#: Afs# (#: UnitId #)</div>
         </div>
         <div>
             <label>Report Synonym:</label>
@@ -75,16 +75,14 @@
     </script>
     <script type="text/x-kendo-template" id="prodDetLocTemplate">
         <form>
-            <div class="inline"><b>Location: </b>#: Loc_Id #</div>
-            <div class="inline">
-                <p><a data-role="button" name="locDetails" class="link">See Details</a></p>
-            </div>
-            <div><b>AFS: </b>#: AFS #</div>
+            <div><b>Location: </b>#: Loc_Id #</div>            
+            <div><b>AFS: </b>#: AFS # (#: UnitId #)</div>
             <div class=""><b>ON_PO: </b>#: ONPO #</div>
             <div class="float-left">
                 <label style="margin-top:8px">Quantity:</label>
-                <input type="number" min="1" required class="border-1 relative width-70" name="Quantity" value="#: CartQty #"                        />
-                <button type="button" data-role="button" name="addToCart" class="fa" data-icon="fa-shopping-cart">Add To Cart</button>
+                <input type="number" min="1" required class="border-1 relative width-70" name="Quantity" value="1"                        />
+                <button type="button" data-role="button" name="addToCart" class="fa" data-icon="fa-shopping-cart">Buy</button>
+                <button type="button" data-role="button" name="locDetails" class="fa" data-icon="fa-info-circle">Details</button>
             </div>
         </form>
     </script>

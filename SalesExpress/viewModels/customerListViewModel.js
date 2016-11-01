@@ -85,7 +85,6 @@
                     serverSorting: true,
                     transport: {
                         read: function (options) {
-                            debugger;
                             app.mobileApp.showLoading();
                             var me = app.viewModels.customerListViewModel;
                             if (me.fromLoadMore && me.lastRowid) {
@@ -95,7 +94,6 @@
                             var rparam = JSON.stringify(options.data);
                             var promise = me.jsdoModel.read(rparam);
                             promise.done(function (session, result, details) {
-                                debugger;
                                 var currentCustList = details.response.dsCust.eCustomer;
                                 if (currentCustList && currentCustList.length > 0) {
                                     me.set("lastRowid", currentCustList[currentCustList.length - 1].TextRowID);
