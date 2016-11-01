@@ -8,7 +8,7 @@
         lastPage: undefined,
         fromLoadMore: false,
         moreRecords: true,
-        pageSize: 10,
+        pageSize: app.pageSize,
         loadedProduct: [],
         selectedRow: {},
         origRow: {},
