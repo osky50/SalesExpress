@@ -39,6 +39,7 @@
     <Content Include="css\jquery.jqplot.min.css">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="css\jquery.mobile-1.4.5.min.css" />
     <Content Include="css\jquery.rateit.css" />
     <Content Include="css\swipebox.min.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
