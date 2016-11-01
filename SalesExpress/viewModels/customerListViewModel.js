@@ -4,6 +4,12 @@
     var customerListViewModel = kendo.observable({
         jsdoDataSource: undefined,
         jsdoModel: undefined,
+        lastRowid: undefined,
+        lastPage: undefined,
+        fromLoadMore: false,
+        moreRecords: true,
+        pageSize: 10,
+        loadedCust: [],
         selectedRow: {},
         origRow: {},
         resourceName: 'Customer List',
@@ -31,12 +37,13 @@
                     pullToRefresh: true,
                     style: "display: inline",
                     pageable: true,
+                    filterable: {
+                        autoFilter: false,
+                        placeholder: "Type to search...",
+                        field: "search-alias"
+                    },
                     appendOnRefresh: false,
                     loadMore: false,
-                    /*filterable: {
-                        placeholder: "Type to search...",
-                        field: "synonym"
-                    },*/
                     virtualViewSize: 100,
                     template: kendo.template($("#customerListTemplate").html()),
                     click: function (e) {
@@ -55,6 +62,11 @@
                 console.log("Error in initListView: " + ex);
             }
         },
+        loadMore: function () {
+            var custListView = $("#customerListView").data("kendoMobileListView");
+            app.viewModels.customerListViewModel.set("fromLoadMore", true);
+            custListView.dataSource.read();
+        },
         createJSDODataSource: function () {
             try {
                 //configuring JSDO Settings
@@ -67,15 +79,49 @@
                     autoFill: false,
                 });
                 this.jsdoDataSource = new kendo.data.DataSource({
-                    type: "jsdo",
                     // TO_DO - Enter your filtering and sorting options
                     serverPaging: true,
-                    //serverFiltering: true,
+                    serverFiltering: true,
                     serverSorting: true,
                     transport: {
-                        jsdo: this.jsdoModel
-                        // TO_DO - If resource is multi-table dataset, specify table name for data source
-                        , tableRef: jsdoSettings.tableName
+                        read: function (options) {
+                            debugger;
+                            app.mobileApp.showLoading();
+                            var me = app.viewModels.customerListViewModel;
+                            if (me.fromLoadMore && me.lastRowid) {
+                                options.data.startrowid = me.lastRowid;
+                            }
+                            options.data.pageSize = me.pageSize;
+                            var rparam = JSON.stringify(options.data);
+                            var promise = me.jsdoModel.read(rparam);
+                            promise.done(function (session, result, details) {
+                                debugger;
+                                var currentCustList = details.response.dsCust.eCustomer;
+                                if (currentCustList && currentCustList.length > 0) {
+                                    me.set("lastRowid", currentCustList[currentCustList.length - 1].TextRowID);
+                                    me.set("moreRecords", currentCustList.length === me.pageSize);
+                                }
+                                else {
+                                    me.set("moreRecords", false);
+                                }
+
+                                kendo.bind($("#loadMore"), me);
+
+                                if (me.fromLoadMore) {
+                                    me.set("fromLoadMore", false);
+                                }
+                                else {
+                                    me.loadedCust = [];
+                                }
+                                Array.prototype.push.apply(me.loadedCust, currentCustList);
+                                options.success(me.loadedCust.slice());
+                                app.mobileApp.hideLoading();
+                            });
+                            promise.fail(function () {
+                                options.success([]);
+                                app.mobileApp.hideLoading();
+                            });
+                        }
                     },
                     schema: {
                         model: eCustomer,
