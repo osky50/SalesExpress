@@ -7,12 +7,6 @@
         origRow: {},
         resourceName: 'Shopping Cart',
         forceLoad: false,
-
-        // The order of the firing of events is as follows:
-        //   before-show
-        //   init (fires only once)
-        //   show
-
         onBeforeShow: function () {
             var shopcartLines = $("#shopcartLines").data("kendoMobileListView");
             if (shopcartLines === undefined) { //extra protection in case onInit have not been fired yet
@@ -88,7 +82,6 @@
                     transport: {
                         // when the grid tries to read data, it will call this function
                         read: function (options) {
-                            var me = this;
                             var promise = app.viewModels.shopcartDetViewModel.jsdoModel.invoke('CartRead', {});
                             promise.done(function (session, result, details) {
                                 var shopcart = null;
@@ -179,7 +172,7 @@
                 app.showMessage('Placing the order failed.');
             });
         },
-        shopcartNotes : function () {
+        shopcartNotes: function () {
             app.mobileApp.navigate('views/shopcartNotesView.html');
         }
     });

@@ -8,6 +8,7 @@
         loginViewTitle: "Log In",
         loginLabel: "Log In",
         logoutLabel: "Log Out",
+        shoppingCartJsdoModel: undefined,
         sysParametersList: [
             { number: -3, name: 'defaultLocation', doNotRequest: true },
             { number: -2, name: 'defaultControlEnt', doNotRequest: true },
@@ -126,6 +127,7 @@
             }
         },
         startApplication: function () {
+            app.updateShoppingCartQty();
             $(".user-info").html(app.viewModels.loginViewModel.get("username"));
             $(".control-ent-info").html(localStorage.getItem('defaultControlEnt'));
             $(".customer-info").html(localStorage.getItem('defaultCustomer'));

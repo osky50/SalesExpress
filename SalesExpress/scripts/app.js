@@ -161,5 +161,32 @@
     app.customerDetails = function () {
         app.mobileApp.navigate('views/customerDetView.html');
     };
+    app.updateShoppingCartQty = function () {
+        //configuring JSDO Settings
+        jsdoSettings.resourceName = 'dsOrder';
+        jsdoSettings.tableName = 'eOrder';
+        // create JSDO
+        var shoppingCartJsdoModel = new progress.data.JSDO({
+            name: jsdoSettings.resourceName,
+            autoFill: false
+        });
+        var promise = shoppingCartJsdoModel.invoke('CartRead', {});
+        promise.done(function (session, result, details) {
+            var shopcart = null;
+            if (details.response.dsOrder.dsOrder.eOrder && details.response.dsOrder.dsOrder.eOrder.length) {
+                var shopcart = details.response.dsOrder.dsOrder.eOrder[0];
+                if (!shopcart.eOrderLine || !shopcart.eOrderLine.length)
+                    shopcart = null;
+            }
+            if (shopcart) {
+                $('.shopcart-header-info').text('(' + shopcart.eOrderLine.length + ')');
+            } else {
+                $('.shopcart-header-info').text('');
+            }
+        });
+        promise.fail(function () {
+            app.showError('Failed to retrieve Shopping Cart details.')
+        });
+    };
     app.pageSize = 10;
 }());

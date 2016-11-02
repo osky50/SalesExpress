@@ -142,6 +142,7 @@ var addLineToShoppingCart = function (eOrder, callBackFn) {
                 return;
             }
             // Executing call back as everything finshed successfully
+            app.updateShoppingCartQty();
             callBackFn.apply(callBackFn);
         }
     });

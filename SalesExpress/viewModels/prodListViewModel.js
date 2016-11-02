@@ -14,12 +14,6 @@
         origRow: {},
         resourceName: 'Product List',
         forceLoad: false,
-
-        // The order of the firing of events is as follows:
-        //   before-show
-        //   init (fires only once)
-        //   show
-
         onBeforeShow: function () {
             var prodListView = $("#productListView").data("kendoMobileListView");
             if (prodListView === undefined) { //extra protection in case onInit have not been fired yet
