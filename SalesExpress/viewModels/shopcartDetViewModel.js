@@ -151,6 +151,7 @@
             app.mobileApp.showLoading();
             var promise = app.viewModels.shopcartDetViewModel.jsdoModel.invoke('FinOrder', {});
             promise.done(function (session, result, details) {
+                debugger;
                 var errors = false;
                 try {
                     if (details.success)
@@ -167,6 +168,8 @@
                     app.mobileApp.hideLoading();
                     return;
                 }
+                var transNo = details.response.dsOrder.dsOrder.eOrder[0].TransNo;
+                app.showMessage('Orcer ' + transNo + ' has been created.');
                 app.viewModels.shopcartDetViewModel.forceLoad = true;
                 app.viewModels.shopcartDetViewModel.onBeforeShow();
                 app.mobileApp.hideLoading();
