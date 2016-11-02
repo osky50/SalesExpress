@@ -146,9 +146,6 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
-        xxonHide() {
-            app.clearData(locDetViewModel);
-        },
     });
 
     parent.locDetViewModel = locDetViewModel;

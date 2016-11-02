@@ -94,7 +94,7 @@
                                         paramData.Param_Value = false;
                                     localStorage.setItem(paramDefinition.name, paramData.Param_Value);
                                 }
-                                app.viewModels.loginViewModel.startApplication();                                
+                                app.viewModels.loginViewModel.startApplication();
                             });
                             paramsPromise.fail(function (jsdo, result, details) {
                                 app.viewModels.loginViewModel.addCatalogErrorFn(
@@ -130,8 +130,6 @@
             $(".control-ent-info").html(localStorage.getItem('defaultControlEnt'));
             $(".customer-info").html(localStorage.getItem('defaultCustomer'));
             $(".location-info").html(localStorage.getItem("defaultLocation"));
-            $(".facebook-info").attr('href', localStorage.getItem('facebookUrl'));
-            $(".twitter-info").attr('href', localStorage.getItem("twitterUrl"));
             $(".login-info").show();
             app.mobileApp.navigate("views/prodListView.html");
         },

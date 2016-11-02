@@ -1,7 +1,8 @@
 .fa .km-icon:after,
 .fa .km-icon:before,
 .fa:before {
-    font: 1em/1em 'FontAwesome' !important;
+    font-size: 1em/1em;
+    font-family: 'FontAwesome' !important;
 }
 
 .fa-recommended-true:before {
@@ -56,6 +57,18 @@
 .km-fa-sticky-note-o:after,
 .km-fa-sticky-note-o:before {
   content: "\f24a";
+}
+.km-fa-rss:after,
+.km-fa-rss:before {
+  content: "\f09e";
+}
+.km-fa-facebook-official:after,
+.km-fa-facebook-official:before {
+  content: "\f230";
+}
+.km-fa-twitter-square:after,
+.km-fa-twitter-square:before {
+  content: "\f081";
 }
 
  

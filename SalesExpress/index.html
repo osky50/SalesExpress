@@ -70,21 +70,19 @@
     <script src="viewModels/customerListViewModel.js"></script>
     <script src="viewModels/locDetViewModel.js"></script>
     <script src="viewModels/shopcartNotesViewModel.js"></script>
+    <script src="viewModels/followUsViewModel.js"></script>
 </head>
 <body>
     <!-- Layout -->
     <div data-role="layout" data-id="tabstrip-layout" data-show="onPageShow">
         <!-- Header -->
-        <div data-role="header" style="background-color:white; padding:5px">
-            <div class="float-left">
-                <img src="img/small_logo.png" />
-                <div style="display:block;text-align:center">
-                    <a class="facebook-info"><img src="img/facebook.png" width="24" title="Follow us in Facebook"></a>
-                    <a class="twitter-info"><img src="img/twitter.png" width="24" title="Follow us in Twitter"></a>
+        <div data-role="header" style="background-color:white; padding-top:5px">
+            
+            <div class="login-info" style="display:none">
+                <div class="float-left" style="height:30px">
+                    <img src="img/small_logo.png" />
                 </div>
-            </div>
-            <div class="login-info float-right" style="display:none">
-                <div class="login-info-container" style="text-align:right; padding-right:5px">
+                <div class="login-info-container float-right" style="padding-right:5px; height:30px">
                     <div class="label" style="display:inline-block">
                         Ctrl. Ent.:
                     </div>
@@ -95,7 +93,7 @@
                     </div>
                     <a data-click="app.logout" class="user-info link fa" style="display:inline-block" data-role="button" data-icon="fa-sign-out">Logout</a>
                 </div>
-                <div class="customer-info-container" style="text-align:right; padding-right:5px">
+                <div class="customer-info-container float-right" style="padding-right:5px">
                     <div class="label" style="display:inline-block">
                         Cust:
                     </div>
@@ -105,6 +103,8 @@
                         Def. Loc.:
                     </div>
                     <div class="location-info" style="margin:8px 3px; display:inline-block"></div>
+                    <div style="display:inline-block">|</div>
+                    <a href="views/shopcartDetView.html" class="fa link" style="font-size:24px; display:inline-block" data-role="button" data-icon="fa-shopping-cart"></a>
                 </div>
             </div>
             <div data-role="navbar" id="navbar">
@@ -136,11 +136,18 @@
             <li><a href="views/orderListView.html" class="fa" data-icon="fa-list-ul">Order List</a></li>
             <li><a href="views/shopcartDetView.html" class="fa" data-icon="fa-shopping-cart">Shopping Cart</a></li>
             <li><a href="views/customerDetView.html" class="fa" data-icon="fa-customer">Customer Details</a></li>
+            <li><a href="views/followUsView.html" class="fa" data-icon="fa-rss">Follow Us</a></li>
             <li><a href="views/loginView.html" class="fa" data-icon="fa-sign-out" id="listIcon">Logout</a></li>
         </ul>
     </div>
     <script>
+        $("body").on("click", 'a[data-rel="external"]', function (e) {
+            e.preventDefault();
+            window.open($(this).attr("href"), '_system', 'location=yes');
+        });
         function onPageShow(e) {
+            if (!e.view.model)
+                return;
             var backButton = $('.back-button');
             if (e.view.model.backButton) {
                 backButton.show();
