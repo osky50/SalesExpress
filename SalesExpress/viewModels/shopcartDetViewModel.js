@@ -3,6 +3,7 @@
         jsdoDataSource: undefined,
         jsdoModel: undefined,
         selectedRow: {},
+        shopCart: undefined,
         origRow: {},
         resourceName: 'Shopping Cart',
         forceLoad: false,
@@ -96,6 +97,7 @@
                                     if (!shopcart.eOrderLine || !shopcart.eOrderLine.length)
                                         shopcart = null;
                                 }
+                                app.viewModels.shopcartDetViewModel.shopCart = shopcart;
                                 if (shopcart) {
                                     $('.shopcart-info').show();
                                     $('.shopcart-placeholder').hide();
@@ -169,6 +171,9 @@
                 app.mobileApp.hideLoading();
                 app.showMessage('Placing the order failed.');
             });
+        },
+        shopcartNotes : function () {
+            app.mobileApp.navigate('views/shopcartNotesView.html');
         }
     });
     parent.shopcartDetViewModel = shopcartDetViewModel;
