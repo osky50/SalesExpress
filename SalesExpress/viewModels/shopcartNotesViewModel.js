@@ -8,16 +8,13 @@
         origRow: {},
         resourceName: 'Shopping Cart Notes',
         forceLoad: false,
-
-        // The order of the firing of events is as follows:
-        //   before-show
-        //   init (fires only once)
-        //   show
-
+        backButton: true,
         onBeforeShow: function () {
-            debugger;
-            var shopcart = app.viewModels.shopcartDetViewModel.shopCart;
-            kendo.bind($('#shopcartNoteHeader'), shopcart, kendo.mobile.ui);
+            kendo.bind($('#shopcartNotesHeader'), app.viewModels.shopcartDetViewModel.shopCart, kendo.mobile.ui);
+            // Set list title to resource name
+            if (app.viewModels.shopcartNotesViewModel.resourceName !== undefined) {
+                app.changeTitle(app.viewModels.shopcartNotesViewModel.resourceName);
+            }
         },
         onInit: function (e) {
             try {

@@ -1,6 +1,7 @@
 (function (parent) {
     var customerDetMapViewModel = kendo.observable({
         resourceName: 'Customer Directions',
+        backButton: true,
         onBeforeShow: function () {
             $(document).on("pagecontainershow", app.viewModels.customerDetMapViewModel.scaleContentToDevice);
             $(window).on("resize orientationchange", app.viewModels.customerDetMapViewModel.scaleContentToDevice);

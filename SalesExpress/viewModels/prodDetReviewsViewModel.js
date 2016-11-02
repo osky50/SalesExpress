@@ -7,6 +7,7 @@
         overridenRatingFilter: undefined,
         origRow: {},
         resourceName: 'Product Reviews',
+        backButton: true,
         onBeforeShow: function () {
             $(window).on("orientationchange", app.viewModels.prodDetReviewsViewModel.devOrientHandler);
             var prodDetView = $("#prodDetView").data("kendoMobileListView");

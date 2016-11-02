@@ -5,12 +5,7 @@
         jsdoStockModel: undefined,
         selectedRow: {},
         resourceName: 'Location Details',
-
-        // The order of the firing of events is as follows:
-        //   before-show
-        //   init (fires only once)
-        //   show
-
+        backButton: true,
         onBeforeShow: function () {
             var locDetListView = $("#locDetailView").data("kendoMobileListView");
             if (locDetListView === undefined) { //extra protection in case onInit have not been fired yet

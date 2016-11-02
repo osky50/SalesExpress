@@ -13,6 +13,7 @@
         selectedRow: {},
         origRow: {},
         resourceName: 'Customer List',
+        backButton: true,
         onBeforeShow: function () {
             var customerListView = $("#customerListView").data("kendoMobileListView");
             if (customerListView === undefined) { //extra protection in case onInit have not been fired yet

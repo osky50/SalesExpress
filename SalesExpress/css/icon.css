@@ -53,6 +53,10 @@
 .km-fa-check:before {
   content: "\f00c";
 }
+.km-fa-sticky-note-o:after,
+.km-fa-sticky-note-o:before {
+  content: "\f24a";
+}
 
  
  
