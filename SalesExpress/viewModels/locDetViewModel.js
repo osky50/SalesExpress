@@ -59,7 +59,7 @@
             jsdoSettings.tableName = 'stockdetail';
             this.jsdoStockModel = new progress.data.JSDO({
                 name: jsdoSettings.resourceName,
-                autoFill: false,                
+                autoFill: false,
             });
             this.locStockDataSource = {
                 transport: {
@@ -125,6 +125,10 @@
                             var promise = app.viewModels.locDetViewModel.jsdoModel.invoke('GetLocation', filter);
                             promise.done(function (session, result, details) {
                                 var currentLocList = details.response.dsLoc.dsLoc.eLocation;
+                                //formatting address
+                                currentLocList.forEach(function (eLocation) {
+                                    eLocation.FormattedAddress = getFormattedAddress(eLocation);
+                                });
                                 options.success(currentLocList);
                                 if (currentLocList.length)
                                     app.viewModels.locDetViewModel.set('selectedRow', currentLocList[0]);

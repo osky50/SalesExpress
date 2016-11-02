@@ -96,29 +96,9 @@
                                 });
                             promise.done(function (session, result, details) {
                                 //formatting the customer address
-                                for (var i = 0; i < details.response.dsCust.dsCust.eCustomer.length; i++) {
-                                    var eCustomer = details.response.dsCust.dsCust.eCustomer[i];
-                                    var address = eCustomer['Address'];
-                                    if (eCustomer['City'] && eCustomer['City'] != '') {
-                                        if (address && address != '')
-                                            address = address + ', ' + eCustomer['City'];
-                                        else
-                                            address = eCustomer['City'];
-                                    }
-                                    if (eCustomer['Province'] && eCustomer['Province'] != '') {
-                                        if (address && address != '')
-                                            address = address + ', ' + eCustomer['Province'];
-                                        else
-                                            address = eCustomer['Province'];
-                                    }
-                                    if (eCustomer['PostalCode'] && eCustomer['PostalCode'] != '') {
-                                        if (address && address != '')
-                                            address = address + ', ' + eCustomer['PostalCode'];
-                                        else
-                                            address = eCustomer['PostalCode'];
-                                    }
-                                    eCustomer.FormattedAddress = address;
-                                }
+                                details.response.dsCust.dsCust.eCustomer.forEach(function (eCustomer) {
+                                    eCustomer.FormattedAddress = getFormattedAddress(eCustomer);
+                                });
                                 var customerPerfData = $("#customerPerfData").data("kendoMobileListView");
                                 customerPerfData.dataSource.read();
                                 options.success(details.response.dsCust.dsCust.eCustomer);

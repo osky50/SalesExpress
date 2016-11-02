@@ -101,6 +101,10 @@
                                 if (shopcart) {
                                     $('.shopcart-info').show();
                                     $('.shopcart-placeholder').hide();
+                                    //adding Currency to each line for making easier to show it
+                                    shopcart.eOrderLine.forEach(function (line) {
+                                        line.CurrencyId = shopcart.CurrencyId;
+                                    });
                                     options.success(shopcart.eOrderLine);
                                     //binding header
                                     kendo.bind($('#shopcartHeader'), shopcart, kendo.mobile.ui);

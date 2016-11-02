@@ -5,56 +5,66 @@
      data-show="app.viewModels.shopcartDetViewModel.onBeforeShow"
      data-model="app.viewModels.shopcartDetViewModel">
     <div class="shopcart-info">
-        <div>
-            <div style="display:block">
-                <h4 class="float-left">Summary</h4>
-                <button data-role="button" class="float-right" style="margin-top:8px" data-bind="click: placeOrder">Place Order</button>
-            </div>
-            <div style="display:block">
-                <ul data-role="listview" data-style="inset" style="width:100%">
-                    <li>
-                        <div id="shopcartHeader">
-                            <div>
-                                <label class="width-90">Order Total:</label>
-                                <div class="inline currency width-90" data-bind="text: OrderAmt"></div>
-                                <div class="inline" data-bind="text: CurrencyId"></div>
-                            </div>
-                            <div>
-                                <label class="width-90">Handling:</label>
-                                <div class="inline currency width-90" data-bind="text: Handling"></div>
-                                <div class="inline" data-bind="text: CurrencyId"></div>
-                            </div>
-                            <div>
-                                <label class="width-90">Shipping:</label>
-                                <div class="inline currency width-90" data-bind="text: Shipping"></div>
-                                <div class="inline" data-bind="text: CurrencyId"></div>
-                            </div>
-                            <div>
-                                <label class="width-90">Discount:</label>
-                                <div class="inline currency width-90" data-bind="text: Discount"></div>
-                                <div class="inline" data-bind="text: CurrencyId"></div>
-                            </div>
-                            <div>
-                                <label class="width-90">Tax:</label>
-                                <div class="inline currency width-90" data-bind="text: Tax"></div>
-                                <div class="inline" data-bind="text: CurrencyId"></div>
-                            </div>
-                            <div>
-                                <label class="width-90">Total:</label>
-                                <div class="inline currency width-90" data-bind="text: TotalAmt"></div>
-                                <div class="inline" data-bind="text: CurrencyId"></div>
-                                <a data-click="app.viewModels.shopcartDetViewModel.shopcartNotes" class="link" style="text-align:right;width:7em" data-role="button">Notes</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div>
-            <h4>Lines</h4>
-            <ul id="shopcartLines"
-                data-role="listview" data-style="inset"></ul>
-        </div>
+        <ul data-role="listview" data-style="inset">
+            <li class="header">
+                <div style="display:block">
+                    <label style="margin-top:8px;" class="float-left">Summary</label>
+                    <button data-role="button" class="fa float-right" style="margin-right:.7em"
+                            data-bind="click: placeOrder" data-icon="fa-check">
+                        Place Order
+                    </button>
+                </div>
+            </li>
+            <li>
+                <div id="shopcartHeader">
+                    <div>
+                        <label class="width-90">Order Total:</label>
+                        <div class="inline currency width-90" data-bind="text: OrderAmt"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                    <div>
+                        <label class="width-90">Handling:</label>
+                        <div class="inline currency width-90" data-bind="text: Handling"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                    <div>
+                        <label class="width-90">Shipping:</label>
+                        <div class="inline currency width-90" data-bind="text: Shipping"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                    <div>
+                        <label class="width-90">Discount:</label>
+                        <div class="inline currency width-90" data-bind="text: Discount"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                    <div>
+                        <label class="width-90">Tax:</label>
+                        <div class="inline currency width-90" data-bind="text: Tax"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                    <div>
+                        <label class="width-90">Total:</label>
+                        <div class="inline currency width-90" data-bind="text: TotalAmt"></div>
+                        <div class="inline" data-bind="text: CurrencyId"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul data-role="listview" data-style="inset">
+            <li class="header">
+                <label>Lines</label>
+            </li>
+        </ul>
+        <ul id="shopcartLines" style="margin-top:-16px"
+            data-role="listview" data-style="inset"></ul>
+        <ul data-role="listview" data-style="inset">
+            <li class="header">
+                <button data-role="button" class="fa float-right" style="margin-right:.7em"
+                        data-bind="click: placeOrder" data-icon="fa-check">
+                    Place Order
+                </button>
+            </li>
+        </ul>
     </div>
     <div class="shopcart-placeholder placeholder align-center">
         <h4>Shopping cart is empty</h4>
@@ -64,16 +74,16 @@
         <form>
             <div><b>Synonym: </b>#: Synonym #</div>
             <div><b>Location: </b>#: LocId #</div>
-            <div><b>AFS: </b>#: AFS #</div>
+            <div><b>AFS: </b>#: AFS # (#: UnitId #)</div>
             <div>
-                <label>Quantity:</label><input type="number" min="1" name="Order Quantity" class="relative width-90" value="#: OrderQty #" />
+                <label style="margin-top:8px">Qty.:</label>
+                <input type="number" min="1" name="quantity" required class="border-1 relative width-70"
+                       value="#: OrderQty #" />
+                <button type="button" data-role="button" name="update-line" data-afs="#: AFS #" class="fa" data-icon="fa-pencil">Update</button>
+                <button type="button" data-role="button" name="delete-line" class="fa" data-icon="fa-trash-o">Remove</button>
             </div>
-            <div>
-                <button type="button" data-role="button" name="update-line" data-afs="#: AFS #">Update</button>
-                <button type="button" data-role="button" name="delete-line">Remove</button>
-            </div>
-            <div><b>Price: </b>$#: UnitPrice #</div>
-            <div><b>Line Total: </b>#: ExtPrice #</div>
+            <div><b>Price: </b>$#: UnitPrice # #: CurrencyId #</div>
+            <div><b>Line Total: </b>$#: ExtPrice # #: CurrencyId #</div>
         </form>
     </script>
 </div>
