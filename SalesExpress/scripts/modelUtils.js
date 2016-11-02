@@ -141,8 +141,7 @@ var addLineToShoppingCart = function (eOrder, callBackFn) {
                 app.mobileApp.hideLoading();
                 return;
             }
-            // Executing call back as everything finshed successfully
-            app.updateShoppingCartQty();
+            // Executing call back as everything finshed successfully            
             callBackFn.apply(callBackFn);
         }
     });

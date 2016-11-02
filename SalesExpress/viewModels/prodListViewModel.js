@@ -198,6 +198,7 @@
             app.mobileApp.showLoading();
             lineAdded = function () {
                 app.mobileApp.hideLoading();
+                app.updateShoppingCartQty();
                 app.showMessage('Product Added to the Cart');
             };
             eOrderobj = new EOrderClass();

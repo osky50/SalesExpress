@@ -92,6 +92,7 @@
                                 }
                                 app.viewModels.shopcartDetViewModel.shopCart = shopcart;
                                 if (shopcart) {
+                                    $('.shopcart-header-info').text('(' + shopcart.eOrderLine.length + ')');
                                     $('.shopcart-info').show();
                                     $('.shopcart-placeholder').hide();
                                     //adding Currency to each line for making easier to show it
@@ -102,6 +103,7 @@
                                     //binding header
                                     kendo.bind($('#shopcartHeader'), shopcart, kendo.mobile.ui);
                                 } else {
+                                    $('.shopcart-header-info').text('');
                                     $('.shopcart-info').hide();
                                     $('.shopcart-placeholder').show();
                                     options.success([]);

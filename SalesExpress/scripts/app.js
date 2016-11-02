@@ -65,7 +65,7 @@
             // Cordova will wait 5 very long seconds to do it for you.
             if (navigator && navigator.splashscreen) {
                 navigator.splashscreen.hide();
-            }            
+            }
             bootstrap();
         }, false);
     } else {
@@ -172,16 +172,20 @@
         });
         var promise = shoppingCartJsdoModel.invoke('CartRead', {});
         promise.done(function (session, result, details) {
-            var shopcart = null;
-            if (details.response.dsOrder.dsOrder.eOrder && details.response.dsOrder.dsOrder.eOrder.length) {
-                var shopcart = details.response.dsOrder.dsOrder.eOrder[0];
-                if (!shopcart.eOrderLine || !shopcart.eOrderLine.length)
-                    shopcart = null;
-            }
-            if (shopcart) {
-                $('.shopcart-header-info').text('(' + shopcart.eOrderLine.length + ')');
-            } else {
-                $('.shopcart-header-info').text('');
+            try {
+                var shopcart = null;
+                if (details.response.dsOrder.dsOrder.eOrder && details.response.dsOrder.dsOrder.eOrder.length) {
+                    var shopcart = details.response.dsOrder.dsOrder.eOrder[0];
+                    if (!shopcart.eOrderLine || !shopcart.eOrderLine.length)
+                        shopcart = null;
+                }
+                if (shopcart) {
+                    $('.shopcart-header-info').text('(' + shopcart.eOrderLine.length + ')');
+                } else {
+                    $('.shopcart-header-info').text('');
+                }
+            } catch (e) {
+
             }
         });
         promise.fail(function () {
