@@ -1,0 +1,77 @@
+<div id="shopcartNotes"
+     data-role="view"
+     data-style="inset"
+     data-init="app.viewModels.shopcartNotesViewModel.onInit"
+     data-show="app.viewModels.shopcartNotesViewModel.onBeforeShow"
+     data-layout="back-layout"
+     data-model="app.viewModels.shopcartNotesViewModel">
+    <div class="shopcart-info">
+        <div>
+            <div style="display:block">
+                <h4 class="float-left">Summary</h4>
+            </div>
+            <div style="display:block">
+                <ul data-role="listview" data-style="inset" style="width:100%">
+                    <li>
+                        <div id="shopcartNoteHeader">
+                            <div>
+                                <label class="width-90">Order Total:</label>
+                                <div class="inline currency width-90" data-bind="text: OrderAmt"></div>
+                                <div class="inline" data-bind="text: CurrencyId"></div>
+                            </div>
+                            <div>
+                                <label class="width-90">Handling:</label>
+                                <div class="inline currency width-90" data-bind="text: Handling"></div>
+                                <div class="inline" data-bind="text: CurrencyId"></div>
+                            </div>
+                            <div>
+                                <label class="width-90">Shipping:</label>
+                                <div class="inline currency width-90" data-bind="text: Shipping"></div>
+                                <div class="inline" data-bind="text: CurrencyId"></div>
+                            </div>
+                            <div>
+                                <label class="width-90">Discount:</label>
+                                <div class="inline currency width-90" data-bind="text: Discount"></div>
+                                <div class="inline" data-bind="text: CurrencyId"></div>
+                            </div>
+                            <div>
+                                <label class="width-90">Tax:</label>
+                                <div class="inline currency width-90" data-bind="text: Tax"></div>
+                                <div class="inline" data-bind="text: CurrencyId"></div>
+                            </div>
+                            <div>
+                                <label class="width-90">Total:</label>
+                                <div class="inline currency width-90" data-bind="text: TotalAmt"></div>
+                                <div class="inline" data-bind="text: CurrencyId"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <h4>Notes Id</h4>
+        <div>
+            <ul id="shopcartNoteId" data-role="listview" data-style="inset">
+                    <li>
+                            <select id="dropdownbound" data-role="dropdownlist" data-bind="source: noteIdList"></select>
+                    </li>
+            </ul>
+        </div>
+        <h4>Notes</h4>
+        <ul id="shopcartNotes" data-role="listview" data-style="inset">
+            <li>
+                <textarea style="width:100%;height:200px"name="noteText" id="noteText" data-bind="value: noteText"></textarea>
+            </li>
+        </ul>
+        <a data-bind="click: saveNotes" data-role="button" class="full">Save</a>
+    </div>
+
+    <div id="pager" class="k-pager-wrap"></div>
+
+</div>
+
+
+
