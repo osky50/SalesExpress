@@ -7,6 +7,7 @@
         prodLocList: [],
         origRow: {},
         resourceName: 'Product Details',
+        backButton: true,
         onBeforeShow: function () {
             var prodDetListView = $("#prodDetailView").data("kendoMobileListView");
             if (prodDetListView === undefined) { //extra protection in case onInit have not been fired yet

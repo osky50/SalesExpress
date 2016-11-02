@@ -1,8 +1,6 @@
 (function () {
     // store a reference to the application object that will be created
     // later on so that we can use it if need be
-
-
     var app = {
         data: {},
         mobileApp: {},
@@ -69,8 +67,7 @@
             // Cordova will wait 5 very long seconds to do it for you.
             if (navigator && navigator.splashscreen) {
                 navigator.splashscreen.hide();
-            }
-
+            }            
             bootstrap();
         }, false);
     } else {
@@ -166,6 +163,5 @@
     app.customerDetails = function () {
         app.mobileApp.navigate('views/customerDetView.html');
     };
-
     app.pageSize = 10;
 }());

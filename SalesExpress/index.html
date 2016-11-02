@@ -23,7 +23,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
     <link href="css/index.css" rel="stylesheet" type="text/css" />
-    <link href="css/order.css" rel="stylesheet" type="text/css" />
     <link href="css/jquery.rateit.css" rel="stylesheet" type="text/css" />
     <link href="css/swipebox.min.css" rel="stylesheet" type="text/css" />
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -31,11 +30,6 @@
     <link href="css/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css" />
     <!--jqplot-->
     <link href="css/jquery.jqplot.min.css" rel="stylesheet" type="text/css" />
-    <!--Google maps-->
-    <!--<script src="https://maps.google.com/maps/api/js?sensor=false"></script>-->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvDWQocuKu7fM1Mb73X9Q-YbDARxMSEMY"
-            type="text/javascript"></script>
-
     <!-- Libraries used -->
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
@@ -78,7 +72,7 @@
 </head>
 <body>
     <!-- Layout -->
-    <div data-role="layout" data-id="tabstrip-layout">
+    <div data-role="layout" data-id="tabstrip-layout" data-show="onPageShow">
         <!-- Header -->
         <div data-role="header" style="background-color:white; padding:5px">
             <div class="float-left">
@@ -115,6 +109,7 @@
             <div data-role="navbar" id="navbar">
                 <a class="login-info" style="display:none" href="#app-drawer" data-rel="drawer" data-role="button" data-align="left" data-icon="details"></a>
                 <span data-role="view-title"></span>
+                <a data-click="app.back" class="back-button" data-role="button" data-align="right" data-icon="rewind">Back</a>
             </div>
         </div>
 
@@ -152,5 +147,16 @@
             <li><a href="views/loginView.html" class="fa" data-icon="fa-sign-out" id="listIcon">Logout</a></li>
         </ul>
     </div>
+    <script>
+        function onPageShow(e) {
+            var backButton = $('.back-button');
+            if (e.view.model.backButton) {
+                backButton.show();
+                //backButton.attr('href', '#' + e.view.model.backTo);
+            } else {
+                backButton.hide();
+            }
+        };
+    </script>
 </body>
 </html>
