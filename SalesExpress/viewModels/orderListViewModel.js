@@ -83,9 +83,8 @@
                     //adding custom methods
                     var me = this;
                     this.jsdoDataSource.read = function () {
-                        var promisse;
-                        promisse = me.jsdoModel.invoke('OrderList', { "CustomerId": "masroo" });
-                        promisse.done(function (session, result, details) {
+                        var promise = me.jsdoModel.invoke('OrderList', { "CustomerId": localStorage.getItem('defaultCustomer') });
+                        promise.done(function (session, result, details) {
                             me.jsdoDataSource.data(details.response.dsOrder.dsOrder.eOrder);
                         });
                     }
@@ -97,7 +96,7 @@
             catch (ex) {
                 createDataSourceErrorFn({ errorObject: ex });
             }
-        },        
+        },
     });
 
     parent.orderListViewModel = orderListViewModel;
