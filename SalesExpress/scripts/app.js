@@ -1,4 +1,4 @@
-(function () {
+(function () {    
     var app = {
         data: {},
         mobileApp: {},
@@ -192,5 +192,8 @@
             app.showError('Failed to retrieve Shopping Cart details.')
         });
     };
+    app.closeImagePopup = function () {
+        $("#imagePopup").data("kendoMobileModalView").close();
+    }
     app.pageSize = 10;
 }());

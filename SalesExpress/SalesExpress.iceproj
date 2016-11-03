@@ -76,6 +76,7 @@
     <Content Include="img\star.gif">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="img\test.jpg" />
     <Content Include="img\twitter.png" />
     <Content Include="index.html" />
     <Content Include="kendo\js\jquery.min.js" />

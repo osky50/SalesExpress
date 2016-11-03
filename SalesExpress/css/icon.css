@@ -70,6 +70,10 @@
 .km-fa-twitter-square:before {
   content: "\f081";
 }
+.km-fa-window-close-o:after,
+.km-fa-window-close-o:before {
+  content: "\f2d4";
+}
 
  
  

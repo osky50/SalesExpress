@@ -26,7 +26,6 @@
             }
         },
         saveNotes: function (e) {
-            debugger;
             alert(noteText);
         },
         

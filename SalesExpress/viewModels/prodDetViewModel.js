@@ -1,9 +1,12 @@
 (function (parent) {
     var prodDetViewModel = kendo.observable({
         jsdoDataSource: undefined,
+        prodLocDataSource: undefined,
+        prodImageDataSource: undefined,
         jsdoModel: undefined,
         currentLoc: undefined,
         selectedRow: {},
+        prodImageList: [],
         prodLocList: [],
         origRow: {},
         resourceName: 'Product Details',
@@ -25,6 +28,7 @@
             try {
                 // Create Data Source
                 app.viewModels.prodDetViewModel.createJSDODataSource();
+                app.viewModels.prodDetViewModel.createProdImageDataSource();
                 app.viewModels.prodDetViewModel.createProdLocDataSource();
                 app.views.productDetView = e.view;
                 $("#prodDetailView").kendoMobileListView({
@@ -55,6 +59,20 @@
                     },
                     dataBound: function (e) {
                         scriptsUtils.createRatingsComponent('prod-det-rateit');
+                    }
+                });
+                $("#prodDetailImageView").kendoMobileListView({
+                    dataSource: app.viewModels.prodDetViewModel.prodImageDataSource,
+                    pullToRefresh: false,
+                    style: "display: inline",
+                    appendOnRefresh: false,
+                    autoBind: false,
+                    endlessScroll: false,
+                    template: kendo.template($("#prodDetImageTemplate").html()),
+                    click: function (e) {
+                        $("#imagePopup img").attr('src', $(e.item).find("img").attr('src'));
+                        $("#imagePopup img").attr('alt', $(e.item).find("img").attr('alt'));
+                        $("#imagePopup").data("kendoMobileModalView").open();
                     }
                 });
                 $("#prodDetailLocView").kendoMobileListView({
@@ -116,6 +134,26 @@
             eOrderobj.addLine(eoline);
             addLineToShoppingCart(eOrderobj.getEOrder(), lineAdded);
         },
+        createProdImageDataSource: function () {
+            this.prodImageDataSource = {
+                transport: {
+                    read: function (options) {
+                        var prodImageList = app.viewModels.prodDetViewModel.prodImageList || [];
+                        if (prodImageList.length) {
+                            $('.images-info').show();
+                            $('.images-placeholder').hide();
+                        } else {
+                            $('.images-info').hide();
+                            $('.images-placeholder').show();
+                        }
+                        options.success(prodImageList);
+                    }
+                },
+                error: function (e) {
+                    console.log('Error: ', e);
+                }
+            };
+        },
         createProdLocDataSource: function () {
             var eLoc = locationModel();
             this.prodLocDataSource = {
@@ -176,22 +214,24 @@
                             promise.done(function (session, result, details) {
                                 var currentProdList = details.response.dsProd.dsProd.eProduct;
                                 options.success(currentProdList);
-
-                                var imagesList = details.response.dsProd.dsProd.eProductImg || [];
+                                /*var imagesList = details.response.dsProd.dsProd.eProductImg || [];
                                 if (imagesList.length) {
                                     var imagesHtml = '';
                                     var template = kendo.template($("#prodDetImageTemplate").html());
                                     imagesList.forEach(function (img) {
-                                        imagesHtml += template(img); //applying template
+                                        imagesHtml += template(img); //applying image template
                                     });
                                     $("#prodDetailImageView").html(imagesHtml); //display the result
-                                    $('.swipebox').swipebox();
                                     $('.images-info').show();
                                     $('.images-placeholder').hide();
                                 } else {
+                                    $("#prodDetailImageView").html('');
                                     $('.images-info').hide();
                                     $('.images-placeholder').show();
-                                }
+                                }*/
+                                //assigning image list data
+                                app.viewModels.prodDetViewModel.set("prodImageList", details.response.dsProd.dsProd.eProductImg);
+                                $("#prodDetailImageView").data("kendoMobileListView").dataSource.read();
                                 //assigning location list data
                                 app.viewModels.prodDetViewModel.set("prodLocList", details.response.dsProd.dsProd.eProductLoc);
                                 $("#prodDetailLocView").data("kendoMobileListView").dataSource.read();

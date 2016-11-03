@@ -146,7 +146,6 @@
             app.mobileApp.showLoading();
             var promise = app.viewModels.shopcartDetViewModel.jsdoModel.invoke('FinOrder', {});
             promise.done(function (session, result, details) {
-                debugger;
                 var errors = false;
                 try {
                     if (details.success)

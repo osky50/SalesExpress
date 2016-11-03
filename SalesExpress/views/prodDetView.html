@@ -8,7 +8,7 @@
         <ul id="prodDetailView"
             data-role="listview" data-style="inset"></ul>
         <div class="float-left" style="width:100%">
-            <div class="images-info">
+            <div class="images-info gallery">
                 <h4>Images</h4>
                 <ul id="prodDetailImageView" data-style="inset" data-role="listview"></ul>
             </div>
@@ -65,11 +65,9 @@
     </script>
 
     <script type="text/x-kendo-template" id="prodDetImageTemplate">
-        <li>
-            <a href="#: FileUrl #" class="swipebox" title="#: FileDesc #">
-                <img src="#: FileUrl #" alt="#: FileDesc #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'">
-            </a>
-        </li>
+        <a data-role="button" style="height:100%; width:100%;padding:0;margin:0;border:0">
+            <img src="#: FileUrl #" alt="#: FileDesc#" style="width:100%; height:100%" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'">
+        </a>
     </script>
     <script type="text/x-kendo-template" id="prodDetLocTemplate">
         <form>
