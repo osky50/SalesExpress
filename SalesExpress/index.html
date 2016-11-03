@@ -24,7 +24,6 @@
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
     <link href="css/index.css" rel="stylesheet" type="text/css" />
     <link href="css/jquery.rateit.css" rel="stylesheet" type="text/css" />
-    <link href="css/swipebox.min.css" rel="stylesheet" type="text/css" />
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="css/icon.css" rel="stylesheet" type="text/css" />
     <link href="css/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css" />
@@ -47,9 +46,6 @@
     <script type="text/javascript" src="scripts/modelUtils.js"></script>
     <script type="text/javascript" src="scripts/scriptsUtils.js"></script>
     <script type="text/javascript" src="scripts/jquery.rateit.min.js"></script>
-    <!--swipebox plugin-->
-    <script type="text/javascript" src="scripts/swipebox/jquery.swipebox.min.js"></script>
-    <script type="text/javascript" src="scripts/swipebox/ios-orientationchange-fix.js"></script>
     <!--jqplot plugin-->
     <script type="text/javascript" src="scripts/jplot/jquery.jqplot.min.js"></script>
     <script type="text/javascript" src="scripts/jplot/jqplot.barRenderer.min.js"></script>
@@ -124,7 +120,6 @@
         <!-- Application views will be rendered here -->
         <!-- Footer -->
         <div data-role="footer">
-
         </div>
     </div>
     <!--Save/Cancel Layout-->
@@ -145,6 +140,14 @@
             <li><a href="views/followUsView.html" class="fa" data-icon="fa-rss">Follow Us</a></li>
             <li><a href="views/loginView.html" class="fa" data-icon="fa-sign-out" id="listIcon">Logout</a></li>
         </ul>
+    </div>
+    <div data-role="modalview" id="imagePopup" data-modal="false" data-overlay-theme="a"
+         data-corners="false" data-tolerance="30,15" style="width: 100%">
+        <div data-role="footer">
+            <a data-role="button" data-click="app.closeImagePopup" class="fa float-right"
+               data-icon="fa-window-close-o">Close</a>
+        </div>
+        <img style="width:100%; height:100%">
     </div>
     <script>
         $("body").on("click", 'a[data-rel="external"]', function (e) {
