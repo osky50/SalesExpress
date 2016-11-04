@@ -285,7 +285,7 @@ ul.header {
     float: right;
     width: 20%;
     margin-right: 15px;
-    margin-top: 12px;
+    margin-top: 14px;
 }
 .scan-button ~ .km-listview-wrapper .km-filter-form {
     width: 80% !important;
