@@ -267,3 +267,9 @@ ul.header li, li.header{
 .km-navbar{
     border-width:1px 0 !important;
 }
+.km-horizontal .km-view-title, .km-view-title, .km-dialog-title {
+    line-height: 2.5em !important;
+}
+.km-flat .km-navbar{
+    border-top: 1px solid rgba(0,0,0,0.3)
+}

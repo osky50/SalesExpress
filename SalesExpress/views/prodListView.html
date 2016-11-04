@@ -24,10 +24,22 @@
                     <span class="shopcart-header-info">(#: CartQty #)</span>
                 </div>
             </div>
-            <div class="float-left" style="width:100%"><b>Prod. Id.: </b>#: Prod_Id #</div>
-            <div class="float-left" style="width:100%"><b>Price: </b>$#: Price #</div>
-            <div class="float-left" style="width:100%"><b>Default Loc. AFS: </b> #: DefaultAfs # (#: UnitId #)</div>
-            <div class="float-left" style="width:100%"><b>All Loc. AFS: </b> #: Afs # (#: UnitId #)</div>
+            <div class="ui-grid-a ui-responsive float-left" style="width:100%">
+                <div class="ui-block-a">
+                    <label>Prod. Id.: </label>#: Prod_Id #
+                </div>
+                <div class="ui-block-b">
+                    <label>Price: </label>$#: Price #
+                </div>
+            </div>
+            <div class="ui-grid-a ui-responsive float-left" style="width:100%">
+                <div class="ui-block-a">
+                    <label>Default Loc. AFS: </label> #: DefaultAfs # (#: UnitId #)
+                </div>
+                <div class="ui-block-b">
+                    <label>All Loc. AFS: </label> #: Afs # (#: UnitId #)
+                </div>
+            </div>
             <div style="width:100%; padding-top:5px" data-rateit-readonly="true" rating-value="#: AvgRating #" class="float-left prod-list-rateit a" data-rateit-starwidth="16" data-rateit-starheight="16" step="1"></div>
             <div class="float-left" style="width:100%">
                 <div style="margin-top:3px" class="font-smaller rateit-description float-left">#: AvgRating # out of 5 stars&nbsp;|&nbsp;</div>

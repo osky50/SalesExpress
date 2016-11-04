@@ -39,7 +39,6 @@
     </div>
     <script type="text/x-kendo-template" id="prodDetailTemplate">
         <div class="float-left" style="max-width: 80%">
-            <label>Description:</label>
             <div class="inline">#: description#</div>
         </div>
         <div class="float-right" style="display: #: ShopCartIndicatorDisplay #; color:darkgreen">
@@ -48,24 +47,32 @@
             </div>
         </div>
         <div class="float-left" style="width:100%">
-            <label>Price:</label>
-            <div class="title">$#: Price#</div>
-        </div>
-        <div class="float-left" style="width:100%">
             <label>Synonym:</label>
-            <div class="inline">#: Synonym#</div>
+            <div class="inline">#: Synonym #</div>
         </div>
-        <div class="float-left" style="width:100%">
-            <label>All Loc. AFS:</label>
-            <div class="title">#: Afs# (#: UnitId #)</div>
+        <div class="ui-grid-a ui-responsive float-left" style="width:100%">
+            <div class="ui-block-a">
+                <label>Prod. Id.: </label>#: Prod_Id #
+            </div>
+            <div class="ui-block-b">
+                <label>Price: </label>$#: Price #
+            </div>
         </div>
-        <div class="float-left" style="width:100%">
-            <label>Report Synonym:</label>
-            <div class="inline">#: ReportSyn#</div>
+        <div class="ui-grid-a ui-responsive float-left" style="width:100%">
+            <div class="ui-block-a">
+                <label>Default Loc. AFS: </label> #: DefaultAfs # (#: UnitId #)
+            </div>
+            <div class="ui-block-b">
+                <label>All Loc. AFS: </label> #: Afs # (#: UnitId #)
+            </div>
         </div>
-        <div class="float-left" style="width:100%">
-            <label>Bar Synonym:</label>
-            <div class="inline">#: BarSyn#</div>
+        <div class="ui-grid-a ui-responsive float-left" style="width:100%">
+            <div class="ui-block-a">
+                <label>Report Synonym:</label>#: ReportSyn #
+            </div>
+            <div class="ui-block-b">
+                <label>Bar Synonym:</label>#: BarSyn #
+            </div>
         </div>
         <div class="float-left" style="width:100%;padding-top:5px">
             <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="prod-det-rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
@@ -86,8 +93,14 @@
     <script type="text/x-kendo-template" id="prodDetLocTemplate">
         <form>
             <div><b>Location: </b>#: Loc_Id #</div>
-            <div><b>AFS: </b>#: AFS # (#: UnitId #)</div>
-            <div class=""><b>ON_PO: </b>#: ONPO # (#: UnitId #)</div>
+            <div class="ui-grid-a ui-responsive float-left" style="width:100%">
+                <div class="ui-block-a">
+                    <label>AFS: </label>#: AFS # (#: UnitId #)
+                </div>
+                <div class="ui-block-b">
+                    <label>ON_PO: </label>#: ONPO # (#: UnitId #)
+                </div>
+            </div>
             <div class="float-left">
                 <label style="margin-top:8px">Qty.:</label>
                 <input type="number" min="1" required class="border-1 relative width-70" name="quantity" value="1" />
