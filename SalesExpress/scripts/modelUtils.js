@@ -152,7 +152,7 @@ var addLineToShoppingCart = function (eOrder, callBackFn) {
 };
 
 var getFormattedAddress = function (eObject) {
-    var address = eObject['Address'];
+    var address = eObject['Address'].trim();
     if (eObject['City'] && eObject['City'] != '') {
         if (address && address != '')
             address = address + ', ' + eObject['City'];
