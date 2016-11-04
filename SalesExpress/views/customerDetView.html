@@ -8,46 +8,96 @@
     <div>
         <ul id="customerDetData"
             data-role="listview" data-style="inset"></ul>
-        <div>
-            <h4>Performance</h4>
-            <ul id="customerPerfData"
-                data-role="listview" data-style="inset"></ul>
-        </div>
+        <ul data-role="listview" data-style="inset" class="header">
+            <li>
+                <label>Performance</label>
+            </li>
+        </ul>
+        <ul id="customerPerfData"
+            data-role="listview" data-style="inset"></ul>
     </div>
 </div>
 <div id="pager" class="k-pager-wrap"></div>
 <script type="text/x-kendo-template" id="customerDetTemplate">
     <div class="float-left" style="margin-top:8px; margin-right: 8px"><b>Customer ID: </b>#: Cust_Id #</div>
     <div>
-        <button type="button" data-role="button" name="change-customer">Change</button>
+        <button type="button" data-role="button" name="change-customer" class="fa" data-icon="fa-pencil">Change</button>
     </div>
-    <div><b>Email: </b>#: Email #</div>
-    <div><b>Full Name: </b>#: Name #</div>
-    <div><b>Search Name: </b>#: SearchName #</div>
-    <div style="margin-top:8px; margin-right: 8px">
-        <b>Address: </b>
-        <button class="link" type="button" data-role="button" name="directions">#: FormattedAddress #</button>
+    <div class="ui-grid-a ui-responsive">
+        <div class="ui-block-a">
+            <b>Full Name: </b>#: Name #
+        </div>
+        <div class="ui-block-b">
+            <b>Search Name: </b>#: SearchName #
+        </div>
     </div>
-    <div>
-        <b>Phones: </b>
-        <div>#: Cell # (cell)</div><div>#: Phone #</div><div>#: Phone2 #</div>
+    <div class="ui-grid-a ui-responsive">
+        <div class="ui-block-a">
+            <b>Phones: </b>
+            <div><a href="tel:#: Cell #">#: Cell #</a><span>&nbsp;(cell)</span></div>
+            <div><a href="tel:#: Phone #">#: Phone #</a></div>
+            <div><a href="tel:#: Phone2 #">#: Phone2 #</a></div>
+        </div>
+        <div class="ui-block-b">
+            <b>Email: </b><a href="mailto:#: Email #">#: Email #</a>
+        </div>
     </div>
-    <div><b>Tax Reg-No.: </b>#: TaxRegNo #</div>
-    <div><b>Level: </b>#: LevelId # (#: LevelDesc #)</div>
-    <div><b>Term: </b>#: TermId # (#: TermDesc #)</div>
-    <div><b>Default Currency: </b>#: CurrencyId # (#: CurrencyDesc #)</div>
-    <div><b>Currency Vals: </b>#: CurrencyVals #</div>
+    <div class="ui-grid-a ui-responsive">
+        <div class="ui-block-a">
+            <b>Address: </b>
+            <button class="link" style="text-align:left" type="button" data-role="button" name="directions">
+                #: FormattedAddress #
+            </button>
+        </div>
+        <div class="ui-block-b">
+            <b>Tax Reg-No.: </b>#: TaxRegNo #
+        </div>
+    </div>
+    <div class="ui-grid-a ui-responsive">
+        <div class="ui-block-a">
+            <b>Level: </b>#: LevelId # (#: LevelDesc #)
+        </div>
+        <div class="ui-block-b">
+            <b>Term: </b>#: TermId # (#: TermDesc #)
+        </div>
+    </div>
+    <div class="ui-grid-a ui-responsive">
+        <div class="ui-block-a">
+            <b>Default Currency: </b>#: CurrencyId # (#: CurrencyDesc #)
+        </div>
+        <div class="ui-block-b">
+            <b>Currency Vals: </b>#: CurrencyVals #
+        </div>
+    </div>
 </script>
 <script type="text/x-kendo-template" id="customerPerfTemplate">
-    <div><b>A/R Balance: </b>#: AR_Balance #</div>
-    <div><b>Charge Balance: </b>#: Charge_Balance #</div>
-    <div><b>Credit Limit: </b>#: Credit_Limit #</div>
-    <div><b>High Credit: </b>#: High_Credit #</div>
-    <div><b>High Credit Date: </b>#: High_Credit_Date #</div>
-    <div><b>Last Payment Amt.: </b>#: Last_Paid_Amt #</div>
-    <div><b>Last Payment Date: </b>#: Last_Paid_Date #</div>
-    <div><b>S/O Balance: </b>#: So_Balance #</div>
-    <div id="perf_graph" style="margin:5px; width:100%"></div>
+    <div class="ui-grid-a ui-responsive">
+        <div class="ui-block-a">
+            <b>A/R Balance: </b>$#: AR_Balance #
+        </div>
+        <div class="ui-block-b">
+            <b>Charge Balance: </b>$#: Charge_Balance #
+        </div>
+        <div class="ui-block-a">
+            <b>Credit Limit: </b>$#: Credit_Limit #
+        </div>
+        <div class="ui-block-b">
+            <b>S/O Balance: </b>$#: So_Balance #
+        </div>
+        <div class="ui-block-a">
+            <b>High Credit: </b>$#: High_Credit #
+        </div>
+        <div class="ui-block-b">
+            <b>High Credit Date: </b>#: High_Credit_Date #
+        </div>
+        <div class="ui-block-a">
+            <b>Last Payment Amt.: </b>$#: Last_Paid_Amt #
+        </div>
+        <div class="ui-block-b">
+            <b>Last Payment Date: </b>#: Last_Paid_Date #
+        </div>
+    </div>
+    <div id="perf_graph" style="margin:15px 5px 5px 5px; width:100%"></div>
 </script>
 
 

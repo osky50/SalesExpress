@@ -258,7 +258,10 @@ label {
 .ui-block-a {
     padding-right: 15px !important;
 }
-.header{
+ul.header{
+    margin-bottom: -15px !important;
+}
+ul.header li, li.header{
     background-color:lightgray !important;
 }
 .km-navbar{
