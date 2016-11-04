@@ -15,21 +15,25 @@
     </div>
 
     <div id="pager" class="k-pager-wrap"></div>
-
     <script type="text/x-kendo-template" id="prodTemplate">
         <div class="prod-list-item-image"><img src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" /></div>
         <div class="prod-list-item-details">
-            <div>#: description #</div>
-            <div><b>Prod. Id.: </b>#: Prod_Id #</div>
-            <div><b>Price: </b>$#: Price #</div>
-            <div><b>Default Loc. AFS: </b> #: DefaultAfs # (#: UnitId #)</div>
-            <div><b>All Loc. AFS: </b> #: Afs # (#: UnitId #)</div>
-            <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="prod-list-rateit a" data-rateit-starwidth="16" data-rateit-starheight="16" step="1"></div>
-            <div>
+            <div class="float-left" style="max-width: 80%">#: description #</div>
+            <div class="float-right" style="display: #: ShopCartIndicatorDisplay #; color:darkgreen">
+                <div class="fa link-disable" style="display:inline-block" data-role="button" data-icon="fa-shopping-cart">
+                    <span class="shopcart-header-info">(#: CartQty #)</span>
+                </div>
+            </div>
+            <div class="float-left" style="width:100%"><b>Prod. Id.: </b>#: Prod_Id #</div>
+            <div class="float-left" style="width:100%"><b>Price: </b>$#: Price #</div>
+            <div class="float-left" style="width:100%"><b>Default Loc. AFS: </b> #: DefaultAfs # (#: UnitId #)</div>
+            <div class="float-left" style="width:100%"><b>All Loc. AFS: </b> #: Afs # (#: UnitId #)</div>
+            <div style="width:100%; padding-top:5px" data-rateit-readonly="true" rating-value="#: AvgRating #" class="float-left prod-list-rateit a" data-rateit-starwidth="16" data-rateit-starheight="16" step="1"></div>
+            <div class="float-left" style="width:100%">
                 <div style="margin-top:3px" class="font-smaller rateit-description float-left">#: AvgRating # out of 5 stars&nbsp;|&nbsp;</div>
                 <button data-role="button" name="reviews-link" class="font-smaller link rateit-description">#: TotalReview # customers reviews</button>
             </div>
-            <div><button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button></div>
+            <div class="float-left" style="width:100%"><button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button></div>
             <form>
                 <div class="float-left">
                     <input type="number" min="1" required style="display: #: BuyDisplay #" class="width-70 border-1 relative" name="Quantity"

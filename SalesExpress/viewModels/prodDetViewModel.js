@@ -213,22 +213,10 @@
                             var promise = me.jsdoModel.invoke('ProductDetail', me.jsdoDataSource.filter());
                             promise.done(function (session, result, details) {
                                 var currentProdList = details.response.dsProd.dsProd.eProduct;
+                                currentProdList.forEach(function (eProduct) {
+                                    eProduct.ShopCartIndicatorDisplay = eProduct.CartQty > 0 ? 'visible' : 'none';
+                                });
                                 options.success(currentProdList);
-                                /*var imagesList = details.response.dsProd.dsProd.eProductImg || [];
-                                if (imagesList.length) {
-                                    var imagesHtml = '';
-                                    var template = kendo.template($("#prodDetImageTemplate").html());
-                                    imagesList.forEach(function (img) {
-                                        imagesHtml += template(img); //applying image template
-                                    });
-                                    $("#prodDetailImageView").html(imagesHtml); //display the result
-                                    $('.images-info').show();
-                                    $('.images-placeholder').hide();
-                                } else {
-                                    $("#prodDetailImageView").html('');
-                                    $('.images-info').hide();
-                                    $('.images-placeholder').show();
-                                }*/
                                 //assigning image list data
                                 app.viewModels.prodDetViewModel.set("prodImageList", details.response.dsProd.dsProd.eProductImg);
                                 $("#prodDetailImageView").data("kendoMobileListView").dataSource.read();

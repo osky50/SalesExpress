@@ -222,15 +222,16 @@ label {
     font-size: smaller !important;
 }
 
-.link, .link-active {
+.link, .link-active, .link-disable {
     background: none !important;
     border: none !important;
     padding: 0 !important;
     margin: 0 !important;
-    color: #247bbd !important;
     font-weight: normal !important;
 }
-
+.link{
+    color: #247bbd !important;
+}
 .link-active {
     font-weight: bold !important;
 }

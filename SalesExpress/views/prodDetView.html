@@ -29,41 +29,46 @@
 
     </div>
     <script type="text/x-kendo-template" id="prodDetailTemplate">
-        <div>
+        <div class="float-left" style="max-width: 80%">
             <label>Description:</label>
             <div class="inline">#: description#</div>
         </div>
-        <div>
+        <div class="float-right" style="display: #: ShopCartIndicatorDisplay #; color:darkgreen">
+            <div class="fa link-disable" style="display:inline-block" data-role="button" data-icon="fa-shopping-cart">
+                <span class="shopcart-header-info">(#: CartQty #)</span>
+            </div>
+        </div>
+        <div class="float-left" style="width:100%">
             <label>Price:</label>
             <div class="title">$#: Price#</div>
         </div>
-
-        <div>
+        <div class="float-left" style="width:100%">
             <label>Synonym:</label>
             <div class="inline">#: Synonym#</div>
         </div>
-        <div>
+        <div class="float-left" style="width:100%">
             <label>All Loc. AFS:</label>
             <div class="title">#: Afs# (#: UnitId #)</div>
         </div>
-        <div>
+        <div class="float-left" style="width:100%">
             <label>Report Synonym:</label>
             <div class="inline">#: ReportSyn#</div>
         </div>
-        <div>
+        <div class="float-left" style="width:100%">
             <label>Bar Synonym:</label>
             <div class="inline">#: BarSyn#</div>
         </div>
-        <div>
+        <div class="float-left" style="width:100%;padding-top:5px">
             <div data-rateit-readonly="true" rating-value="#: AvgRating #" class="prod-det-rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" step="1"></div>
         </div>
-        <div>
+        <div class="float-left" style="width:100%">
             <div style="margin-top:3px" class="rateit-description float-left">#: AvgRating # out of 5 stars&nbsp;|&nbsp;</div>
             <button data-role="button" name="reviews-link" class="font-smaller link rateit-description">#: TotalReview # customers reviews</button>
         </div>
-        <button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button>
+        <div class="float-left" style="width:100%">
+            <button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button>
+        </div>
     </script>
-
     <script type="text/x-kendo-template" id="prodDetImageTemplate">
         <a data-role="button" style="height:100%; width:100%;padding:0;margin:0;border:0">
             <img src="#: FileUrl #" alt="#: FileDesc#" style="width:100%; height:100%" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'">

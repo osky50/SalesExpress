@@ -113,16 +113,11 @@
                                     request.response.dsProd.eProduct.forEach(function (eProduct) {
                                         var enableBackOrder = localStorage.getItem('enabledBackOrder').toString();
                                         eProduct.BuyDisplay = eProduct.DefaultAfs == 0 && localStorage.getItem('enabledBackOrder') == 'false' ? 'none' : 'visible';
+                                        eProduct.ShopCartIndicatorDisplay = eProduct.CartQty > 0 ? 'visible' : 'none';
                                     });
                                 } catch (e) {
 
                                 }
-                            }
-                        }],
-                        'beforeFill': [{
-                            scope: this,
-                            fn: function (jsdo, success, request) {
-                                // beforeFill event handler statements ...
                             }
                         }],
                     }
