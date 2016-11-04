@@ -15,11 +15,19 @@
 
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="customerListTemplate">
-        <div style="margin-top:8px; margin-right: 8px"><b>Customer ID: </b>#: Cust_Id #</div>
-        <div><b>Search Name: </b>#: SearchName #</div>
-        <div>
-            <button class="float-right" type="button" data-role="button" name="change-customer">Change to this customer</button>
+        <div class="ui-grid-b ui-responsive">
+            <div class="ui-block-a">
+                <label>Customer ID: </label>#: Cust_Id #
+            </div>
+            <div class="ui-block-b">
+                <label>Search Name: </label>#: SearchName #
+            </div>
+            <div class="ui-block-c">
+                <button class="fa float-right" type="button" data-role="button" 
+                        name="change-customer" data-icon="fa-check">Change</button>
+            </div>
         </div>
+        
     </script>
 
 </div>

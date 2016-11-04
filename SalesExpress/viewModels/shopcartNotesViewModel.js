@@ -1,8 +1,5 @@
 (function (parent) {
     var shopcartNotesViewModel = kendo.observable({
-        jsdoDataSource: undefined,
-        jsdoModel: undefined,
-        selectedRow: {},
         noteText: null,
         noteIdList: [],
         origRow: {},
@@ -26,9 +23,42 @@
             }
         },
         saveNotes: function (e) {
-            alert(noteText);
+            var notes = noteText.value;
+            jsdoSettings.resourceName = 'dsOrder';
+            var updateNotesJSDOModel = new progress.data.JSDO({
+                name: jsdoSettings.resourceName,
+                autoFill: false,
+            });
+            var updateNotesData = {
+                "dsOrder": {
+                    "eOrder": {}
+                }
+            };
+            var promise = updateNotesJSDOModel.invoke('AddOrderLine', updateLineData);
+            promise.done(function (session, result, details) {
+                if (details.success == true) {
+                    var errors = false;
+                    try {
+                        errors = app.getErrors(details.response.dsOrder.dsOrder.restResult);
+                    } catch (e) {
+                        console.log("Error", e)
+                    }
+                    if (errors) {
+                        app.mobileApp.hideLoading();
+                        return;
+                    }
+                    // Executing call back as everything finshed successfully            
+                    app.back();
+                }
+            });
+            promise.fail(function () {
+                app.mobileApp.hideLoading();
+                MessageDialogController.showMessage('Saving notes failed', "Error");
+            });
         },
-        
+        cancel: function (e) {
+            app.back();
+        },
     });
     parent.shopcartNotesViewModel = shopcartNotesViewModel;
 

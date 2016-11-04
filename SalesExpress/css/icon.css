@@ -78,6 +78,14 @@
 .km-fa-plus:before {
   content: "\f067";
 }
+.km-fa-floppy-o:after,
+.km-fa-floppy-o:before {
+  content: "\f0c7";
+}
+.km-fa-step-backward:after,
+.km-fa-step-backward:before {
+  content: "\f048";
+}
 
  
  

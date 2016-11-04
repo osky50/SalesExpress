@@ -96,6 +96,9 @@
                             var promise = me.jsdoModel.read(rparam);
                             promise.done(function (session, result, details) {
                                 var currentCustList = details.response.dsCust.eCustomer;
+                                currentCustList.forEach(function (eCustomer) {
+                                    eCustomer['Cust-Id'] = eCustomer['Cust-Id'] || '<not specified>';
+                                });
                                 if (currentCustList && currentCustList.length > 0) {
                                     me.set("lastRowid", currentCustList[currentCustList.length - 1].TextRowID);
                                     me.set("moreRecords", currentCustList.length === me.pageSize);
@@ -103,9 +106,7 @@
                                 else {
                                     me.set("moreRecords", false);
                                 }
-
                                 kendo.bind($("#loadMore"), me);
-
                                 if (me.fromLoadMore) {
                                     me.set("fromLoadMore", false);
                                 }
