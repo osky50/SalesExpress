@@ -211,8 +211,8 @@
         },
         scan: function () {
             var callbackFn = function (format, text) {
-                alert(text);
                 $('#productList .km-filter-wrap input').val(text);
+                $("#productList .km-filter-wrap input").trigger("change");
             };
             app.scan(callbackFn);
         }

@@ -86,6 +86,10 @@
 .km-fa-step-backward:before {
   content: "\f048";
 }
+.km-fa-barcode:after,
+.km-fa-barcode:before {
+  content: "\f02a";
+}
 
  
  

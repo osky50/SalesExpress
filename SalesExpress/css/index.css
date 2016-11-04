@@ -229,9 +229,11 @@ label {
     margin: 0 !important;
     font-weight: normal !important;
 }
-.link{
+
+.link {
     color: #247bbd !important;
 }
+
 .link-active {
     font-weight: bold !important;
 }
@@ -242,7 +244,7 @@ label {
 }
 
 #map-canvas {
-    position:absolute;
+    position: absolute;
     padding: 0;
 }
 
@@ -258,18 +260,33 @@ label {
 .ui-block-a {
     padding-right: 15px !important;
 }
-ul.header{
+
+ul.header {
     margin-bottom: -15px !important;
 }
-ul.header li, li.header{
-    background-color:lightgray !important;
+
+    ul.header li, li.header {
+        background-color: lightgray !important;
+    }
+
+.km-navbar {
+    border-width: 1px 0 !important;
 }
-.km-navbar{
-    border-width:1px 0 !important;
-}
+
 .km-horizontal .km-view-title, .km-view-title, .km-dialog-title {
     line-height: 2.5em !important;
 }
-.km-flat .km-navbar{
-    border-top: 1px solid rgba(0,0,0,0.3)
+
+.km-flat .km-navbar {
+    border-top: 1px solid rgba(0,0,0,0.3);
+}
+
+.scan-button {
+    float: right;
+    width: 20%;
+    margin-right: 15px;
+    margin-top: 12px;
+}
+.scan-button ~ .km-listview-wrapper .km-filter-form {
+    width: 80% !important;
 }
