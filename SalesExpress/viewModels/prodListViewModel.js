@@ -213,7 +213,7 @@
             var callbackFn = function (format, text) {
                 alert('text');
             };
-            app.scan();
+            app.scan(callbackFn);
         }
     });
 
