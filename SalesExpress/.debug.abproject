@@ -1,5 +1,6 @@
 {
   "CorePlugins": [
+    "com.phonegap.plugins.barcodescanner@6.0.3",
     "com.telerik.LivePatch",
     "cordova-plugin-battery-status",
     "cordova-plugin-camera",
