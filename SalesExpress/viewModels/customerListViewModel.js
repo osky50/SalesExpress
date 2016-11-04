@@ -161,7 +161,7 @@
                                 }
                             });
                             checkCartPromise.fail(function () {
-                                app.showError('Can not change customer. Existing Shopping cart could not be cancelled.');
+                                MessageDialogController.showMessage('Can not change customer: existing Shopping cart could not be cancelled', "Error");
                             });
                         }
                     }
@@ -172,7 +172,7 @@
                 }
             });
             checkCartPromise.fail(function () {
-                app.showError('Can not change customer. Shopping cart could not be checked.');
+                MessageDialogController.showMessage('Can not change customer: shopping cart could not be checked', "Error");
             });
         },
     });

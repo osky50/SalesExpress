@@ -181,7 +181,7 @@
                             details[i].result + "\n    " + details[i].errorObject;
                 }
             }
-            app.showError(msg);
+            MessageDialogController.showMessage(msg, "Error");
             console.log(msg);
             // Now logout
             if (app.viewModels.loginViewModel.isLoggedIn) {
@@ -191,7 +191,7 @@
 
         logoutErrorFn: function (jsdosession, result, info) {
             var msg = "Error on logout";
-            app.showError(msg);
+            MessageDialogController.showMessage(msg, "Error");
             if (info.errorObject !== undefined) {
                 msg = msg + "\n" + info.errorObject;
             }
@@ -211,8 +211,7 @@
             else {
                 msg = msg + " Service " + jsdoSettings.serviceURI + " is unavailable";
             }
-
-            app.showError(msg);
+            MessageDialogController.showMessage(msg, "Error");
             if (info.xhr) {
                 msg = msg + " status (from jqXHT):" + info.xhr.status;
                 msg = msg + " statusText (from jqXHT):" + info.xhr.statusText;

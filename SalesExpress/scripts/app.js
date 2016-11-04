@@ -1,4 +1,4 @@
-(function () {    
+(function () {
     var app = {
         data: {},
         mobileApp: {},
@@ -100,11 +100,8 @@
             }
         }
         if (errors)
-            app.showError(errors);
+            MessageDialogController.showMessage(errors, "Error");
         return errors;
-    };
-    app.showError = function (message) {
-        MessageDialogController.showMessage(message, "Error");
     };
     app.changeTitle = function (customTitle) {
         if (app.mobileApp.view()) {
@@ -116,7 +113,7 @@
     app.onSelectTab = function (e) {
         if (e.item[0].id == "listIcon") {
             if (!app.viewModels.loginViewModel.isLoggedIn && !app.isAnonymous()) {
-                app.showError("Please login first.");
+                MessageDialogController.showMessage("Please login first", "Error");
                 e.preventDefault();
             }
         }
@@ -181,7 +178,7 @@
             }
         });
         promise.fail(function () {
-            app.showError('Failed to retrieve Shopping Cart details.')
+            MessageDialogController.showMessage("Failed to retrieve Shopping Cart details", "Error");
         });
     };
     app.closeImagePopup = function () {
