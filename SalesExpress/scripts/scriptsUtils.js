@@ -18,6 +18,16 @@ var scriptsUtils = {
         }
     }
 }
+var VibrationController = {
+    vibrate: function (vibrationTime) {
+        vibrationTime = vibrationTime || 1000;
+        if (typeof vibrationTime != 'number')
+            vibrationTime = 1000;
+        if (vibrationTime && navigator.notification && navigator.notification.vibrate)
+            navigator.notification.vibrate(vibrationTime);
+    }
+};
+
 var MessageDialogController = (function () {
     var that = {};
     /**
@@ -32,7 +42,7 @@ var MessageDialogController = (function () {
             fun(args);
         }
     };
-    that.showMessage = function (message, title, buttonName) {
+    that.showMessage = function (message, title, buttonName, vibrate) {
         title = title || "Information";
         buttonName = buttonName || 'OK';
         if (navigator.notification && navigator.notification.alert) {
@@ -42,9 +52,13 @@ var MessageDialogController = (function () {
                 title,
                 buttonName
             );
-        } else {
+        } else { 
             alert(message);
         }
+        if (vibrate === true)
+            VibrationController.vibrate();
+        else if (typeof vibrate == 'number')
+            VibrationController.vibrate(vibrate);
     };
     that.showConfirm = function (message, callback, buttonLabels, title) {
         /*Set default values if not specified by the user.*/

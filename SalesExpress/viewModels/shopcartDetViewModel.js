@@ -1,6 +1,7 @@
 (function (parent) {
     var shopcartDetViewModel = kendo.observable({
         jsdoDataSource: undefined,
+        linesDataSource: undefined,
         jsdoModel: undefined,
         selectedRow: {},
         shopCart: undefined,
@@ -8,12 +9,12 @@
         resourceName: 'Shopping Cart',
         forceLoad: false,
         onBeforeShow: function () {
-            var shopcartLines = $("#shopcartLines").data("kendoMobileListView");
-            if (shopcartLines === undefined) { //extra protection in case onInit have not been fired yet
+            var shopcartHeader = $("#shopcartHeader").data("kendoMobileListView");
+            if (shopcartHeader === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.shopcartDetViewModel.onInit(this);
-            } else if (shopcartLines.dataSource && shopcartLines.dataSource.data().length === 0 ||
+            } else if (shopcartHeader.dataSource && shopcartHeader.dataSource.data().length === 0 ||
                 app.viewModels.shopcartDetViewModel.forceLoad) {
-                shopcartLines.dataSource.read();
+                shopcartHeader.dataSource.read();
             }
             // Set list title to resource name
             if (app.viewModels.shopcartDetViewModel.resourceName !== undefined) {
@@ -24,14 +25,35 @@
             try {
                 // Create Data Source
                 app.viewModels.shopcartDetViewModel.createJSDODataSource();
+                app.viewModels.shopcartDetViewModel.createLinesDataSource();
                 app.views.listView = e.view;
                 // Create list
-                $("#shopcartLines").kendoMobileListView({
+                $("#shopcartHeader").kendoMobileListView({
                     dataSource: app.viewModels.shopcartDetViewModel.jsdoDataSource,
                     pullToRefresh: true,
                     style: "display: inline",
                     appendOnRefresh: false,
                     endlessScroll: false,
+                    autoBind: false,
+                    template: kendo.template($("#shopcartHeaderTemplate").html()),
+                    click: function (e) {
+                        if (!e.button)
+                            return;
+                        try {
+                            var button = e.button.element[0];
+                            if (button.name == 'notes') {
+                                app.viewModels.shopcartDetViewModel.shopcartNotes()
+                            }
+                        } catch (e) { }
+                    }
+                });
+                $("#shopcartLines").kendoMobileListView({
+                    dataSource: app.viewModels.shopcartDetViewModel.linesDataSource,
+                    pullToRefresh: false,
+                    style: "display: inline",
+                    appendOnRefresh: false,
+                    endlessScroll: false,
+                    autoBind: false,
                     template: kendo.template($("#shopcartLineTemplate").html()),
                     click: function (e) {
                         app.viewModels.shopcartDetViewModel.set("selectedRow", e.dataItem);
@@ -58,7 +80,6 @@
                             }
                             else if (button.name == 'delete-line') {
                                 var callback = function (index) {
-                                    debugger;
                                     if (index == 1)
                                         app.viewModels.shopcartDetViewModel.updateLine(0);
                                 }
@@ -71,6 +92,21 @@
             catch (ex) {
                 console.log("Error in initListView: " + ex);
             }
+        },
+        createLinesDataSource: function () {
+            this.linesDataSource = {
+                transport: {
+                    read: function (options) {
+                        if (app.viewModels.shopcartDetViewModel.shopCart)
+                            options.success(app.viewModels.shopcartDetViewModel.shopCart.eOrderLine);
+                        else
+                            options.success([]);
+                    }
+                },
+                error: function (e) {
+                    alert('Error: ', e);
+                }
+            };
         },
         createJSDODataSource: function () {
             try {
@@ -88,30 +124,30 @@
                         read: function (options) {
                             var promise = app.viewModels.shopcartDetViewModel.jsdoModel.invoke('CartRead', {});
                             promise.done(function (session, result, details) {
-                                var shopcart = null;
+                                var shopCart = null;
                                 if (details.response.dsOrder.dsOrder.eOrder && details.response.dsOrder.dsOrder.eOrder.length) {
-                                    var shopcart = details.response.dsOrder.dsOrder.eOrder[0];
-                                    if (!shopcart.eOrderLine || !shopcart.eOrderLine.length)
-                                        shopcart = null;
+                                    var shopCart = details.response.dsOrder.dsOrder.eOrder[0];
+                                    if (!shopCart.eOrderLine || !shopCart.eOrderLine.length)
+                                        shopCart = null;
                                 }
-                                app.viewModels.shopcartDetViewModel.shopCart = shopcart;
-                                if (shopcart) {
-                                    $('.shopcart-header-info').text('(' + shopcart.eOrderLine.length + ')');
+                                if (shopCart) {
+                                    shopCart.NotesIcon = shopCart.eOrderNote && shopCart.eOrderNote.length ? 'fa-pencil' : 'fa-plus';
+                                    $('.shopcart-header-info').text('(' + shopCart.eOrderLine.length + ')');
                                     $('.shopcart-info').show();
                                     $('.shopcart-placeholder').hide();
                                     //adding Currency to each line for making easier to show it
-                                    shopcart.eOrderLine.forEach(function (line) {
-                                        line.CurrencyId = shopcart.CurrencyId;
+                                    shopCart.eOrderLine.forEach(function (line) {
+                                        line.CurrencyId = shopCart.CurrencyId;
                                     });
-                                    options.success(shopcart.eOrderLine);
-                                    //binding header
-                                    kendo.bind($('#shopcartHeader'), shopcart, kendo.mobile.ui);
+                                    options.success([shopCart]);
                                 } else {
                                     $('.shopcart-header-info').text('');
                                     $('.shopcart-info').hide();
                                     $('.shopcart-placeholder').show();
                                     options.success([]);
                                 }
+                                app.viewModels.shopcartDetViewModel.shopCart = shopCart;
+                                $("#shopcartLines").data("kendoMobileListView").dataSource.read();
                             });
                             promise.fail(function () {
                                 options.success([]);
@@ -119,7 +155,7 @@
                         }
                     },
                     error: function (e) {
-                        console.log('Error: ', e);
+                        alert('Error: ', e);
                     }
                 };
             }
@@ -131,10 +167,9 @@
             app.mobileApp.showLoading();
             successUpd = function () {
                 app.mobileApp.hideLoading();
-                debugger;
                 app.viewModels.shopcartDetViewModel.forceLoad = true;
                 app.viewModels.shopcartDetViewModel.onBeforeShow();
-                MessageDialogController.showMessage('Shopping cart updated successfully', "Success");
+                VibrationController.vibrate();
             }
             eOrderobj = new EOrderClass();
             eOrderobj.setCustId(localStorage.getItem('defaultCustomer'));

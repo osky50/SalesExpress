@@ -74,6 +74,10 @@
 .km-fa-window-close-o:before {
   content: "\f2d4";
 }
+.km-fa-plus:after,
+.km-fa-plus:before {
+  content: "\f067";
+}
 
  
  
