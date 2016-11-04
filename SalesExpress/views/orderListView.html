@@ -12,10 +12,22 @@
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="orderTemplate">
         <a href="views/orderDetView.html">
-            <div><b>Trans. No.: </b>#: TransNo #</div>
-            <div><b>Trans. Date: </b>#: TransDate #</div>
-            <div><b>Status: </b>#: DocStatus #</div>
-            <div><b>Total: </b>$#: TotalAmt # #: CurrencyId #</div>
+            <div class="ui-grid-a ui-responsive">
+                <div class="ui-block-a">
+                    <label>Trans. No.: </label>#: TransNo #
+                </div>
+                <div class="ui-block-b">
+                    <label>Trans. Date: </label>#: TransDate #
+                </div>
+            </div>
+            <div class="ui-grid-a ui-responsive">
+                <div class="ui-block-a">
+                    <label>Status: </label>#: DocStatus #
+                </div>
+                <div class="ui-block-b">
+                    <label>Total: </label>$#: TotalAmt # #: CurrencyId #
+                </div>
+            </div>
         </a>
     </script>
 </div>
