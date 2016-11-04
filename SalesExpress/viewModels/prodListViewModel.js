@@ -210,7 +210,9 @@
             addLineToShoppingCart(eOrderobj.getEOrder(), lineAdded);
         },
         scan: function () {
-            alert('scan');
+            var callbackFn = function (format, text) {
+                alert('text');
+            };
             app.scan();
         }
     });
