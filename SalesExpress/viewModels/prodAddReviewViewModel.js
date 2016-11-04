@@ -71,11 +71,11 @@
                             errors = app.getErrors(details.response.dsProdReview.dsProdReview.wsReviewResult);
                         else {
                             errors = true;
-                            app.showMessage('Adding the review failed.');
+                            MessageDialogController.showMessage('Adding the review failed', "Error");
                         }
                     } catch (e) {
                         errors = true;
-                        app.showMessage('Adding the review failed.');
+                        MessageDialogController.showMessage('Adding the review failed', "Error");
                     }
                     if (errors)
                         return;
@@ -86,7 +86,7 @@
                     }
                 });
                 promise.fail(function () {
-                    app.showMessage('Adding the review failed.');
+                    MessageDialogController.showMessage('Adding the review failed', "Error");
                 });
             } catch (e) { }
         },

@@ -104,15 +104,7 @@
         return errors;
     };
     app.showError = function (message) {
-        app.showMessage(message);
-    };
-    app.showMessage = function (message) {
-        if (navigator && navigator.notification) {
-            navigator.notification.alert(message);
-        } else {
-            // if run directly in browser
-            alert(message);
-        }
+        MessageDialogController.showMessage(message, "Error");
     };
     app.changeTitle = function (customTitle) {
         if (app.mobileApp.view()) {

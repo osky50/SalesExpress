@@ -57,8 +57,12 @@
                                 app.viewModels.shopcartDetViewModel.updateLine(orderQty);
                             }
                             else if (button.name == 'delete-line') {
-                                if (confirm("Are you sure you want to delete the line?"))
-                                    app.viewModels.shopcartDetViewModel.updateLine(0);
+                                var callback = function (index) {
+                                    debugger;
+                                    if (index == 1)
+                                        app.viewModels.shopcartDetViewModel.updateLine(0);
+                                }
+                                MessageDialogController.showConfirm("Are you sure you want to delete the line?", callback, "Yes,No", "Delete Line");
                             }
                         } catch (e) { }
                     }
@@ -124,10 +128,13 @@
             }
         },
         updateLine: function (orderQty) {
+            app.mobileApp.showLoading();
             successUpd = function () {
+                app.mobileApp.hideLoading();
+                debugger;
                 app.viewModels.shopcartDetViewModel.forceLoad = true;
                 app.viewModels.shopcartDetViewModel.onBeforeShow();
-                app.showMessage('Shopping cart updated successfully');
+                MessageDialogController.showMessage('Shopping cart updated successfully', "Success");
             }
             eOrderobj = new EOrderClass();
             eOrderobj.setCustId(localStorage.getItem('defaultCustomer'));
@@ -152,25 +159,25 @@
                         errors = app.getErrors(details.response.dsOrder.dsOrder.restResult);
                     else {
                         errors = true;
-                        app.showMessage('Placing the order failed.');
+                        MessageDialogController.showMessage('Placing the order failed', "Error");
                     }
                 } catch (e) {
                     errors = true;
-                    app.showMessage('Placing the order failed.');
+                    MessageDialogController.showMessage('Placing the order failed', "Error");
                 }
                 if (errors) {
                     app.mobileApp.hideLoading();
                     return;
                 }
                 var transNo = details.response.dsOrder.dsOrder.eOrder[0].TransNo;
-                app.showMessage('Orcer ' + transNo + ' has been created.');
+                MessageDialogController.showMessage('Orcer ' + transNo + ' has been created', "Success");
                 app.viewModels.shopcartDetViewModel.forceLoad = true;
                 app.viewModels.shopcartDetViewModel.onBeforeShow();
                 app.mobileApp.hideLoading();
             });
             promise.fail(function () {
                 app.mobileApp.hideLoading();
-                app.showMessage('Placing the order failed.');
+                MessageDialogController.showMessage('Placing the order failed', "Error");
             });
         },
         shopcartNotes: function () {

@@ -121,7 +121,7 @@
             app.mobileApp.showLoading();
             lineAdded = function () {
                 app.mobileApp.hideLoading();
-                app.showMessage('Product Added to the Cart');
+                MessageDialogController.showMessage('Product Added to the Cart', "Success");
             };
             eOrderobj = new EOrderClass();
             eOrderobj.setCustId(localStorage.getItem('defaultCustomer'));
