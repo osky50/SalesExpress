@@ -209,6 +209,10 @@
             eOrderobj.addLine(eoline);
             addLineToShoppingCart(eOrderobj.getEOrder(), lineAdded);
         },
+        scan: function () {
+            alert('scan');
+            app.scan();
+        }
     });
 
     parent.prodListViewModel = prodListViewModel;

@@ -183,6 +183,23 @@
     };
     app.closeImagePopup = function () {
         $("#imagePopup").data("kendoMobileModalView").close();
-    }
+    },
+    app.scan = function (calbackFn) {
+        var that = this;
+        if (window.navigator.simulator === true) {
+            alert("Not Supported in Simulator.");
+        }
+        else {
+            cordova.plugins.barcodeScanner.scan(
+                function (result) {
+                    if (!result.cancelled) {
+                        calbackFn(result.format, result.text);
+                    }
+                },
+                function (error) {
+                    MessageDialogController.showMessage("Scanning failed: " + error, "Error");
+                });
+        }
+    },
     app.pageSize = 10;
 }());
