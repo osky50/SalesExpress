@@ -211,7 +211,8 @@
         },
         scan: function () {
             var callbackFn = function (format, text) {
-                alert('text');
+                alert(text);
+                $('#productList .km-filter-wrap input').val(text);
             };
             app.scan(callbackFn);
         }
