@@ -164,9 +164,11 @@
                     read: function (options) {
                         var prodLocList = app.viewModels.prodDetViewModel.prodLocList || [];
                         if (prodLocList.length) {
+                            $('.locations-header').show();
                             $('.locations-info').show();
                             $('.locations-placeholder').hide();
                         } else {
+                            $('.locations-header').show();
                             $('.locations-info').hide();
                             $('.locations-placeholder').show();
                         }
