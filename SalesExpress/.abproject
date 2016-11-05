@@ -6,7 +6,7 @@
   "DisplayName": "Sale Express",
   "Author": "apero solutions",
   "Description": "Sales Express",
-  "BundleVersion": "3.0",
+  "BundleVersion": "3.2",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [
     "1",
@@ -16,6 +16,7 @@
   "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
   "FrameworkVersion": "4.0.0",
   "AndroidPermissions": [
+    "android.permission.CAMERA",
     "android.permission.INTERNET"
   ],
   "DeviceOrientations": [
@@ -28,6 +29,7 @@
   "WP8TileTitle": "",
   "WP8Publisher": "",
   "WP8Capabilities": [
+    "ID_CAP_ISV_CAMERA",
     "ID_CAP_NETWORKING",
     "ID_CAP_WEBBROWSERCOMPONENT"
   ],
@@ -41,5 +43,6 @@
     "ID_RESOLUTION_WVGA",
     "ID_RESOLUTION_WXGA",
     "ID_RESOLUTION_HD720P"
-  ]
+  ],
+  "CordovaPluginVariables": {}
 }
