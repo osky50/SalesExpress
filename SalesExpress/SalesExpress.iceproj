@@ -201,7 +201,7 @@
     <Content Include="viewModels\prodDetReviewsViewModel.js">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="viewModels\shopcartNotesViewModel.js" />
+    <Content Include="viewModels\shopcartNoteDetViewModel.js" />
     <Content Include="viewModels\shopcartDetViewModel.js" />
     <Content Include="viewModels\orderDetViewModel.js" />
     <Content Include="viewModels\prodDetViewModel.js">
@@ -223,7 +223,7 @@
     <Content Include="views\prodDetReviewsView.html">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="views\shopcartNotesView.html" />
+    <Content Include="views\shopcartNoteDetView.html" />
     <Content Include="views\shopcartDetView.html" />
     <Content Include="views\orderDetView.html" />
     <Content Include="views\prodDetView.html" />

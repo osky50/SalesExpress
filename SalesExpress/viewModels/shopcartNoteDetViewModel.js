@@ -1,5 +1,5 @@
 (function (parent) {
-    var shopcartNotesViewModel = kendo.observable({
+    var shopcartNoteDetViewModel = kendo.observable({
         noteText: null,
         noteIdList: [],
         origRow: {},
@@ -9,13 +9,13 @@
         onBeforeShow: function () {
             kendo.bind($('#shopcartNotesHeader'), app.viewModels.shopcartDetViewModel.shopCart, kendo.mobile.ui);
             // Set list title to resource name
-            if (app.viewModels.shopcartNotesViewModel.resourceName !== undefined) {
-                app.changeTitle(app.viewModels.shopcartNotesViewModel.resourceName);
+            if (app.viewModels.shopcartNoteDetViewModel.resourceName !== undefined) {
+                app.changeTitle(app.viewModels.shopcartNoteDetViewModel.resourceName);
             }
         },
         onInit: function (e) {
             try {
-                var me = app.viewModels.shopcartNotesViewModel;
+                var me = app.viewModels.shopcartNoteDetViewModel;
                 me.set("noteIdList", ["EA", "BOX", "New"]);
             }
             catch (ex) {
@@ -60,6 +60,6 @@
             app.back();
         },
     });
-    parent.shopcartNotesViewModel = shopcartNotesViewModel;
+    parent.shopcartNoteDetViewModel = shopcartNoteDetViewModel;
 
 })(app.viewModels);
