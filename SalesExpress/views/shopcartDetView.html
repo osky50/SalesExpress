@@ -16,11 +16,16 @@
             </li>
         </ul>
         <ul id="shopcartHeader" data-role="listview" data-style="inset"></ul>
-        <div data-role="collapsible" data-animation="false" class="fa"
+        <div style="text-align:right; padding-right:.7em">
+            <button class="fa" data-role="button" data-icon="fa-plus" data-bind="click: addNotes">Add Note</button>
+        </div>
+        <div data-role="collapsible" data-animation="false" class="fa padding-0 notes-collapsible"
              data-icon-position="right" data-expand-icon="fa-arrow-circle-down"
-             data-collapse-icon="fa-arrow-circle-up" data-bind="click: notesClick">
-            <h4>Notes</h4>
-            <ul id="shopcartNotes" data-role="listview" data-style="inset"></ul>
+             data-collapse-icon="fa-arrow-circle-up">
+            <h4>
+                Notes
+            </h4>
+            <ul id="shopcartNotes" style="margin:0" data-role="listview" data-style="inset"></ul>
         </div>
         <ul data-role="listview" data-style="inset" class="header">
             <li>
@@ -31,7 +36,7 @@
         <div class="lines-placeholder placeholder">
             <ul data-role="listview" data-style="inset">
                 <li>
-                    <label>No lines in the Shopping Cart...</label>
+                    <label>No Lines in the Shopping Cart...</label>
                 </li>
             </ul>
         </div>
@@ -72,7 +77,7 @@
         <form>
             <div><b>NoteId: </b>#: NoteId #</div>
             <div><b>Note: </b>#: NoteText #</div>
-            <div>
+            <div class="float-right">
                 <button type="button" data-role="button" name="update-note" class="fa" data-icon="fa-pencil">Update</button>
                 <button type="button" data-role="button" name="delete-note" class="fa" data-icon="fa-trash-o">Remove</button>
             </div>

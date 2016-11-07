@@ -49,7 +49,6 @@
                     autoBind: false,
                     template: kendo.template($("#shopcartNoteTemplate").html()),
                     click: function (e) {
-                        debugger;
                         app.viewModels.shopcartDetViewModel.set("selectedNote", e.dataItem);
                         if (!e.button)
                             return;
@@ -166,8 +165,8 @@
                                 if (details.response.dsOrder.dsOrder.eOrder && details.response.dsOrder.dsOrder.eOrder.length) {
                                     shopCart = details.response.dsOrder.dsOrder.eOrder[0];
                                 }
-                                if (shopCart) {
-                                    shopCart.NotesCount = shopCart.eOrderNote ? shopCart.eOrderNote.length : 0;
+                                if (shopCart) {                                    
+                                    //displaying lines or place holder
                                     if (shopCart.eOrderLine && shopCart.eOrderLine.length) {
                                         $('#shopcartLines').show();
                                         $('.lines-placeholder').hide();
@@ -178,6 +177,12 @@
                                         $('.lines-placeholder').show();
                                         $('.place-order').hide();
                                         $('.shopcart-header-info').text('');
+                                    }
+                                    //displaying notes or placeholder
+                                    if (shopCart.eOrderNote && shopCart.eOrderNote.length) {
+                                        $('.notes-collapsible').show();
+                                    } else {
+                                        $('.notes-collapsible').hide();
                                     }
                                     $('.shopcart-info').show();
                                     $('.shopcart-placeholder').hide();
@@ -263,6 +268,10 @@
                 app.mobileApp.hideLoading();
                 MessageDialogController.showMessage('Placing the order failed', "Error");
             });
+        },
+        addNotes: function () {
+            app.viewModels.shopcartDetViewModel.set("selectedNote", {});
+            app.mobileApp.navigate('views/shopcartNoteDetView.html');
         },
         deleteNote: function () {
             alert('delete');

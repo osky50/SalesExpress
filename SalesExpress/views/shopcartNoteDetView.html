@@ -46,7 +46,6 @@
                 </div>
             </li>
         </ul>
-
     </div>
     <div>
         <ul data-role="listview" data-style="inset" class="header">
@@ -55,16 +54,15 @@
             </li>
         </ul>
         <div>
-            <ul data-role="listview" data-style="inset">
+            <ul data-role="listview" data-style="inset" id="noteDetails">
                 <li style="padding:8px; height:70px">
                     <label style="margin-top:15px">
                         Note ID:
-                        <select id="dropdownbound" style="right:auto;left:90px" class="border-1" data-role="dropdownlist" data-bind="source: noteIdList"></select>
+                        <select id="dropdownbound" style="right:auto;left:90px" class="border-1" data-role="dropdownlist" data-bind="source: noteIdList, value: noteId"></select>
                     </label>
                 </li>
                 <li>
-                    <textarea style="width:100%" rows="4" class="border-1 float-left"
-                              name="noteText" id="noteText" data-bind="value: noteText"></textarea>
+                    <textarea style="width:100%" rows="4" class="border-1 float-left" name="noteText" id="noteText" data-bind="value: noteText"></textarea>
                 </li>
                 <li>
                     <a data-bind="click: cancel" data-role="button" class="fa float-right" data-icon="fa-step-backward">Cancel</a>

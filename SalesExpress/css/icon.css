@@ -119,6 +119,5 @@
 }
 /*patch for collapsible*/
 span.km-icon.km-fa-arrow-circle-down, span.km-icon.km-fa-arrow-circle-up {
-    float: right;
     font-size: 20px;
 }

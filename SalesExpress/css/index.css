@@ -265,7 +265,7 @@ ul.header {
     margin-bottom: -15px !important;
 }
 
-    ul.header li, li.header, .km-collapsible-header{
+    ul.header li, li.header, .km-collapsible-header {
         background-color: lightgray !important;
     }
 
@@ -287,14 +287,22 @@ ul.header {
     margin-right: 15px;
     margin-top: 14px;
 }
-.scan-button ~ .km-listview-wrapper .km-filter-form {
-    width: 80% !important;
+
+    .scan-button ~ .km-listview-wrapper .km-filter-form {
+        width: 80% !important;
+    }
+
+.km-collapsible {
+    margin: 1em !important;
 }
-.km-collapsible{
-    margin:1em !important;
-}
-.km-collapsible-header{
+
+.km-collapsible-header {
     padding: .5em .7em;
     border-width: 1px;
     border-radius: 3px;
+    overflow: hidden;
+}
+
+.padding-0, .padding-0 .km-collapsible-content {
+    padding: 0 !important;
 }
