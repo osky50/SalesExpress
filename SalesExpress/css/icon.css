@@ -89,12 +89,14 @@
 .km-fa-window-close-o:before {
     content: "\f2d4";
 }
-
 .km-fa-plus:after,
 .km-fa-plus:before {
     content: "\f067";
 }
-
+.km-fa-minus:after,
+.km-fa-minus:before {
+    content: "\f068";
+}
 .km-fa-floppy-o:after,
 .km-fa-floppy-o:before {
     content: "\f0c7";

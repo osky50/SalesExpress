@@ -48,11 +48,13 @@
             <div class="float-left" style="width:100%"><button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button></div>
             <form>
                 <div class="float-left">
+                    <button data-role="button" name="decrement-qty" style="display: #: BuyDisplay #" data-style="notext" class="fa" data-icon="fa-minus"></button>
                     <input type="number" min="1" required style="display: #: BuyDisplay #" class="select-on-focus width-70 border-1 relative" name="Quantity"
                            value="1" />
-                    <button type="button" data-role="button" style="display: #: BuyDisplay #" name="addToCart" class="fa" data-icon="fa-shopping-cart">Buy</button>
+                    <button data-role="button" name="increment-qty" style="display: #: BuyDisplay #" data-style="notext" class="fa" data-icon="fa-plus" style="margin-right:15px"></button>
+                    <button type="button" data-role="button" style="display: #: BuyDisplay #" name="addToCart" class="fa" data-icon="fa-shopping-cart">Buy</button>                    
                     <button type="button" data-role="button" name="details" class="fa" data-icon="fa-info-circle">Details</button>
-                </div>
+                </div>                
             </form>
         </div>
     </script>
