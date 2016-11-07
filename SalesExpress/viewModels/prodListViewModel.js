@@ -70,15 +70,41 @@
                                 //analizing "enabledBackOrders" parameter
                                 var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
                                 if (!enabledBackOrders || enabledBackOrders == 'false') {
-                                    $(input).attr('max', app.viewModels.prodListViewModel.selectedRow.DefaultAfs); //removing max attribute which initially have the AFS
+                                    $(input).attr('max', app.viewModels.prodListViewModel.selectedRow.DefaultAfs); //adding max attribute
                                 }
                                 var validator = $(form).kendoValidator({
-                                    validateOnBlur: false
+                                    validateOnBlur: false,
+                                    messages: {
+                                        min: function (input) {
+                                            return input[0].name + ' should be greater than 0';
+                                        }
+                                    }
                                 }).data('kendoValidator');
                                 if (!validator.validateInput($(input)))
                                     return;
                                 var qty = parseInt(input.val());
                                 app.viewModels.prodListViewModel.addLineToCart(qty);
+                            } else if (button.name == 'increment-qty') {
+                                var form = e.item.find('form');
+                                var input = e.item.find('input');
+                                if (!enabledBackOrders || enabledBackOrders == 'false') {
+                                    var max = app.viewModels.prodListViewModel.selectedRow.DefaultAfs;
+                                    var currentValue = parseFloat($(input).val());
+                                    if (currentValue >= max || currentValue + 1 > max) {
+                                        VibrationController.vibrate();
+                                        return;
+                                    }
+                                }
+                                $(input).val(currentValue + 1);
+                            } else if (button.name == 'decrement-qty') {
+                                var form = e.item.find('form');
+                                var input = e.item.find('input');
+                                var currentValue = parseFloat($(input).val());
+                                if (currentValue <= 0 || currentValue - 1 <= 0) {
+                                    VibrationController.vibrate();
+                                    return;
+                                }
+                                $(input).val(currentValue - 1);
                             }
                         } catch (e) { }
                     },
@@ -209,7 +235,7 @@
             eOrderobj.addLine(eoline);
             addLineToShoppingCart(eOrderobj.getEOrder(), lineAdded);
         },
-        scan: function () {            
+        scan: function () {
             var callbackFn = function (format, text) {
                 var guid = function () {
                     function s4() {
