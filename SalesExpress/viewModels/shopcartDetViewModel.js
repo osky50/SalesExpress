@@ -59,7 +59,6 @@
                                 app.mobileApp.navigate('views/shopcartNoteDetView.html');
                             }
                             else if (button.name == 'delete-note') {
-                                return;
                                 var callback = function (index) {
                                     if (index == 1)
                                         app.viewModels.shopcartDetViewModel.deleteNote();
