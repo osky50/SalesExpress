@@ -10,6 +10,12 @@
     var bootstrap = function () {
         $(function () {
             try {
+                $(document).on('focus', 'input.select-on-focus', function () {
+                    var me = this;
+                    setTimeout(function () {
+                        me.select();
+                    }, 50); //select all text in any field on focus for easy re-entry. Delay sightly to allow focus to "stick" before selecting.
+                });
                 $.jqplot.config.enablePlugins = true;
                 app.mobileApp = new kendo.mobile.Application(document.body, {
 
