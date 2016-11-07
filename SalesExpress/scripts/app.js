@@ -13,6 +13,7 @@
                 $(document).on('focus', 'input.select-on-focus', function () {
                     var me = this;
                     setTimeout(function () {
+                        alert('si');
                         me.select();
                     }, 50); //select all text in any field on focus for easy re-entry. Delay sightly to allow focus to "stick" before selecting.
                 });
