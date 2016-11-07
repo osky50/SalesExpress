@@ -31,7 +31,6 @@
             }
         },
         saveNotes: function (e) {
-            debugger;
             jsdoSettings.resourceName = 'dsOrder';
             var updateNotesJSDOModel = new progress.data.JSDO({
                 name: jsdoSettings.resourceName,

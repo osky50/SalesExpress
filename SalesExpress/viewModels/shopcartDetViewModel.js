@@ -91,7 +91,12 @@
                                     $(input).attr('max', afs); //adding max attribute which AFS
                                 }
                                 var validator = $(form).kendoValidator({
-                                    validateOnBlur: false
+                                    validateOnBlur: false,
+                                    messages: {
+                                        min: function (input) {
+                                            return input[0].name + ' should be greater than 0';
+                                        }
+                                    }
                                 }).data('kendoValidator');
                                 if (!validator.validateInput($(input)))
                                     return;
@@ -104,6 +109,27 @@
                                         app.viewModels.shopcartDetViewModel.updateLine(0);
                                 }
                                 MessageDialogController.showConfirm("Are you sure you want to delete the line?", callback, "Yes,No", "Delete Line");
+                            } else if (button.name == 'increment-qty') {
+                                var form = e.item.find('form');
+                                var input = e.item.find('input');
+                                if (!enabledBackOrders || enabledBackOrders == 'false') {
+                                    var max = parseFloat(input[0].dataset.afs);
+                                    var currentValue = parseFloat($(input).val());
+                                    if (currentValue >= max || currentValue + 1 > max) {
+                                        VibrationController.vibrate();
+                                        return;
+                                    }
+                                }
+                                $(input).val(currentValue + 1);
+                            } else if (button.name == 'decrement-qty') {
+                                var form = e.item.find('form');
+                                var input = e.item.find('input');
+                                var currentValue = parseFloat($(input).val());
+                                if (currentValue <= 0 || currentValue - 1 <= 0) {
+                                    VibrationController.vibrate();
+                                    return;
+                                }
+                                $(input).val(currentValue - 1);
                             }
                         } catch (e) { }
                     }
@@ -165,7 +191,7 @@
                                 if (details.response.dsOrder.dsOrder.eOrder && details.response.dsOrder.dsOrder.eOrder.length) {
                                     shopCart = details.response.dsOrder.dsOrder.eOrder[0];
                                 }
-                                if (shopCart) {                                    
+                                if (shopCart) {
                                     //displaying lines or place holder
                                     if (shopCart.eOrderLine && shopCart.eOrderLine.length) {
                                         $('#shopcartLines').show();
