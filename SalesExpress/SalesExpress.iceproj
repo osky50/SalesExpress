@@ -201,8 +201,6 @@
     <Content Include="viewModels\prodDetReviewsViewModel.js">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="viewModels\shopcartNotesViewModel.js" />
-    <Content Include="viewModels\shopcartNoteDetViewModel.js" />
     <Content Include="viewModels\shopcartDetViewModel.js" />
     <Content Include="viewModels\orderDetViewModel.js" />
     <Content Include="viewModels\prodDetViewModel.js">
@@ -213,6 +211,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="viewModels\loginViewModel.js" />
+    <Content Include="viewModels\shopcartNoteDetViewModel.js">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="views\customerDetView.html" />
     <Content Include="views\customerDetMapView.html" />
     <Content Include="views\customerListView.html" />
@@ -224,14 +225,15 @@
     <Content Include="views\prodDetReviewsView.html">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="views\shopcartNotesView.html" />
-    <Content Include="views\shopcartNoteDetView.html" />
     <Content Include="views\shopcartDetView.html" />
     <Content Include="views\orderDetView.html" />
     <Content Include="views\prodDetView.html" />
     <Content Include="views\orderListView.html" />
     <Content Include="views\prodListView.html" />
     <Content Include="views\loginView.html" />
+    <Content Include="views\shopcartNoteDetView.html">
+      <SubType>Content</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="App_Resources\Android\drawable-hdpi\icon.png" />

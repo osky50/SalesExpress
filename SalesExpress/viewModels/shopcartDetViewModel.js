@@ -1,9 +1,11 @@
 (function (parent) {
     var shopcartDetViewModel = kendo.observable({
         jsdoDataSource: undefined,
+        notesDataSource: undefined,
         linesDataSource: undefined,
         jsdoModel: undefined,
         selectedRow: {},
+        selectedNote: {},
         shopCart: undefined,
         origRow: {},
         resourceName: 'Shopping Cart',
@@ -25,6 +27,7 @@
             try {
                 // Create Data Source
                 app.viewModels.shopcartDetViewModel.createJSDODataSource();
+                app.viewModels.shopcartDetViewModel.createNotesDataSource();
                 app.viewModels.shopcartDetViewModel.createLinesDataSource();
                 app.views.listView = e.view;
                 // Create list
@@ -36,13 +39,32 @@
                     endlessScroll: false,
                     autoBind: false,
                     template: kendo.template($("#shopcartHeaderTemplate").html()),
+                });
+                $("#shopcartNotes").kendoMobileListView({
+                    dataSource: app.viewModels.shopcartDetViewModel.notesDataSource,
+                    pullToRefresh: false,
+                    style: "display: inline",
+                    appendOnRefresh: false,
+                    endlessScroll: false,
+                    autoBind: false,
+                    template: kendo.template($("#shopcartNoteTemplate").html()),
                     click: function (e) {
+                        debugger;
+                        app.viewModels.shopcartDetViewModel.set("selectedNote", e.dataItem);
                         if (!e.button)
                             return;
                         try {
                             var button = e.button.element[0];
-                            if (button.name == 'notes') {
-                                app.viewModels.shopcartDetViewModel.shopcartNotes()
+                            if (button.name == 'update-note') {
+                                app.mobileApp.navigate('views/shopcartNoteDetView.html');
+                            }
+                            else if (button.name == 'delete-note') {
+                                return;
+                                var callback = function (index) {
+                                    if (index == 1)
+                                        app.viewModels.shopcartDetViewModel.deleteNote();
+                                }
+                                MessageDialogController.showConfirm("Are you sure you want to delete the note?", callback, "Yes,No", "Delete Note");
                             }
                         } catch (e) { }
                     }
@@ -93,11 +115,28 @@
                 console.log("Error in initListView: " + ex);
             }
         },
+        createNotesDataSource: function () {
+            this.notesDataSource = {
+                transport: {
+                    read: function (options) {
+                        if (app.viewModels.shopcartDetViewModel.shopCart && app.viewModels.shopcartDetViewModel.shopCart.eOrderNote &&
+                            app.viewModels.shopcartDetViewModel.shopCart.eOrderNote.length)
+                            options.success(app.viewModels.shopcartDetViewModel.shopCart.eOrderNote);
+                        else
+                            options.success([]);
+                    }
+                },
+                error: function (e) {
+                    alert('Error: ', e);
+                }
+            };
+        },
         createLinesDataSource: function () {
             this.linesDataSource = {
                 transport: {
                     read: function (options) {
-                        if (app.viewModels.shopcartDetViewModel.shopCart)
+                        if (app.viewModels.shopcartDetViewModel.shopCart && app.viewModels.shopcartDetViewModel.shopCart.eOrderLine &&
+                            app.viewModels.shopcartDetViewModel.shopCart.eOrderLine.length)
                             options.success(app.viewModels.shopcartDetViewModel.shopCart.eOrderLine);
                         else
                             options.success([]);
@@ -126,19 +165,29 @@
                             promise.done(function (session, result, details) {
                                 var shopCart = null;
                                 if (details.response.dsOrder.dsOrder.eOrder && details.response.dsOrder.dsOrder.eOrder.length) {
-                                    var shopCart = details.response.dsOrder.dsOrder.eOrder[0];
-                                    if (!shopCart.eOrderLine || !shopCart.eOrderLine.length)
-                                        shopCart = null;
+                                    shopCart = details.response.dsOrder.dsOrder.eOrder[0];
                                 }
                                 if (shopCart) {
-                                    shopCart.NotesIcon = shopCart.eOrderNote && shopCart.eOrderNote.length ? 'fa-pencil' : 'fa-plus';
-                                    $('.shopcart-header-info').text('(' + shopCart.eOrderLine.length + ')');
+                                    shopCart.NotesCount = shopCart.eOrderNote ? shopCart.eOrderNote.length : 0;
+                                    if (shopCart.eOrderLine && shopCart.eOrderLine.length) {
+                                        $('#shopcartLines').show();
+                                        $('.lines-placeholder').hide();
+                                        $('.place-order').show();
+                                        $('.shopcart-header-info').text('(' + shopCart.eOrderLine.length + ')');
+                                    } else {
+                                        $('#shopcartLines').hide();
+                                        $('.lines-placeholder').show();
+                                        $('.place-order').hide();
+                                        $('.shopcart-header-info').text('');
+                                    }
                                     $('.shopcart-info').show();
                                     $('.shopcart-placeholder').hide();
                                     //adding Currency to each line for making easier to show it
-                                    shopCart.eOrderLine.forEach(function (line) {
-                                        line.CurrencyId = shopCart.CurrencyId;
-                                    });
+                                    if (shopCart.eOrderLine) {
+                                        shopCart.eOrderLine.forEach(function (line) {
+                                            line.CurrencyId = shopCart.CurrencyId;
+                                        });
+                                    }
                                     options.success([shopCart]);
                                 } else {
                                     $('.shopcart-header-info').text('');
@@ -147,6 +196,7 @@
                                     options.success([]);
                                 }
                                 app.viewModels.shopcartDetViewModel.shopCart = shopCart;
+                                $("#shopcartNotes").data("kendoMobileListView").dataSource.read();
                                 $("#shopcartLines").data("kendoMobileListView").dataSource.read();
                             });
                             promise.fail(function () {
@@ -215,8 +265,8 @@
                 MessageDialogController.showMessage('Placing the order failed', "Error");
             });
         },
-        shopcartNotes: function () {
-            app.mobileApp.navigate('views/shopcartNotesView.html');
+        deleteNote: function () {
+            alert('delete');
         }
     });
     parent.shopcartDetViewModel = shopcartDetViewModel;

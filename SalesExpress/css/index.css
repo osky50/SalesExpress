@@ -265,7 +265,7 @@ ul.header {
     margin-bottom: -15px !important;
 }
 
-    ul.header li, li.header {
+    ul.header li, li.header, .km-collapsible-header{
         background-color: lightgray !important;
     }
 
@@ -289,4 +289,12 @@ ul.header {
 }
 .scan-button ~ .km-listview-wrapper .km-filter-form {
     width: 80% !important;
+}
+.km-collapsible{
+    margin:1em !important;
+}
+.km-collapsible-header{
+    padding: .5em .7em;
+    border-width: 1px;
+    border-radius: 3px;
 }
