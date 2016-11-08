@@ -40,23 +40,27 @@
     <script type="text/x-kendo-template" id="prodDetailTemplate">
         <div class="float-left" style="max-width: 80%">
             <div class="inline">#: description#</div>
-        </div>
+        </div>        
         <div class="float-right" style="display: #: ShopCartIndicatorDisplay #; color:darkgreen">
             <div class="fa link-disable" style="display:inline-block" data-role="button" data-icon="fa-shopping-cart">
                 <span class="shopcart-header-info">(#: CartQty #)</span>
             </div>
         </div>
+        <div class="float-left" style="width:100%">#: description2 #</div>
         <div class="float-left" style="width:100%">
             <label>Synonym:</label>
             <div class="inline">#: Synonym #</div>
         </div>
         <div class="ui-grid-a ui-responsive float-left" style="width:100%">
             <div class="ui-block-a">
-                <label>Prod. Id.: </label>#: Prod_Id #
+                <label>Report Syn.: </label>#: ReportSyn #
             </div>
             <div class="ui-block-b">
-                <label>Price: </label>$#: Price #
-            </div>
+                <label>Manuf. Syn.: </label>#: ManSyn #
+            </div>            
+        </div>
+        <div class="float-left" style="width:100%">
+            <label>Price: </label>$#: Price #
         </div>
         <div class="ui-grid-a ui-responsive float-left" style="width:100%">
             <div class="ui-block-a">
