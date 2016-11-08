@@ -218,6 +218,7 @@
     <Content Include="views\customerDetView.html" />
     <Content Include="views\customerDetMapView.html" />
     <Content Include="views\customerListView.html" />
+    <Content Include="views\followUs.html" />
     <Content Include="views\followUsView.html" />
     <Content Include="views\locDetView.html" />
     <Content Include="views\prodAddReviewView.html">
