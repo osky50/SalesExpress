@@ -25,10 +25,49 @@
             try {
                 var me = app.viewModels.shopcartNoteDetViewModel;
                 me.set("noteIdList", ["in", "so", "ar"]);
+                me.getNoteIds();
             }
             catch (ex) {
                 console.log("Error in initListView: " + ex);
             }
+        },
+        getNoteIds: function () {
+
+            jsdoSettings.resourceName = 'RestGetRecord';
+            var getNoteIdsJSDOModel = new progress.data.JSDO({
+                name: jsdoSettings.resourceName,
+                autoFill: false,
+            });
+            var rparam = { "pTableName": "note-type" };
+            var promise = getNoteIdsJSDOModel.read(rparam);
+            promise.done(function (session, result, details) {
+                if (details.success == true) {
+                    var errors = false;
+                    try {
+                        errors = app.getErrors(details.response.ProDataSet.wsResult);
+                    } catch (e) {
+                        console.log("Error", e)
+                    }
+                    if (errors) {
+                        app.mobileApp.hideLoading();
+                        return;
+                    }
+                    // Executing call back as everything finshed successfully
+                    // Parsing response
+                    var noteIds = [];
+                    details.response.ProDataSet["T_note-type"].forEach(function (nt) {
+                        //noteIds.push(nt["Note-ID"] + " - " + nt.Description);
+                        noteIds.push(nt["Note-ID"]);
+                    });
+                    app.viewModels.shopcartNoteDetViewModel.set("noteIdList", noteIds);
+                    return noteIds;
+                }
+            });
+            promise.fail(function () {
+                app.mobileApp.hideLoading();
+                MessageDialogController.showMessage('Saving notes failed', "Error");
+            });
+
         },
         saveNotes: function (e) {
             jsdoSettings.resourceName = 'dsOrder';
