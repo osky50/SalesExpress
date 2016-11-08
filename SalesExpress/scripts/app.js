@@ -190,7 +190,8 @@
             alert("Not Supported in Simulator.");
         }
         else {
-            cordova.plugins.barcodeScanner.scan(
+            try {
+                cordova.plugins.barcodeScanner.scan(
                 function (result) {
                     if (!result.cancelled) {
                         calbackFn(result.format, result.text);
@@ -199,6 +200,10 @@
                 function (error) {
                     MessageDialogController.showMessage("Scanning failed: " + error, "Error");
                 });
+            } catch (e) {
+                alert('Eroor scanning: ' + e.message);
+            }
+
         }
     },
     app.pageSize = 10;
