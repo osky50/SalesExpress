@@ -53,7 +53,7 @@
                 }
             }
             catch (ex) {
-                console.log("Error creating JSDOSession: " + ex);
+                alert("Error creating JSDOSession: " + ex);
             }
         });
     };
@@ -201,7 +201,7 @@
                     MessageDialogController.showMessage("Scanning failed: " + error, "Error");
                 });
             } catch (e) {
-                alert('Eroor scanning: ' + e.message);
+                alert('Scanning failed: ' + e.message);
             }
 
         }

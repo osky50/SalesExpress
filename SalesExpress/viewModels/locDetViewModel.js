@@ -45,7 +45,7 @@
                 });
             }
             catch (ex) {
-                console.log("Error in init locDetView: " + ex);
+                alert("Error in init locDetView: " + ex);
             }
         },
         createLocStockDataSource: function () {
@@ -93,7 +93,7 @@
                     }
                 },
                 error: function (e) {
-                    console.log('Error: ', e);
+                    alert('Error: ', e);
                 }
             };
         },
@@ -137,7 +137,7 @@
                         }
                     },
                     error: function (e) {
-                        console.log('Error: ', e);
+                        alert('Error: ', e);
                     }
                 };
             }

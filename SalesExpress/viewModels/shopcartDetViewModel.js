@@ -136,7 +136,7 @@
                 });
             }
             catch (ex) {
-                console.log("Error in initListView: " + ex);
+                alert("Error in initListView: " + ex);
             }
         },
         createNotesDataSource: function () {
@@ -204,11 +204,11 @@
                                         $('.place-order').hide();
                                         $('.shopcart-header-info').text('');
                                     }
-                                    //displaying notes or placeholder
+                                    //displaying notes if exist
                                     if (shopCart.eOrderNote && shopCart.eOrderNote.length) {
-                                        $('.notes-collapsible').show();
+                                        $('.shopcart-notes-collapsible').show();
                                     } else {
-                                        $('.notes-collapsible').hide();
+                                        $('.shopcart-notes-collapsible').hide();
                                     }
                                     $('.shopcart-info').show();
                                     $('.shopcart-placeholder').hide();

@@ -96,7 +96,7 @@
                 });
             }
             catch (ex) {
-                console.log("Error in init view: " + ex);
+                alert("Error in init view: " + ex);
             }
         },
         createProdDetDataSource: function () {
@@ -111,7 +111,7 @@
                         }
                     },
                     error: function (e) {
-                        console.log('Error: ', e);
+                        alert('Error: ', e);
                     }
                 };
             }
@@ -153,7 +153,7 @@
                         }
                     },
                     error: function (e) {
-                        console.log('Error: ', e);
+                        alert('Error: ', e);
                     }
                 };
             }

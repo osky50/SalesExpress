@@ -22,7 +22,7 @@
                 app.views.listView = e.view;
             }
             catch (ex) {
-                console.log("Error in initListView: " + ex);
+                alert("Error in initListView: " + ex);
             }
         },
         createProdReviewsJSDO: function () {

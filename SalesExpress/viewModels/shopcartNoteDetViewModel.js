@@ -28,7 +28,7 @@
                 me.getNoteIds();
             }
             catch (ex) {
-                console.log("Error in initListView: " + ex);
+                alert("Error in initListView: " + ex);
             }
         },
         getNoteIds: function () {
@@ -46,7 +46,7 @@
                     try {
                         errors = app.getErrors(details.response.ProDataSet.wsResult);
                     } catch (e) {
-                        console.log("Error", e)
+                        alert("Error", e)
                     }
                     if (errors) {
                         app.mobileApp.hideLoading();
@@ -102,7 +102,7 @@
                     try {
                         errors = app.getErrors(details.response.dsOrder.dsOrder.restResult);
                     } catch (e) {
-                        console.log("Error", e)
+                        alert("Error", e)
                     }
                     if (errors) {
                         app.mobileApp.hideLoading();

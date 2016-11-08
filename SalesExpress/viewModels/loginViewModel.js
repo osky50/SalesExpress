@@ -174,7 +174,6 @@
 
         addCatalogErrorFn: function (jsdo, result, details) {
             var msg = "", i;
-            console.log("Error on addCatalog()");
             if (details !== undefined && Array.isArray(details)) {
                 for (i = 0; i < details.length; i += 1) {
                     msg = msg + "\nresult for " + details[i].catalogURI + ": " +
@@ -182,7 +181,6 @@
                 }
             }
             MessageDialogController.showMessage(msg, "Error");
-            console.log(msg);
             // Now logout
             if (app.viewModels.loginViewModel.isLoggedIn) {
                 app.viewModels.loginViewModel.logout();
@@ -199,7 +197,7 @@
                 msg = msg + "\n" + "status (from jqXHT):" + info.xhr.status;
                 msg = msg + " statusText (from jqXHT):" + info.xhr.statusText;
             }
-            console.log(msg);
+            alert(msg);
         },
 
         loginErrorFn: function (jsdosession, result, info) {
@@ -223,7 +221,7 @@
             if (info.errorObject) {
                 msg = msg + "\n" + info.errorObject;
             }
-            console.log(msg);
+            alert(msg);
         }
     });
 

@@ -1,8 +1,7 @@
 var createDataSourceErrorFn = function (info) {
-    var msg = "Error on create DataSource";
-    MessageDialogController.showMessage(msg, "Error");
+    var msg = "Error on create DataSource. ";
     if (info.errorObject !== undefined) {
-        msg = msg + "\n" + info.errorObject;
+        msg= msg + "\n" + info.errorObject;
     }
-    console.log(msg);
+    MessageDialogController.showMessage(msg, "Error");
 };

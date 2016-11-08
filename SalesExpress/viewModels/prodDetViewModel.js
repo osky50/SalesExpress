@@ -28,6 +28,7 @@
             try {
                 // Create Data Source
                 app.viewModels.prodDetViewModel.createJSDODataSource();
+                app.viewModels.prodDetViewModel.createNotesDataSource();
                 app.viewModels.prodDetViewModel.createProdImageDataSource();
                 app.viewModels.prodDetViewModel.createProdLocDataSource();
                 app.views.productDetView = e.view;
@@ -60,6 +61,15 @@
                     dataBound: function (e) {
                         scriptsUtils.createRatingsComponent('prod-det-rateit');
                     }
+                });
+                $("#prodNotes").kendoMobileListView({
+                    dataSource: app.viewModels.prodDetViewModel.notesDataSource,
+                    pullToRefresh: false,
+                    style: "display: inline",
+                    appendOnRefresh: false,
+                    endlessScroll: false,
+                    autoBind: false,
+                    template: kendo.template($("#prodNoteTemplate").html()),
                 });
                 $("#prodDetailImageView").kendoMobileListView({
                     dataSource: app.viewModels.prodDetViewModel.prodImageDataSource,
@@ -137,12 +147,14 @@
                                 }
                                 $(input).val(currentValue - 1);
                             }
-                        } catch (e) { console.log('Error: ', e); }
+                        } catch (e) {
+                            alert('Error: ', e);
+                        }
                     }
                 });
             }
             catch (ex) {
-                console.log("Error in initproductDetView: " + ex);
+                alert("Error in initproductDetView: " + ex);
             }
         },
         addLineToCart: function (qty) {
@@ -162,6 +174,27 @@
             eOrderobj.addLine(eoline);
             addLineToShoppingCart(eOrderobj.getEOrder(), lineAdded);
         },
+        createNotesDataSource: function () {
+            this.notesDataSource = {
+                transport: {
+                    read: function (options) {
+                        //displaying notes if exist
+                        if (app.viewModels.prodDetViewModel.product && app.viewModels.prodDetViewModel.product.eProductNote &&
+                            app.viewModels.prodDetViewModel.product.eProductNote.length) {
+                            options.success(app.viewModels.prodDetViewModel.product.eOrderNote);
+                            $('.prod-notes-collapsible').show();
+                        }
+                        else {
+                            options.success([]);
+                            $('.prod-notes-collapsible').hide();
+                        }
+                    }
+                },
+                error: function (e) {
+                    alert('Error: ', e);
+                }
+            };
+        },
         createProdImageDataSource: function () {
             this.prodImageDataSource = {
                 transport: {
@@ -178,7 +211,7 @@
                     }
                 },
                 error: function (e) {
-                    console.log('Error: ', e);
+                    alert('Error: ', e);
                 }
             };
         },
@@ -204,7 +237,7 @@
                     }
                 },
                 error: function (e) {
-                    console.log('Error: ', e);
+                    alert('Error: ', e);
                 }
             };
         },
@@ -242,11 +275,14 @@
                             me.jsdoDataSource.prodrecno = app.viewModels.prodListViewModel.selectedRow.Prod_Recno;
                             var promise = me.jsdoModel.invoke('ProductDetail', me.jsdoDataSource.filter());
                             promise.done(function (session, result, details) {
-                                var currentProdList = details.response.dsProd.dsProd.eProduct;
-                                currentProdList.forEach(function (eProduct) {
-                                    eProduct.ShopCartIndicatorDisplay = eProduct.CartQty > 0 ? 'visible' : 'none';
-                                });
-                                options.success(currentProdList);
+                                var product = null;
+                                if (details.response.dsProd.dsProd.eProduct && details.response.dsProd.dsProd.eProduct.length) {
+                                    product = details.response.dsProd.dsProd.eProduct[0];
+                                    product.ShopCartIndicatorDisplay = product.CartQty > 0 ? 'visible' : 'none';
+                                }
+                                options.success([product]);
+                                app.viewModels.prodDetViewModel.product = product;
+                                $("#prodNotes").data("kendoMobileListView").dataSource.read();
                                 //assigning image list data
                                 app.viewModels.prodDetViewModel.set("prodImageList", details.response.dsProd.dsProd.eProductImg);
                                 $("#prodDetailImageView").data("kendoMobileListView").dataSource.read();
@@ -260,11 +296,10 @@
                         }
                     },
                     error: function (e) {
-                        console.log('Error: ', e);
+                        alert('Error: ', e);
                     }
                 };
             }
-
             catch (ex) {
                 createDataSourceErrorFn({ errorObject: ex });
             }

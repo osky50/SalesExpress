@@ -38,7 +38,7 @@
                 });
             }
             catch (ex) {
-                console.log("Error in initListView: " + ex);
+                alert("Error in initListView: " + ex);
             }
         },
         createJSDODataSource: function () {
@@ -46,7 +46,7 @@
                 this.jsdoDataSource = new kendo.data.DataSource({
                     data: [],
                     error: function (e) {
-                        console.log("Error: ", e);
+                        alert("Error: ", e);
                     },
                 });
                 //adding custom methods

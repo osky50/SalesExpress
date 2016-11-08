@@ -6,6 +6,14 @@
      data-transition="fade">
     <ul id="prodDetailView"
         data-role="listview" data-style="inset"></ul>
+    <div data-role="collapsible" data-animation="false" class="fa padding-0 prod-notes-collapsible"
+         data-icon-position="right" data-expand-icon="fa-arrow-circle-down"
+         data-collapse-icon="fa-arrow-circle-up">
+        <h4>
+            Notes
+        </h4>
+        <ul id="prodNotes" style="margin:0" data-role="listview" data-style="inset"></ul>
+    </div>
     <ul data-role="listview" data-style="inset" class="header">
         <li>
             <label>Images</label>
@@ -40,7 +48,7 @@
     <script type="text/x-kendo-template" id="prodDetailTemplate">
         <div class="float-left" style="max-width: 80%">
             <div class="inline">#: description#</div>
-        </div>        
+        </div>
         <div class="float-right" style="display: #: ShopCartIndicatorDisplay #; color:darkgreen">
             <div class="fa link-disable" style="display:inline-block" data-role="button" data-icon="fa-shopping-cart">
                 <span class="shopcart-header-info">(#: CartQty #)</span>
@@ -57,7 +65,7 @@
             </div>
             <div class="ui-block-b">
                 <label>Manuf. Syn.: </label>#: ManSyn #
-            </div>            
+            </div>
         </div>
         <div class="float-left" style="width:100%">
             <label>Price: </label>$#: Price #
@@ -89,6 +97,10 @@
             <button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button>
         </div>
     </script>
+    <script type="text/x-kendo-template" id="prodNoteTemplate">
+        <div><b>NoteId: </b>#: NoteId #</div>
+        <div><b>Note: </b>#: NoteText #</div>
+    </script>
     <script type="text/x-kendo-template" id="prodDetImageTemplate">
         <a data-role="button" style="height:100%; width:100%;padding:0;margin:0;border:0">
             <img src="#: FileUrl #" alt="#: FileDesc#" style="width:100%; height:100%" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'">
@@ -111,11 +123,11 @@
                 </div>
             </div>
             <div class="float-left">
-                <button data-role="button" name="decrement-qty" data-style="notext" 
+                <button data-role="button" name="decrement-qty" data-style="notext"
                         class="fa spin-button spin-button-left" data-icon="fa-minus"></button>
-                <input type="number" min="0.0000001" required class="select-on-focus border-1 relative width-50" 
-                       name="quantity" value="1"  data-afs="#: AFS #"/>
-                <button data-role="button" name="increment-qty" data-style="notext" 
+                <input type="number" min="0.0000001" required class="select-on-focus border-1 relative width-50"
+                       name="quantity" value="1" data-afs="#: AFS #" />
+                <button data-role="button" name="increment-qty" data-style="notext"
                         class="fa spin-button spin-button-right" data-icon="fa-plus" style="margin-right:15px"></button>
                 <button type="button" data-role="button" name="addToCart" class="fa" data-icon="fa-shopping-cart">Buy</button>
             </div>

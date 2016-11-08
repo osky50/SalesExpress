@@ -114,7 +114,7 @@
                 });
             }
             catch (ex) {
-                console.log("Error in initListView: " + ex);
+                alert("Error in initListView: " + ex);
             }
         },
         loadMore: function () {
@@ -207,7 +207,7 @@
                         total: function () { return 500; }
                     },
                     error: function (e) {
-                        console.log("Error: ", e);
+                        alert("Error: ", e);
                     }
                 });
             }
