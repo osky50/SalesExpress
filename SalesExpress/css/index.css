@@ -306,8 +306,27 @@ ul.header {
 .padding-0, .padding-0 .km-collapsible-content {
     padding: 0 !important;
 }
-.item-details{
+
+.item-details {
     position: absolute;
     top: .5em;
     right: .7em;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.spin-button {
+    padding: .5em 3px .5em 5px !important;
+}
+.spin-button-left{
+    margin-right: -3px !important;
+}
+.spin-button-right{
+    margin-left: -3px !important;
+}
+

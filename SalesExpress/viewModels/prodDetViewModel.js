@@ -98,7 +98,12 @@
                                     $(input).attr('max', app.viewModels.prodDetViewModel.selectedRow.AFS); //removing max attribute which initially have the AFS
                                 }
                                 var validator = $(form).kendoValidator({
-                                    validateOnBlur: false
+                                    validateOnBlur: false,
+                                    messages: {
+                                        min: function (input) {
+                                            return input[0].name + ' should be greater than 0';
+                                        }
+                                    }
                                 }).data('kendoValidator');
                                 if (!validator.validateInput($(input)))
                                     return;
@@ -108,6 +113,29 @@
                             if (button.name == 'locDetails') {
                                 app.viewModels.prodDetViewModel.set("currentLoc", e.dataItem);
                                 app.mobileApp.navigate('views/locDetView.html');
+                            } else if (button.name == 'increment-qty') {
+                                debugger;
+                                var form = e.item.find('form');
+                                var input = e.item.find('input');
+                                if (!enabledBackOrders || enabledBackOrders == 'false') {
+                                    var max = parseFloat(input[0].dataset.afs);
+                                    var currentValue = parseFloat($(input).val());
+                                    if (currentValue >= max || currentValue + 1 > max) {
+                                        VibrationController.vibrate();
+                                        return;
+                                    }
+                                }
+                                $(input).val(currentValue + 1);
+                            } else if (button.name == 'decrement-qty') {
+                                debugger;
+                                var form = e.item.find('form');
+                                var input = e.item.find('input');
+                                var currentValue = parseFloat($(input).val());
+                                if (currentValue <= 0 || currentValue - 1 <= 0) {
+                                    VibrationController.vibrate();
+                                    return;
+                                }
+                                $(input).val(currentValue - 1);
                             }
                         } catch (e) { console.log('Error: ', e); }
                     }

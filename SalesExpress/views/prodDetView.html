@@ -107,9 +107,12 @@
                 </div>
             </div>
             <div class="float-left">
-                <button data-role="button" name="decrement-qty" data-style="notext" class="fa" data-icon="fa-minus"></button>
-                <input type="number" min="1" required class="select-on-focus border-1 relative width-50" name="quantity" value="1" />
-                <button data-role="button" name="increment-qty" data-style="notext" class="fa" data-icon="fa-plus" style="margin-right:15px"></button>
+                <button data-role="button" name="decrement-qty" data-style="notext" 
+                        class="fa spin-button spin-button-left" data-icon="fa-minus"></button>
+                <input type="number" min="0.0000001" required class="select-on-focus border-1 relative width-50" 
+                       name="quantity" value="1"  data-afs="#: AFS #"/>
+                <button data-role="button" name="increment-qty" data-style="notext" 
+                        class="fa spin-button spin-button-right" data-icon="fa-plus" style="margin-right:15px"></button>
                 <button type="button" data-role="button" name="addToCart" class="fa" data-icon="fa-shopping-cart">Buy</button>
             </div>
         </form>

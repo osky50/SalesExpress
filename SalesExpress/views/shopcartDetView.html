@@ -90,10 +90,12 @@
             <div><b>AFS: </b>#: AFS # (#: UnitId #)</div>
             <div>
                 <label style="margin-top:8px">Qty.:</label>
-                <button data-role="button" name="decrement-qty" data-style="notext" class="fa" data-icon="fa-minus"></button>
+                <button data-role="button" name="decrement-qty" data-style="notext" 
+                        class="fa spin-button spin-button-left" data-icon="fa-minus"></button>
                 <input type="number" min="0.0000001" name="Quantity" required class="select-on-focus border-1 relative width-50"
                        value="#: OrderQty #" data-afs="#: AFS #"/>
-                <button data-role="button" name="increment-qty" data-style="notext" class="fa" data-icon="fa-plus" style="margin-right:15px"></button>
+                <button data-role="button" name="increment-qty" data-style="notext" 
+                        class="fa spin-button spin-button-right" data-icon="fa-plus" style="margin-right:15px"></button>
                 <button type="button" data-role="button" name="update-line" data-afs="#: AFS #" data-style="notext" class="fa" data-icon="fa-floppy-o"></button>
                 <button type="button" data-role="button" name="delete-line" data-style="notext" class="fa" data-icon="fa-trash-o"></button>
             </div>
