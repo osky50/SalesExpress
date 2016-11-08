@@ -18,12 +18,8 @@
     <script type="text/x-kendo-template" id="prodTemplate">
         <div class="prod-list-item-image"><img src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" /></div>
         <div class="prod-list-item-details">
-            <div class="float-left" style="max-width: 80%">#: description #</div>
-            <div class="float-right" style="display: #: ShopCartIndicatorDisplay #; color:darkgreen">
-                <div class="fa link-disable" style="display:inline-block" data-role="button" data-icon="fa-shopping-cart">
-                    <span>(#: CartQty #)</span>
-                </div>
-            </div>
+            <div class="float-left" style="padding-right: 80px;">#: description #</div>
+            <button type="button" data-role="button" name="details" class="fa item-details link float-right" data-icon="fa-info-circle">Details</button>
             <div class="ui-grid-a ui-responsive float-left" style="width:100%">
                 <div class="ui-block-a">
                     <label>Report Syn.: </label>#: ReportSyn #
@@ -49,12 +45,17 @@
             <form>
                 <div class="float-left">
                     <button data-role="button" name="decrement-qty" style="display: #: BuyDisplay #" data-style="notext" class="fa" data-icon="fa-minus"></button>
-                    <input type="number" min="0.0000001" required style="display: #: BuyDisplay #" class="select-on-focus width-70 border-1 relative" name="Quantity"
+                    <input type="number" min="0.0000001" required style="display: #: BuyDisplay #" class="select-on-focus width-50 border-1 relative" name="Quantity"
                            value="1" />
                     <button data-role="button" name="increment-qty" style="display: #: BuyDisplay #" data-style="notext" class="fa" data-icon="fa-plus" style="margin-right:15px"></button>
-                    <button type="button" data-role="button" style="display: #: BuyDisplay #" name="addToCart" class="fa" data-icon="fa-shopping-cart">Buy</button>                    
-                    <button type="button" data-role="button" name="details" class="fa" data-icon="fa-info-circle">Details</button>
-                </div>                
+                    <div style="display: #: ShopCartIndicatorDisplay #; color:darkgreen; margin-left: 10px; margin-top: 8px;" class="float-right">
+                        <div class="fa link-disable" style="display:inline-block" data-role="button" data-icon="fa-shopping-cart">
+                            <span>(#: CartQty #)</span>
+                        </div>
+                    </div>
+                    <button type="button" data-role="button" style="display: #: BuyDisplay #" name="addToCart" class="fa" data-icon="fa-shopping-cart">Buy</button>
+
+                </div>
             </form>
         </div>
     </script>

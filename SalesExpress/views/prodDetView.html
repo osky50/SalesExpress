@@ -92,7 +92,12 @@
     </script>
     <script type="text/x-kendo-template" id="prodDetLocTemplate">
         <form>
-            <div><b>Location: </b>#: Loc_Id #</div>
+            <div style="margin-right:15px" class="float-left">
+                <b>Location: </b>#: Loc_Id #
+            </div>
+            <div>
+                <button type="button" data-role="button" name="locDetails" class="fa link" data-icon="fa-info-circle">Details</button>
+            </div>
             <div class="ui-grid-a ui-responsive float-left" style="width:100%">
                 <div class="ui-block-a">
                     <label>AFS: </label>#: AFS # (#: UnitId #)
@@ -102,10 +107,10 @@
                 </div>
             </div>
             <div class="float-left">
-                <label style="margin-top:8px">Qty.:</label>
-                <input type="number" min="1" required class="select-on-focus border-1 relative width-70" name="quantity" value="1" />
+                <button data-role="button" name="decrement-qty" data-style="notext" class="fa" data-icon="fa-minus"></button>
+                <input type="number" min="1" required class="select-on-focus border-1 relative width-50" name="quantity" value="1" />
+                <button data-role="button" name="increment-qty" data-style="notext" class="fa" data-icon="fa-plus" style="margin-right:15px"></button>
                 <button type="button" data-role="button" name="addToCart" class="fa" data-icon="fa-shopping-cart">Buy</button>
-                <button type="button" data-role="button" name="locDetails" class="fa" data-icon="fa-info-circle">Details</button>
             </div>
         </form>
     </script>
