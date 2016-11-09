@@ -123,3 +123,7 @@
 span.km-icon.km-fa-arrow-circle-down, span.km-icon.km-fa-arrow-circle-up {
     font-size: 20px;
 }
+.km-fa-sliders:after,
+.km-fa-sliders:before {
+    content: "\f1de";
+} 

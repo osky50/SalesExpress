@@ -1,0 +1,26 @@
+<!-- Login view -->
+<div id="settingsView"
+     data-role="view"
+     data-before-show="app.viewModels.settingsViewModel.onBeforeShow"
+     data-model="app.viewModels.settingsViewModel">
+    <form>
+        <ul data-role="listview" data-style="inset">
+            <li>
+                <label>
+                    Host name:
+                    <input type="url" required data-bind="value: hostname" placeholder="https://myserver.com" name="Host name"/>
+                </label>
+            </li>
+            <li>
+                <label>
+                    Host port:
+                    <input type="text" required data-bind="value: hostport" placeholder="80" name="Host port"/>
+                </label>
+            </li>
+            <li>
+                <input type="submit" data-role="button" data-bind="click: saveSettings" value="Save" 
+                       class="float-right fa" data-icon="fa-floppy-o"/>
+            </li>
+        </ul>
+    </form>
+</div>

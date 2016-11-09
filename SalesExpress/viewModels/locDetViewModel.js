@@ -13,7 +13,6 @@
             } else {
                 locDetListView.dataSource.read();
             }
-
             // Set list title to resource name
             if (app.viewModels.locDetViewModel.resourceName !== undefined) {
                 app.changeTitle(app.viewModels.locDetViewModel.resourceName);

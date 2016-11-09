@@ -194,6 +194,7 @@
     <Content Include="scripts\jsdoUtils.js" />
     <Content Include="scripts\modelUtils.js" />
     <Content Include="viewModels\followUsViewModel.js" />
+    <Content Include="viewModels\settingsViewModel.js" />
     <Content Include="viewModels\prodAddReviewViewModel.js" />
     <Content Include="viewModels\customerDetViewModel.js" />
     <Content Include="viewModels\customerDetMapViewModel.js" />
@@ -220,6 +221,7 @@
     <Content Include="views\customerListView.html" />
     <Content Include="views\followUsView.html" />
     <Content Include="views\locDetView.html" />
+    <Content Include="views\settingsView.html" />
     <Content Include="views\prodAddReviewView.html">
       <SubType>Content</SubType>
     </Content>
