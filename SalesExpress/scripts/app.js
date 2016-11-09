@@ -139,6 +139,9 @@
         }
     }
     app.navigate = function (url) {
+        var currentView = app.mobileApp.view().id;
+        if (currentView == url)
+            return;
         if (app.beforeNavigate) {
             var callback = function () {
                 app.mobileApp.navigate(url);
