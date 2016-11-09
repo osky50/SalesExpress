@@ -9,13 +9,25 @@
         shopCart: undefined,
         origRow: {},
         resourceName: 'Shopping Cart',
-        forceLoad: false,
-        onBeforeShow: function () {
+        beforeNavigate: function (callbackFn) {
+            //checking for unsaved lines (we are using disabled attribute in save button)
+            var allLines = $('#shopcartDet .update-line');
+            var savedLines = $('#shopcartDet .update-line[disabled]');
+            if (allLines.length > savedLines.length) {
+                var callback = function (index) {
+                    if (index == 1) {
+                        callbackFn();
+                    }
+                }
+                MessageDialogController.showConfirm("You are going to lose unsaved changes. Are you sure you want to proceed?", callback, "Yes,No", "Unsaved changes");
+            } else
+                callbackFn();
+        },
+        onShow: function () {
             var shopcartHeader = $("#shopcartHeader").data("kendoMobileListView");
             if (shopcartHeader === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.shopcartDetViewModel.onInit(this);
-            } else if (shopcartHeader.dataSource && shopcartHeader.dataSource.data().length === 0 ||
-                app.viewModels.shopcartDetViewModel.forceLoad) {
+            } else {
                 shopcartHeader.dataSource.read();
             }
             // Set list title to resource name
@@ -55,7 +67,7 @@
                         try {
                             var button = e.button.element[0];
                             if (button.name == 'update-note') {
-                                app.mobileApp.navigate('views/shopcartNoteDetView.html');
+                                app.navigate('views/shopcartNoteDetView.html');
                             }
                             else if (button.name == 'delete-note') {
                                 var callback = function (index) {
@@ -84,21 +96,7 @@
                             if (button.name == 'update-line') {
                                 var form = e.item.find('form');
                                 var input = e.item.find('input');
-                                //analizing "enabledBackOrders" parameter
-                                var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
-                                if (!enabledBackOrders || enabledBackOrders == 'false') {
-                                    var afs = parseFloat(button.dataset.afs);
-                                    $(input).attr('max', afs); //adding max attribute which AFS
-                                }
-                                var validator = $(form).kendoValidator({
-                                    validateOnBlur: false,
-                                    messages: {
-                                        min: function (input) {
-                                            return input[0].name + ' should be greater than 0';
-                                        }
-                                    }
-                                }).data('kendoValidator');
-                                if (!validator.validateInput($(input)))
+                                if (!app.viewModels.shopcartDetViewModel.validateLineQty(input[0]))
                                     return;
                                 var orderQty = parseInt(input.val());
                                 app.viewModels.shopcartDetViewModel.updateLine(orderQty);
@@ -112,24 +110,30 @@
                             } else if (button.name == 'increment-qty') {
                                 var form = e.item.find('form');
                                 var input = e.item.find('input');
+                                //taking current afs and value
+                                var afs = parseFloat($(e.item).find('.line-afs').text());
+                                var currentValue = parseFloat($(input).val());
+                                var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
                                 if (!enabledBackOrders || enabledBackOrders == 'false') {
-                                    var max = parseFloat(input[0].dataset.afs);
-                                    var currentValue = parseFloat($(input).val());
-                                    if (currentValue >= max || currentValue + 1 > max) {
+                                    if (afs <= 0 || (afs - 1) < 0) {
                                         VibrationController.vibrate();
                                         return;
                                     }
                                 }
-                                $(input).val(currentValue + 1);
+                                $(input).val(currentValue + 1); //incrementing value
+                                $(input).trigger('keyup');
                             } else if (button.name == 'decrement-qty') {
                                 var form = e.item.find('form');
                                 var input = e.item.find('input');
+                                //taking current afs and value
+                                var afs = parseFloat($(e.item).find('.line-afs').text());
                                 var currentValue = parseFloat($(input).val());
                                 if (currentValue <= 0 || currentValue - 1 <= 0) {
                                     VibrationController.vibrate();
                                     return;
                                 }
-                                $(input).val(currentValue - 1);
+                                $(input).val(currentValue - 1); //decrementing value
+                                $(input).trigger('keyup');
                             }
                         } catch (e) { }
                     }
@@ -159,11 +163,38 @@
             this.linesDataSource = {
                 transport: {
                     read: function (options) {
+                        $("#shopcartLines .input-qty").off('change', app.viewModels.shopcartDetViewModel.qtyChange);
                         if (app.viewModels.shopcartDetViewModel.shopCart && app.viewModels.shopcartDetViewModel.shopCart.eOrderLine &&
                             app.viewModels.shopcartDetViewModel.shopCart.eOrderLine.length)
                             options.success(app.viewModels.shopcartDetViewModel.shopCart.eOrderLine);
                         else
                             options.success([]);
+                        $("#shopcartLines .input-qty").on('keyup paste', function (e) {
+                            var currentValue = parseFloat($(e.target).val());
+                            if (isNaN(currentValue))
+                                currentValue = 0;
+                            e.target.dataset.lastValue = currentValue; //setting last value
+                            var originalValue = parseFloat(e.target.dataset.originalValue);
+                            //extra protection
+                            if (isNaN(originalValue))
+                                originalValue = 0;
+                            var originalAfs = parseFloat(e.target.dataset.originalAfs);
+                            //extra protection
+                            if (isNaN(originalAfs))
+                                originalAfs = 0;
+                            var form = $(e.target).closest('form');
+
+                            if (currentValue != originalValue)
+                                $(form).find('.update-line').prop('disabled', false);
+                            else
+                                $(form).find('.update-line').prop('disabled', true);
+                            var afs = originalAfs + originalValue;
+                            var remainingAfs = afs - currentValue;
+                            if (remainingAfs < 0)
+                                remainingAfs = 0;
+                            $(form).find('.line-afs').text(remainingAfs);
+                            app.viewModels.shopcartDetViewModel.validateLineQty(e.target);
+                        });
                     }
                 },
                 error: function (e) {
@@ -192,6 +223,8 @@
                                     shopCart = details.response.dsOrder.dsOrder.eOrder[0];
                                 }
                                 if (shopCart) {
+                                    //formatting values before showing them
+                                    shopCart.AbsoluteDiscount = shopCart.Discount * -1;
                                     //displaying lines or place holder
                                     if (shopCart.eOrderLine && shopCart.eOrderLine.length) {
                                         $('#shopcartLines').show();
@@ -247,8 +280,7 @@
             app.mobileApp.showLoading();
             successUpd = function () {
                 app.mobileApp.hideLoading();
-                app.viewModels.shopcartDetViewModel.forceLoad = true;
-                app.viewModels.shopcartDetViewModel.onBeforeShow();
+                app.viewModels.shopcartDetViewModel.onShow();
                 VibrationController.vibrate();
             }
             eOrderobj = new EOrderClass();
@@ -265,42 +297,64 @@
             addLineToShoppingCart(eOrderobj.getEOrder(), successUpd);
         },
         placeOrder: function () {
-            app.mobileApp.showLoading();
-            var promise = app.viewModels.shopcartDetViewModel.jsdoModel.invoke('FinOrder', {});
-            promise.done(function (session, result, details) {
-                var errors = false;
-                try {
-                    if (details.success)
-                        errors = app.getErrors(details.response.dsOrder.dsOrder.restResult);
-                    else {
+            var callbackFn = function () {
+                app.mobileApp.showLoading();
+                var promise = app.viewModels.shopcartDetViewModel.jsdoModel.invoke('FinOrder', {});
+                promise.done(function (session, result, details) {
+                    var errors = false;
+                    try {
+                        if (details.success)
+                            errors = app.getErrors(details.response.dsOrder.dsOrder.restResult);
+                        else {
+                            errors = true;
+                            MessageDialogController.showMessage('Placing the order failed', "Error");
+                        }
+                    } catch (e) {
                         errors = true;
                         MessageDialogController.showMessage('Placing the order failed', "Error");
                     }
-                } catch (e) {
-                    errors = true;
-                    MessageDialogController.showMessage('Placing the order failed', "Error");
-                }
-                if (errors) {
+                    if (errors) {
+                        app.mobileApp.hideLoading();
+                        return;
+                    }
+                    var transNo = details.response.dsOrder.dsOrder.eOrder[0].TransNo;
+                    MessageDialogController.showMessage('Orcer ' + transNo + ' has been created', "Success");
+                    app.viewModels.shopcartDetViewModel.onShow();
                     app.mobileApp.hideLoading();
-                    return;
-                }
-                var transNo = details.response.dsOrder.dsOrder.eOrder[0].TransNo;
-                MessageDialogController.showMessage('Orcer ' + transNo + ' has been created', "Success");
-                app.viewModels.shopcartDetViewModel.forceLoad = true;
-                app.viewModels.shopcartDetViewModel.onBeforeShow();
-                app.mobileApp.hideLoading();
-            });
-            promise.fail(function () {
-                app.mobileApp.hideLoading();
-                MessageDialogController.showMessage('Placing the order failed', "Error");
-            });
+                });
+                promise.fail(function () {
+                    app.mobileApp.hideLoading();
+                    MessageDialogController.showMessage('Placing the order failed', "Error");
+                });
+            }
+            app.viewModels.shopcartDetViewModel.beforeNavigate(callbackFn);
         },
         addNotes: function () {
             app.viewModels.shopcartDetViewModel.set("selectedNote", {});
-            app.mobileApp.navigate('views/shopcartNoteDetView.html');
+            app.navigate('views/shopcartNoteDetView.html');
         },
         deleteNote: function () {
             alert('delete');
+        },
+        validateLineQty: function (input) {
+            //analizing "enabledBackOrders" parameter
+            var form = $(input).closest('form')[0];
+            var enabledBackOrders = localStorage.getItem('enabledBackOrder') || false;
+            if (!enabledBackOrders || enabledBackOrders == 'false') {
+                var afs = parseFloat(input.dataset.originalAfs) + parseFloat(input.dataset.originalValue);
+                $(input).attr('max', afs); //adding max attribute for native validation
+            }
+            var validator = $(form).kendoValidator({
+                validateOnBlur: false,
+                messages: {
+                    min: function (input) {
+                        return input[0].name + ' should be greater than 0';
+                    }
+                }
+            }).data('kendoValidator');
+            var valid = validator.validateInput($(input));
+            $(input).removeAttr('max'); //removing max attribute
+            return valid;
         }
     });
     parent.shopcartDetViewModel = shopcartDetViewModel;

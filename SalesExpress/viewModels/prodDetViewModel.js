@@ -47,14 +47,14 @@
                         try {
                             var button = e.button.element[0];
                             if (button.name == 'reviews-link') {
-                                app.mobileApp.navigate('views/prodDetReviewsView.html');
+                                app.navigate('views/prodDetReviewsView.html');
                             } else if (button.name == 'create-review-link') {
                                 var addReviewCallback = function (prodReviewDet) {
                                     app.back();
                                 };
                                 app.viewModels.prodAddReviewViewModel.set("selectedProduct", e.dataItem);
                                 app.viewModels.prodAddReviewViewModel.successCallback = addReviewCallback;
-                                app.mobileApp.navigate('views/prodAddReviewView.html');
+                                app.navigate('views/prodAddReviewView.html');
                             }
                         } catch (e) { }
                     },
@@ -122,9 +122,8 @@
                             }
                             if (button.name == 'locDetails') {
                                 app.viewModels.prodDetViewModel.set("currentLoc", e.dataItem);
-                                app.mobileApp.navigate('views/locDetView.html');
+                                app.navigate('views/locDetView.html');
                             } else if (button.name == 'increment-qty') {
-                                debugger;
                                 var form = e.item.find('form');
                                 var input = e.item.find('input');
                                 if (!enabledBackOrders || enabledBackOrders == 'false') {
@@ -137,7 +136,6 @@
                                 }
                                 $(input).val(currentValue + 1);
                             } else if (button.name == 'decrement-qty') {
-                                debugger;
                                 var form = e.item.find('form');
                                 var input = e.item.find('input');
                                 var currentValue = parseFloat($(input).val());

@@ -4,8 +4,7 @@
      data-init="app.viewModels.prodAddReviewViewModel.onInit"
      data-show="app.viewModels.prodAddReviewViewModel.onBeforeShow"
      data-after-show="app.viewModels.prodAddReviewViewModel.onAfterShow"
-     data-model="app.viewModels.prodAddReviewViewModel"
-     data-layout="popup">
+     data-model="app.viewModels.prodAddReviewViewModel">
     <div id="create_review">
         <form>
             <ul data-role="listview" data-style="inset">
@@ -20,7 +19,7 @@
                 </li>
                 <li>
                     <label>Comments:</label>
-                    <textarea class="border-1 float-left" name="comments" style="width: 100%;"></textarea>
+                    <textarea class="border-1 float-left" name="comments" style="width: 100%;" rows="6"></textarea>
                 </li>
                 <li>
                     <a data-bind="click: cancel" data-role="button" class="fa float-right" data-icon="fa-step-backward">Cancel</a>

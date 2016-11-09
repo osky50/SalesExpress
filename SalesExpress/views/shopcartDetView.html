@@ -2,7 +2,8 @@
      data-role="view"
      data-style="inset"
      data-init="app.viewModels.shopcartDetViewModel.onInit"
-     data-show="app.viewModels.shopcartDetViewModel.onBeforeShow"
+     data-show="app.viewModels.shopcartDetViewModel.onShow"
+     data-before-hide="app.viewModels.shopcartDetViewModel.onBeforeHide"
      data-model="app.viewModels.shopcartDetViewModel">
     <div class="shopcart-info">
         <ul data-role="listview" data-style="inset" class="header">
@@ -54,23 +55,74 @@
     </div>
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="shopcartHeaderTemplate">
-        <div>
-            <label class="width-90">Order Total:</label>$#: OrderAmt #&nbsp;#: CurrencyId #
-        </div>
-        <div>
-            <label class="width-90">Handling:</label>$#: Handling #&nbsp;#: CurrencyId #
-        </div>
-        <div>
-            <label class="width-90">Shipping:</label>$#: Shipping #&nbsp;#: CurrencyId #
-        </div>
-        <div>
-            <label class="width-90">Discount:</label>$#: Discount #&nbsp;#: CurrencyId #
-        </div>
-        <div>
-            <label class="width-90">Tax:</label>$#: Tax #&nbsp;#: CurrencyId #
-        </div>
-        <div>
-            <label class="width-90">Total:</label>$#: TotalAmt #&nbsp;#: CurrencyId #
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <div>
+                    <label class="amount-label-width">Order Amount:</label>
+                    <div class="amount-width inline currency">
+                        #: OrderAmt #&nbsp;#: CurrencyId #
+                    </div>
+                </div>
+                <div>
+                    <label class="amount-label-width">Shipping:</label>
+                    <div class="amount-width inline currency">
+                        #: Shipping #&nbsp;#: CurrencyId #
+                    </div>
+                </div>
+                <div>
+                    <label class="amount-label-width">Handling:</label>
+                    <div class="amount-width inline currency">
+                        #: Handling #&nbsp;#: CurrencyId #
+                    </div>
+                </div>
+                <div>
+                    <label class="amount-label-width">Minumum Charge:</label>
+                    <div class="amount-width inline currency">
+                        #: MinCharge #&nbsp;#: CurrencyId #
+                    </div>
+                </div>
+                <div>
+                    <label class="amount-label-width">Discount:</label>
+                    <div class="amount-width inline currency">
+                        #: AbsoluteDiscount #&nbsp;#: CurrencyId #
+                    </div>
+                    <div class="inline" style="font-style:italic; color:darkgreen; font-weight:bold">
+                        (CR)
+                    </div>
+                </div>
+            </div>
+            <div class="ui-block-b">
+                <div>
+                    <label class="amount-label-width">Surcharge:</label>
+                    <div class="amount-width inline currency">
+                        #: SurCharge #&nbsp;#: CurrencyId #
+                    </div>
+                </div>
+                <div>
+                    <label class="amount-label-width">Net Order Amount:</label>
+                    <div class="amount-width inline currency">
+                        #: SubTotal #&nbsp;#: CurrencyId #
+                    </div>
+                </div>
+                <div>
+                    <label class="amount-label-width">Fixed Charge:</label>
+                    <div class="amount-width inline currency">
+                        #: Handling #&nbsp;#: CurrencyId #
+                    </div>
+                </div>
+                <div>
+                    <label class="amount-label-width">Tax Amount:</label>
+                    <div class="amount-width inline currency">
+                        #: Tax #&nbsp;#: CurrencyId #
+                    </div>
+                </div>
+                <div>
+                    <label class="amount-label-width">Total:</label>
+                    <div class="amount-width inline currency">
+                        #: TotalAmt #&nbsp;#: CurrencyId #
+                    </div>
+                </div>
+            </div>
         </div>
     </script>
     <script type="text/x-kendo-template" id="shopcartNoteTemplate">
@@ -85,17 +137,18 @@
     </script>
     <script type="text/x-kendo-template" id="shopcartLineTemplate">
         <form>
+            <div>#: ProdDesc #</div>
             <div><b>Synonym: </b>#: Synonym #</div>
             <div><b>Location: </b>#: LocId #</div>
-            <div><b>AFS: </b>#: AFS # (#: UnitId #)</div>
+            <div><b>AFS: </b><span class="line-afs">#: AFS #</span> (#: UnitId #)</div>
             <div>
-                <button data-role="button" name="decrement-qty" data-style="notext" 
+                <button data-role="button" name="decrement-qty" data-style="notext"
                         class="fa spin-button spin-button-left" data-icon="fa-minus"></button>
-                <input type="number" min="0.0000001" name="Quantity" required class="select-on-focus border-1 relative width-50"
-                       value="#: OrderQty #" data-afs="#: AFS #"/>
-                <button data-role="button" name="increment-qty" data-style="notext" 
+                <input type="number" min="0.0000001" name="Quantity" required class="input-qty select-on-focus border-1 relative width-50"
+                       value="#: OrderQty #" data-last-value="#: OrderQty #" data-original-value="#: OrderQty #" data-original-afs="#: AFS #"/>
+                <button data-role="button" name="increment-qty" data-style="notext"
                         class="fa spin-button spin-button-right" data-icon="fa-plus" style="margin-right:15px"></button>
-                <button type="button" data-role="button" name="update-line" data-afs="#: AFS #" data-style="notext" class="fa" data-icon="fa-floppy-o"></button>
+                <button type="button" data-role="button" name="update-line" disabled data-afs="#: AFS #" data-style="notext" class="fa update-line" data-icon="fa-floppy-o"></button>
                 <button type="button" data-role="button" name="delete-line" data-style="notext" class="fa" data-icon="fa-trash-o"></button>
             </div>
             <div><b>Price: </b>$#: UnitPrice # #: CurrencyId #</div>

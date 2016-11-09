@@ -70,7 +70,7 @@
 </head>
 <body>
     <!-- Layout -->
-    <div data-role="layout" data-id="tabstrip-layout" data-show="onPageShow">
+    <div data-role="layout" data-id="tabstrip-layout" data-show="app.onViewShow">
         <!-- Header -->
         <div data-role="header" style="background-color:white;">
             <div class="login-info" style="display:none">
@@ -87,7 +87,7 @@
                         <div class="label" style="display:inline-block">
                             User:
                         </div>
-                        <a data-click="app.logout" class="user-info link fa" style="display:inline-block" data-role="button" data-icon="fa-sign-out">Logout</a>
+                        <a onclick="app.navigate('views/loginView.html')" class="user-info link fa" style="display:inline-block" data-role="button" data-icon="fa-sign-out">Logout</a>
                     </div>
                 </div>
                 <div class="customer-info-container" style="padding-right:5px; width:100%;">
@@ -95,14 +95,14 @@
                         <div class="label" style="display:inline-block">
                             Cust:
                         </div>
-                        <a data-click="app.customerDetails" class="customer-info link" style="display:inline-block" data-role="button" data-icon="home"></a>
+                        <a onclick="app.navigate('views/customerDetView.html')" class="customer-info link" style="display:inline-block" data-role="button" data-icon="home"></a>
                         <div style="display:inline-block">|</div>
                         <div class="label" style="display:inline-block">
                             Def. Loc.:
                         </div>
                         <div class="location-info" style="display:inline-block"></div>
                         <div style="display:inline-block; margin-right:5px">|</div>
-                        <a href="views/shopcartDetView.html" class="fa link" style="display:inline-block" data-role="button" data-icon="fa-shopping-cart">
+                        <a onclick="app.navigate('views/shopcartDetView.html')" class="fa link" style="display:inline-block" data-role="button" data-icon="fa-shopping-cart">
                             <span class="shopcart-header-info"></span>
                         </a>
                     </div>
@@ -113,7 +113,7 @@
                 <a class="login-info" style="display:none;" href="#app-drawer" data-rel="drawer"
                    data-role="button" data-align="left" data-icon="details"></a>
                 <span data-role="view-title"></span>
-                <a data-click="app.back" class="fa back-button" data-role="button" data-align="right" 
+                <a data-click="app.back" class="fa back-button" data-role="button" data-align="right"
                    data-icon="fa-step-backward">Back</a>
             </div>
         </div>
@@ -123,23 +123,15 @@
         <div data-role="footer">
         </div>
     </div>
-    <!--Save/Cancel Layout-->
-    <div data-role="layout" data-id="popup">
-        <div data-role="header">
-            <div data-role="navbar">
-                <span data-role="view-title"></span>
-            </div>
-        </div>
-    </div>
     <!--Menu Definition-->
     <div data-role="drawer" id="app-drawer">
         <ul data-role="listview">
-            <li><a href="views/prodListView.html" data-icon="home">Product List</a></li>
-            <li><a href="views/orderListView.html" class="fa" data-icon="fa-list-ul">Order List</a></li>
-            <li><a href="views/shopcartDetView.html" class="fa" data-icon="fa-shopping-cart">Shopping Cart</a></li>
-            <li><a href="views/customerDetView.html" class="fa" data-icon="fa-customer">Customer Details</a></li>
-            <li><a href="views/followUsView.html" class="fa" data-icon="fa-rss">Follow Us</a></li>
-            <li><a href="views/loginView.html" class="fa" data-icon="fa-sign-out" id="listIcon">Logout</a></li>
+            <li><a onclick="app.navigate('views/prodListView.html')" data-icon="home">Product List</a></li>
+            <li><a onclick="app.navigate('views/orderListView.html')" class="fa" data-icon="fa-list-ul">Order List</a></li>
+            <li><a onclick="app.navigate('views/shopcartDetView.html')" class="fa" data-icon="fa-shopping-cart">Shopping Cart</a></li>
+            <li><a onclick="app.navigate('views/customerDetView.html')" class="fa" data-icon="fa-customer">Customer Details</a></li>
+            <li><a onclick="app.navigate('views/followUsView.html')" class="fa" data-icon="fa-rss">Follow Us</a></li>
+            <li><a onclick="app.navigate('views/loginView.html')" class="fa" data-icon="fa-sign-out" id="listIcon">Logout</a></li>
         </ul>
     </div>
     <div data-role="modalview" id="imagePopup" data-modal="false" data-overlay-theme="a"
@@ -155,17 +147,6 @@
             e.preventDefault();
             window.open($(this).attr("href"), '_system', 'location=yes');
         });
-        function onPageShow(e) {
-            if (!e.view.model)
-                return;
-            var backButton = $('.back-button');
-            if (e.view.model.backButton) {
-                backButton.show();
-                //backButton.attr('href', '#' + e.view.model.backTo);
-            } else {
-                backButton.hide();
-            }
-        };
     </script>
 </body>
 </html>

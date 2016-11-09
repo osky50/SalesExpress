@@ -138,17 +138,31 @@
             }
         }
     }
+    app.navigate = function (url) {
+        if (app.beforeNavigate) {
+            var callback = function () {
+                app.mobileApp.navigate(url);
+            };
+            app.beforeNavigate(callback);
+        } else
+            app.mobileApp.navigate(url);
+    };
     app.back = function () {
-        app.mobileApp.navigate("#:back");
+        app.navigate("#:back");
     };
 
     app.autoLogin = true;
-
-    app.logout = function () {
-        app.mobileApp.navigate('views/loginView.html');
-    };
-    app.customerDetails = function () {
-        app.mobileApp.navigate('views/customerDetView.html');
+    app.onViewShow = function (e) {
+        if (!e.view.model)
+            return;
+        app.beforeNavigate = e.view.model.beforeNavigate;
+        var backButton = $('.back-button');
+        if (e.view.model.backButton) {
+            backButton.show();
+            //backButton.attr('href', '#' + e.view.model.backTo);
+        } else {
+            backButton.hide();
+        }
     };
     app.updateShoppingCartQty = function () {
         //configuring JSDO Settings

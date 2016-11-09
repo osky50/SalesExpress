@@ -155,10 +155,10 @@
             }
         },
         changeCustomer: function () {
-            app.mobileApp.navigate('views/customerListView.html');
+            app.navigate('views/customerListView.html');
         },
         getDirections: function () {
-            app.mobileApp.navigate('views/customerDetMapView.html');
+            app.navigate('views/customerDetMapView.html');
         },
         createPerfGraph: function () {
             //creating the graph

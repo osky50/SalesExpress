@@ -53,9 +53,9 @@
                         try {
                             var button = e.button.element[0];
                             if (button.name == 'details') {
-                                app.mobileApp.navigate('views/prodDetView.html');
+                                app.navigate('views/prodDetView.html');
                             } else if (button.name == 'reviews-link') {
-                                app.mobileApp.navigate('views/prodDetReviewsView.html');
+                                app.navigate('views/prodDetReviewsView.html');
                             } else if (button.name == 'create-review-link') {
                                 var addReviewCallback = function (prodReviewDet) {
                                     app.viewModels.prodListViewModel.forceLoad = true;
@@ -63,7 +63,7 @@
                                 };
                                 app.viewModels.prodAddReviewViewModel.set("selectedProduct", e.dataItem);
                                 app.viewModels.prodAddReviewViewModel.successCallback = addReviewCallback;
-                                app.mobileApp.navigate('views/prodAddReviewView.html');
+                                app.navigate('views/prodAddReviewView.html');
                             } else if (button.name == 'addToCart') {
                                 var form = e.item.find('form');
                                 var input = e.item.find('input');

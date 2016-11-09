@@ -159,8 +159,10 @@ h1 {
 .align-center {
     text-align: center;
 }
-
-.width-90 {
+.amount-label-width {
+    width: 140px !important;
+}
+.amount-width {
     width: 90px !important;
 }
 
@@ -194,6 +196,7 @@ label {
 
     .currency:before {
         content: "$";
+        margin-right:-3px;
     }
 
 .k-invalid-msg {

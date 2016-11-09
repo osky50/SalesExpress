@@ -75,7 +75,7 @@
                                 };
                                 app.viewModels.prodAddReviewViewModel.set("selectedProduct", e.dataItem);
                                 app.viewModels.prodAddReviewViewModel.successCallback = addReviewCallback;
-                                app.mobileApp.navigate('views/prodAddReviewView.html');
+                                app.navigate('views/prodAddReviewView.html');
                             }
                         } catch (e) { }
                     },

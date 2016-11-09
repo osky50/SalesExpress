@@ -133,7 +133,7 @@
             $(".customer-info").html(localStorage.getItem('defaultCustomer'));
             $(".location-info").html(localStorage.getItem("defaultLocation"));
             $(".login-info").show();
-            app.mobileApp.navigate("views/prodListView.html");
+            app.navigate("views/prodListView.html");
         },
         logout: function (e) {
             var that = this,

@@ -158,7 +158,7 @@
                                 if (details.success) {
                                     localStorage.setItem('defaultCustomer', selectedCustomer.Cust_Id); //changing customer in localStorage
                                     $(".customer-info").html(localStorage.getItem('defaultCustomer'));
-                                    app.mobileApp.navigate('views/customerDetView.html');
+                                    app.navigate('views/customerDetView.html');
                                 }
                             });
                             checkCartPromise.fail(function () {
@@ -169,7 +169,7 @@
                 } else {
                     localStorage.setItem('defaultCustomer', selectedCustomer.Cust_Id); //changing customer in localStorage
                     $(".customer-info").html(localStorage.getItem('defaultCustomer'));
-                    app.mobileApp.navigate('views/customerDetView.html');
+                    app.navigate('views/customerDetView.html');
                 }
             });
             checkCartPromise.fail(function () {
