@@ -119,7 +119,7 @@
     app.back = function () {
         app.navigate("#:back");
     };
-    app.autoLogin = true;
+    app.autoLogin = false;
     app.onViewShow = function (e) {
         if (!e.view.model)
             return;

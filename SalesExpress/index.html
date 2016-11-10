@@ -72,13 +72,13 @@
     <!-- Layout -->
     <div data-role="layout" data-id="tabstrip-layout" data-show="app.onViewShow">
         <!-- Header -->
-        <div data-role="header" style="background-color:white;">
-            <div class="login-info" style="display:none">
+        <div data-role="header" style="background-color:white;height:110px">
+            <div style="height:60px">
                 <div class="login-info-container float-right" style="width:100%;padding-right:5px;">
                     <div class="float-left" style="height:30px">
                         <img src="img/small_logo.png" />
                     </div>
-                    <div class="float-right">
+                    <div class="float-right login-info" style="display:none">
                         <div class="label" style="display:inline-block">
                             Ctrl. Ent.:
                         </div>
@@ -90,7 +90,7 @@
                         <a onclick="app.navigate('views/loginView.html')" class="user-info link fa" style="display:inline-block" data-role="button" data-icon="fa-sign-out">Logout</a>
                     </div>
                 </div>
-                <div class="customer-info-container" style="padding-right:5px; width:100%;">
+                <div class="customer-info-container login-info" style="padding-right:5px; width:100%;display:none">
                     <div class="float-right" style="margin-bottom:5px">
                         <div class="label" style="display:inline-block">
                             Cust:
@@ -109,7 +109,7 @@
 
                 </div>
             </div>
-            <div data-role="navbar" id="navbar">
+            <div data-role="navbar" id="navbar" style="height:50px">
                 <a class="login-info" style="display:none;" href="#app-drawer" data-rel="drawer"
                    data-role="button" data-align="left" data-icon="details"></a>
                 <span data-role="view-title"></span>
@@ -117,7 +117,6 @@
                    data-icon="fa-step-backward">Back</a>
             </div>
         </div>
-
         <!-- Application views will be rendered here -->
         <!-- Footer -->
         <div data-role="footer">

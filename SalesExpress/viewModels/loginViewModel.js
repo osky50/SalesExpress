@@ -19,26 +19,10 @@
             { number: 2560, name: 'twitterUrl' },
         ],
         onInit: function () {
-            try {
-                if (app.jsdoSession == undefined) {
-                    //looking for required settings...
-                    if (!app.readSettings()) {
-                        app.viewModels.settingsViewModel.fromLogin = true;
-                        app.navigate('views/settingsView.html'); //missing settings..going to settings page
-                        return;
-                    }
-                    app.jsdoSettings = {
-                        "serviceURI": app.hostname + "/LatitudeIpadService/",
-                        "catalogURIs": app.hostname + "/LatitudeIpadService/rest/static/LatitudeIpadService.json",
-                        "authenticationModel": "Basic",
-                        "resourceName": "",
-                        "tableName": ""
-                    };
-                    progress.util.jsdoSettingsProcessor(app.jsdoSettings);
-                    app.jsdoSession = new progress.data.JSDOSession(app.jsdoSettings);
-                }
-            } catch (e) {
-                alert('Error instantiating session: ' + e.message);
+            //looking for required settings...
+            if (!app.readSettings()) {
+                app.navigate('views/settingsView.html'); //missing settings..going to settings page
+                return;
             }
         },
         onBeforeShow: function (e) {
@@ -60,8 +44,7 @@
                 $("#password").parent().show();
                 $("#welcome").parent().hide();
                 if (app.autoLogin) { //only used first time
-                    // Login as anonymous automatically, data will be available on list page
-                    app.autoLogin = false;
+                    // Login as anonymous automatically, data will be available on list page                    
                     $('#loginIcon').hide();
                     app.viewModels.loginViewModel.username = "gouser";
                     app.viewModels.loginViewModel.password = "gouser";
@@ -70,78 +53,116 @@
                 }
             }
         },
+        validUrl: function (url, validUrlCallback) {
+            $.ajax({
+                url: url,
+                async: false,
+                success: function () {
+                    validUrlCallback();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    app.viewModels.loginViewModel.loginErrorFn(progress.data.Session.GENERAL_FAILURE,
+                        { errorObject: "Failed to connect with Host. Please review your settings." });
+                    app.navigate('views/settingsView.html'); //missing settings..going to settings page
+                },
+                timeout: 1000
+            });
+        },
         login: function (e) {
-            var that = this,
-            details,
-            promise;
-            try {
-                promise = app.jsdoSession.login(this.get("username"), this.get("password"));
-                promise.done(function (jsdo, result, info) {
+            if (e) {
+                var form = e.button.closest('form');
+                var validator = $(form).kendoValidator({
+                    validateOnBlur: false,
+                }).data('kendoValidator');
+                if (!validator.validate())
+                    return;
+            }
+            var validUrlCallback = function () {
+                if (app.jsdoSession == undefined) {
                     try {
-                        that.set("isLoggedIn", true);
-                        var catPromise = app.jsdoSession.addCatalog(app.jsdoSettings.catalogURIs);
-                        catPromise.done(function (jsdo, result, details) {
-                            app.viewModels.loginViewModel.startApplication();
-                            return;
-                            //getting system parameters
-                            app.jsdoSettings.resourceName = "dsSystem";
-                            var jsdoParameters = new progress.data.JSDO({
-                                name: app.jsdoSettings.resourceName,
-                                autoFill: false,
-                            });
-                            //creating parameters list to be requested
-                            var requestedParamsList = [];
-                            for (var i = 0; i < app.viewModels.loginViewModel.sysParametersList.length; i++) {
-                                if (app.viewModels.loginViewModel.sysParametersList[i].doNotRequest)
-                                    continue;
-                                var param = {
-                                    "Param_No": app.viewModels.loginViewModel.sysParametersList[i].number,
-                                    "Param_EntVal": app.viewModels.loginViewModel.get("username")
-                                }
-                                requestedParamsList.push(param);
-                            }
-                            var paramsPromise = jsdoParameters.invoke('GetParam', { "dsSystem": { "ParamList": requestedParamsList } });
-                            paramsPromise.done(function (jsdo, result, details) {
-                                //storing all parameters in the localStorage
-                                for (var i = 0; i < details.response.dsSystem.dsSystem.ParamList.length; i++) {
-                                    var paramData = details.response.dsSystem.dsSystem.ParamList[i];
-                                    var paramDefinition = app.viewModels.loginViewModel.sysParametersList.filter(
-                                        function (p) {
-                                            return p.number == paramData.Param_No;
-                                        });
-                                    if (!paramDefinition.length) //we do noa ask for this parameters
+                        app.jsdoSettings = {
+                            "serviceURI": app.hostname + "/LatitudeIpadService/",
+                            "catalogURIs": app.hostname + "/LatitudeIpadService/rest/static/LatitudeIpadService.json",
+                            "authenticationModel": "Basic",
+                            "resourceName": "",
+                            "tableName": ""
+                        };
+                        progress.util.jsdoSettingsProcessor(app.jsdoSettings);
+                        app.jsdoSession = new progress.data.JSDOSession(app.jsdoSettings);
+                    } catch (e) {
+                        alert('Error instantiating session: ' + e.message);
+                        return;
+                    }
+                }
+                try {
+                    var promise = app.jsdoSession.login(app.viewModels.loginViewModel.get("username"),
+                        app.viewModels.loginViewModel.get("password"));
+                    promise.done(function (jsdo, result, info) {
+                        try {
+                            app.viewModels.loginViewModel.set("isLoggedIn", true);
+                            var catPromise = app.jsdoSession.addCatalog(app.jsdoSettings.catalogURIs);
+                            catPromise.done(function (jsdo, result, details) {
+                                //getting system parameters
+                                app.jsdoSettings.resourceName = "dsSystem";
+                                var jsdoParameters = new progress.data.JSDO({
+                                    name: app.jsdoSettings.resourceName,
+                                    autoFill: false,
+                                });
+                                //creating parameters list to be requested
+                                var requestedParamsList = [];
+                                for (var i = 0; i < app.viewModels.loginViewModel.sysParametersList.length; i++) {
+                                    if (app.viewModels.loginViewModel.sysParametersList[i].doNotRequest)
                                         continue;
-                                    paramDefinition = paramDefinition[0];
-                                    //converting boolean values
-                                    if (paramData.Param_Value === 'yes')
-                                        paramData.Param_Value = true;
-                                    else if (paramData.Param_Value === 'no')
-                                        paramData.Param_Value = false;
-                                    localStorage.setItem(paramDefinition.name, paramData.Param_Value);
+                                    var param = {
+                                        "Param_No": app.viewModels.loginViewModel.sysParametersList[i].number,
+                                        "Param_EntVal": app.viewModels.loginViewModel.get("username")
+                                    }
+                                    requestedParamsList.push(param);
                                 }
-                                app.viewModels.loginViewModel.startApplication();
+                                var paramsPromise = jsdoParameters.invoke('GetParam', { "dsSystem": { "ParamList": requestedParamsList } });
+                                paramsPromise.done(function (jsdo, result, details) {
+                                    //storing all parameters in the localStorage
+                                    for (var i = 0; i < details.response.dsSystem.dsSystem.ParamList.length; i++) {
+                                        var paramData = details.response.dsSystem.dsSystem.ParamList[i];
+                                        var paramDefinition = app.viewModels.loginViewModel.sysParametersList.filter(
+                                            function (p) {
+                                                return p.number == paramData.Param_No;
+                                            });
+                                        if (!paramDefinition.length) //we do noa ask for this parameters
+                                            continue;
+                                        paramDefinition = paramDefinition[0];
+                                        //converting boolean values
+                                        if (paramData.Param_Value === 'yes')
+                                            paramData.Param_Value = true;
+                                        else if (paramData.Param_Value === 'no')
+                                            paramData.Param_Value = false;
+                                        localStorage.setItem(paramDefinition.name, paramData.Param_Value);
+                                    }                                    
+                                    app.autoLogin = false;
+                                    app.viewModels.loginViewModel.startApplication();
+                                });
+                                paramsPromise.fail(function (jsdo, result, details) {
+                                    app.viewModels.loginViewModel.addCatalogErrorFn(progress.data.Session.GENERAL_FAILURE, details);
+                                });
                             });
-                            paramsPromise.fail(function (jsdo, result, details) {
+                            catPromise.fail(function (jsdo, result, details) {
                                 app.viewModels.loginViewModel.addCatalogErrorFn(progress.data.Session.GENERAL_FAILURE, details);
                             });
-                        });
-                        catPromise.fail(function (jsdo, result, details) {
+                        }
+                        catch (ex) {
+                            var details = [{ "catalogURI": app.jsdoSettings.catalogURIs, errorObject: ex }];
                             app.viewModels.loginViewModel.addCatalogErrorFn(progress.data.Session.GENERAL_FAILURE, details);
-                        });
-                    }
-                    catch (ex) {
-                        details = [{ "catalogURI": app.jsdoSettings.catalogURIs, errorObject: ex }];
-                        app.viewModels.loginViewModel.addCatalogErrorFn(progress.data.Session.GENERAL_FAILURE, details);
-                    }
-                });
-                promise.fail(function (jsdo, result, info) {
-                    debugger;
-                    app.viewModels.loginViewModel.loginErrorFn(result, info);
-                }); // end promise.fail
+                        }
+                    });
+                    promise.fail(function (jsdo, result, info) {
+                        app.viewModels.loginViewModel.loginErrorFn(result, info);
+                    }); // end promise.fail
+                }
+                catch (ex) {
+                    app.viewModels.loginViewModel.loginErrorFn(progress.data.Session.GENERAL_FAILURE, { errorObject: ex });
+                }
             }
-            catch (ex) {
-                app.viewModels.loginViewModel.loginErrorFn(progress.data.Session.GENERAL_FAILURE, { errorObject: ex });
-            }
+            app.viewModels.loginViewModel.validUrl(app.hostname + "/LatitudeIpadService/", validUrlCallback);
         },
         startApplication: function () {
             app.updateShoppingCartQty();

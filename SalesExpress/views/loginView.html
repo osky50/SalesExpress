@@ -20,17 +20,26 @@
             <li>
                 <label>
                     User:
-                    <input type="text" id='username' style="width: 70%" data-bind="value: username" autocapitalize="off" autocorrect="off" />
+                    <input type="text" name="User" required id='username' style="width: 70%" 
+                           data-bind="value: username" autocapitalize="off" autocorrect="off" />
                 </label>
             </li>
             <li>
                 <label>
                     Password:
-                    <input type="password" id='password' style="width: 70%" data-bind="value: password" />
+                    <input type="password" name="Password" required id='password' style="width: 70%" 
+                           data-bind="value: password" />
                 </label>
             </li>
             <li>
-                <input style="width: 100%" id="login" type="submit" data-role="button" data-bind="click: login, invisible: isLoggedIn" value="Login" class="login-button" />
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <a onclick="app.navigate('views/settingsView.html')" class="link" data-role="button">Settings</a>
+                    </div>
+                    <div class="ui-block-b">
+                        <input style="width: 100%" id="login" type="submit" data-role="button" data-bind="click: login, invisible: isLoggedIn" value="Login" class="login-button" />
+                    </div>
+                </div>
             </li>
         </ul>
     </form>
