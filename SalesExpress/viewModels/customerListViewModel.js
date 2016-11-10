@@ -71,12 +71,12 @@
         createJSDODataSource: function () {
             try {
                 //configuring JSDO Settings
-                jsdoSettings.resourceName = 'dsCust';
-                jsdoSettings.tableName = 'eCustomer';
+                app.jsdoSettings.resourceName = 'dsCust';
+                app.jsdoSettings.tableName = 'eCustomer';
                 var eCustomer = customerModel();
                 // create JSDO
                 this.jsdoModel = new progress.data.JSDO({
-                    name: jsdoSettings.resourceName,
+                    name: app.jsdoSettings.resourceName,
                     autoFill: false,
                 });
                 this.jsdoDataSource = new kendo.data.DataSource({
@@ -138,11 +138,11 @@
         changeCustomer: function () {
             //checking if there is an open shopping cart
             //configuring JSDO Settings
-            jsdoSettings.resourceName = 'dsOrder';
-            jsdoSettings.tableName = 'eOrder';
+            app.jsdoSettings.resourceName = 'dsOrder';
+            app.jsdoSettings.tableName = 'eOrder';
             // create JSDO
             var shoppingCartJSDO = new progress.data.JSDO({
-                name: jsdoSettings.resourceName,
+                name: app.jsdoSettings.resourceName,
                 autoFill: false
             });
             var checkCartPromise = shoppingCartJSDO.invoke('CartRead', {});

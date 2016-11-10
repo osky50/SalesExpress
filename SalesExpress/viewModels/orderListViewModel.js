@@ -52,44 +52,39 @@
         createJSDODataSource: function () {
             try {
                 //configuring JSDO Settings
-                jsdoSettings.resourceName = 'dsOrder';
-                jsdoSettings.tableName = 'eOrder';
+                app.jsdoSettings.resourceName = 'dsOrder';
+                app.jsdoSettings.tableName = 'eOrder';
                 // create JSDO
-                if (jsdoSettings && jsdoSettings.resourceName) {
-                    this.jsdoModel = new progress.data.JSDO({
-                        name: jsdoSettings.resourceName,
-                        autoFill: false, events: {
-                            'afterFill': [{
-                                scope: this,
-                                fn: function (jsdo, success, request) {
-                                    // afterFill event handler statements ...
-                                }
-                            }],
-                            'beforeFill': [{
-                                scope: this,
-                                fn: function (jsdo, success, request) {
-                                    // beforeFill event handler statements ...
-                                }
-                            }]
-                        }
-                    });
-                    this.jsdoDataSource = new kendo.data.DataSource({
-                        data: [],
-                        error: function (e) {
-                            alert("Error: ", e);
-                        },
-                    });
-                    //adding custom methods
-                    var me = this;
-                    this.jsdoDataSource.read = function () {
-                        var promise = me.jsdoModel.invoke('OrderList', { "CustomerId": localStorage.getItem('defaultCustomer') });
-                        promise.done(function (session, result, details) {
-                            me.jsdoDataSource.data(details.response.dsOrder.dsOrder.eOrder);
-                        });
+                this.jsdoModel = new progress.data.JSDO({
+                    name: app.jsdoSettings.resourceName,
+                    autoFill: false, events: {
+                        'afterFill': [{
+                            scope: this,
+                            fn: function (jsdo, success, request) {
+                                // afterFill event handler statements ...
+                            }
+                        }],
+                        'beforeFill': [{
+                            scope: this,
+                            fn: function (jsdo, success, request) {
+                                // beforeFill event handler statements ...
+                            }
+                        }]
                     }
-                }
-                else {
-                    alert("Warning: jsdoSettings.resourceName not specified");
+                });
+                this.jsdoDataSource = new kendo.data.DataSource({
+                    data: [],
+                    error: function (e) {
+                        alert("Error: ", e);
+                    },
+                });
+                //adding custom methods
+                var me = this;
+                this.jsdoDataSource.read = function () {
+                    var promise = me.jsdoModel.invoke('OrderList', { "CustomerId": localStorage.getItem('defaultCustomer') });
+                    promise.done(function (session, result, details) {
+                        me.jsdoDataSource.data(details.response.dsOrder.dsOrder.eOrder);
+                    });
                 }
             }
             catch (ex) {

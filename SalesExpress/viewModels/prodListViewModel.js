@@ -126,11 +126,11 @@
             try {
                 var eProduct = productModel();
                 //configuring JSDO Settings
-                jsdoSettings.resourceName = 'dsProd';
-                jsdoSettings.tableName = 'eProduct';
+                app.jsdoSettings.resourceName = 'dsProd';
+                app.jsdoSettings.tableName = 'eProduct';
                 // create JSDO
                 this.jsdoModel = new progress.data.JSDO({
-                    name: jsdoSettings.resourceName,
+                    name: app.jsdoSettings.resourceName,
                     autoFill: false, events: {
                         'afterFill': [{
                             scope: this,

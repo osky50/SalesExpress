@@ -117,10 +117,10 @@ var EOrderClass = function () {
 };
 
 var addLineToShoppingCart = function (eOrder, callBackFn) {
-    jsdoSettings.resourceName = 'dsOrder';
-    jsdoSettings.tableName = 'eOrder';
+    app.jsdoSettings.resourceName = 'dsOrder';
+    app.jsdoSettings.tableName = 'eOrder';
     var updatejsdoModel = new progress.data.JSDO({
-        name: jsdoSettings.resourceName,
+        name: app.jsdoSettings.resourceName,
         autoFill: false,
     });
     var updateLineData = {

@@ -244,10 +244,10 @@
                 // create JSDO
                 var eProduct = productModel();
                 //configuring JSDO Settings
-                jsdoSettings.resourceName = 'dsProd';
-                jsdoSettings.tableName = 'eProduct';
+                app.jsdoSettings.resourceName = 'dsProd';
+                app.jsdoSettings.tableName = 'eProduct';
                 this.jsdoModel = new progress.data.JSDO({
-                    name: jsdoSettings.resourceName,
+                    name: app.jsdoSettings.resourceName,
                     autoFill: false,
                 });
                 this.jsdoDataSource = {

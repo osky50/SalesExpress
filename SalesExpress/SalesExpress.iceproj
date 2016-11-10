@@ -190,7 +190,6 @@
     <Content Include="scripts\swipebox\ios-orientationchange-fix.js" />
     <Content Include="scripts\jquery.rateit.min.js" />
     <Content Include="scripts\swipebox\jquery.swipebox.min.js" />
-    <Content Include="scripts\jsdoSettings.js" />
     <Content Include="scripts\jsdoUtils.js" />
     <Content Include="scripts\modelUtils.js" />
     <Content Include="viewModels\followUsViewModel.js" />

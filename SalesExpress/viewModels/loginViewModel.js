@@ -20,49 +20,67 @@
         ],
         onBeforeShow: function (e) {
             // Always clear password
+            app.viewModels.loginViewModel.set("username", "");
             app.viewModels.loginViewModel.set("password", "");
-            if (!app.isAnonymous()) {
-                if (app.viewModels.loginViewModel.isLoggedIn)
-                    app.changeTitle(app.viewModels.loginViewModel.logoutLabel);
-                else
-                    app.changeTitle(app.viewModels.loginViewModel.loginLabel);
-            }
-
             // If logged in, show welcome message
             if (app.viewModels.loginViewModel.isLoggedIn) {
+                app.changeTitle(app.viewModels.loginViewModel.logoutLabel);
                 $("#credentials").parent().hide();
                 $("#username").parent().hide();
                 $("#password").parent().hide();
                 $("#welcome").parent().show();
             } else {
-                //else show login screen
-                app.viewModels.loginViewModel.set("username", "");
+                //showing login screen                
+                app.changeTitle(app.viewModels.loginViewModel.loginLabel);
                 $("#credentials").parent().show();
                 $("#username").parent().show();
                 $("#password").parent().show();
                 $("#welcome").parent().hide();
+                //looking for required settings...
+                if (!app.readSettings()) {
+                    app.viewModels.settingsViewModel.fromLogin = true;
+                    app.navigate('views/settingsView.html'); //missing settings..going to settings page
+                    return;
+                }
+                app.jsdoSettings = {
+                    "serviceURI": app.hostname + "/LatitudeIpadService/",
+                    "catalogURIs": app.hostname + "/LatitudeIpadService/rest/static/LatitudeIpadService.json",
+                    "authenticationModel": "Basic",
+                    "resourceName": "",
+                    "tableName": ""
+                };
+                try {
+                    progress.util.jsdoSettingsProcessor(app.jsdoSettings);
+                    app.jsdosession = new progress.data.JSDOSession(app.jsdoSettings);
+                    if (app.autoLogin) {
+                        // Login as anonymous automatically, data will be available on list page
+                        $('#loginIcon').hide();
+                        app.viewModels.loginViewModel.username = "gouser";
+                        app.viewModels.loginViewModel.password = "gouser";
+                        app.viewModels.loginViewModel.login();
+                        return;
+                    }
+                } catch (e) {
+                    alert('Error instantiating session: ' + e.message);
+                }
             }
         },
-
-        onInit: function (e) {
-        },
-
         login: function (e) {
             var that = this,
-                details,
-                promise;
+            details,
+            promise;
             try {
                 promise = app.jsdosession.login(this.get("username"), this.get("password"));
                 promise.done(function (jsdosession, result, info) {
                     try {
                         console.log("Success on login()");
                         that.set("isLoggedIn", true);
-                        var catPromise = jsdosession.addCatalog(jsdoSettings.catalogURIs);
+                        var catPromise = jsdosession.addCatalog(app.jsdoSettings.catalogURIs);
                         catPromise.done(function (jsdosession, result, details) {
                             //getting system parameters
-                            jsdoSettings.resourceName = "dsSystem";
+                            app.jsdoSettings.resourceName = "dsSystem";
                             var jsdoParameters = new progress.data.JSDO({
-                                name: jsdoSettings.resourceName,
+                                name: app.jsdoSettings.resourceName,
                                 autoFill: false,
                             });
                             //creating parameters list to be requested
@@ -110,11 +128,10 @@
                         });
                     }
                     catch (ex) {
-                        details = [{ "catalogURI": jsdoSettings.catalogURIs, errorObject: ex }];
+                        details = [{ "catalogURI": app.jsdoSettings.catalogURIs, errorObject: ex }];
                         app.viewModels.loginViewModel.addCatalogErrorFn(app.jsdosession,
                             progress.data.Session.GENERAL_FAILURE, details);
                     }
-
                 });
                 promise.fail(function (jsdosession, result, info) {
                     app.viewModels.loginViewModel.loginErrorFn(app.jsdosession, result, info);
@@ -122,8 +139,7 @@
             }
             catch (ex) {
                 app.viewModels.loginViewModel.loginErrorFn(app.jsdosession,
-                    progress.data.Session.GENERAL_FAILURE,
-                    { errorObject: ex });
+                    progress.data.Session.GENERAL_FAILURE, { errorObject: ex });
             }
         },
         startApplication: function () {
@@ -202,12 +218,11 @@
 
         loginErrorFn: function (jsdosession, result, info) {
             var msg = "Error on login";
-
             if (result === progress.data.Session.LOGIN_AUTHENTICATION_FAILURE) {
                 msg = msg + " Invalid userid or password";
             }
             else {
-                msg = msg + " Service " + jsdoSettings.serviceURI + " is unavailable";
+                msg = msg + " Service " + app.jsdoSettings.serviceURI + " is unavailable";
             }
             MessageDialogController.showMessage(msg, "Error");
             if (info.xhr) {

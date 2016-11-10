@@ -2,62 +2,27 @@
     var app = {
         data: {},
         mobileApp: {},
+        jsdoSettings: {},
         jsdoSession: {},
         views: {},
         viewModels: {},
     };
-
     var bootstrap = function () {
         $(function () {
-            try {
-                $.jqplot.config.enablePlugins = true;
-                app.mobileApp = new kendo.mobile.Application(document.body, {
-
-                    // you can change the default transition (slide, zoom or fade)
-                    transition: 'slide',
-                    // comment out the following line to get a UI which matches the look
-                    // and feel of the operating system
-                    skin: 'flat',
-                    // the application needs to know which view to load first
-                    initial: 'views/loginView.html',
-                    layout: "tabstrip-layout",
-                    statusBarStyle: 'black-translucent'
-                });
-
-                // Session management - behavior deoends on authentication model speecified in JSDO instance for session in jsdoSettings.js
-                progress.util.jsdoSettingsProcessor(jsdoSettings);
-
-                if (!jsdoSettings.authenticationModel) {
-                    console.log("Warning: jsdoSettings.authenticationModel not specified. Default is ANONYMOUS");
-                }
-
-                if (jsdoSettings.serviceURI) {
-                    app.jsdosession = new progress.data.JSDOSession(jsdoSettings);
-                }
-                else {
-                    console.log("Error: jsdoSettings.serviceURI must be specified.");
-                }
-
-                if (app.jsdosession && app.isAnonymous()) {
-                    // Login as anonymous automatically, data will be available on list page
-                    $('#loginIcon').hide();
-                    app.viewModels.loginViewModel.login();
-                }
-
-                if (app.jsdosession && app.autoLogin) {
-                    // Login as anonymous automatically, data will be available on list page
-                    $('#loginIcon').hide();
-                    app.viewModels.loginViewModel.username = "gouser";
-                    app.viewModels.loginViewModel.password = "gouser";
-                    app.viewModels.loginViewModel.login();
-                }
-            }
-            catch (ex) {
-                alert("Error creating JSDOSession: " + ex);
-            }
+            $.jqplot.config.enablePlugins = true;
+            app.mobileApp = new kendo.mobile.Application(document.body, {
+                // you can change the default transition (slide, zoom or fade)
+                transition: 'slide',
+                // comment out the following line to get a UI which matches the look
+                // and feel of the operating system
+                skin: 'flat',
+                // the application needs to know which view to load first
+                initial: 'views/loginView.html',
+                layout: "tabstrip-layout",
+                statusBarStyle: 'black-translucent'
+            });
         });
     };
-
     if (window.cordova) {
         // this function is called by Cordova when the application is loaded by the device
         document.addEventListener('deviceready', function () {
@@ -71,25 +36,28 @@
     } else {
         bootstrap();
     }
-
     window.app = app;
-
+    app.readSettings = function () {
+        app.hostname = localStorage.getItem('SalesExpressHostName') || '';        
+        if (app.hostname) {
+            var isUrlValid = function (url) {
+                return /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
+            };
+            //testing hostname url
+            if (!isUrlValid(app.hostname)) {
+                app.hostname = '';
+                localStorage.setItem('SalesExpressHostName', '');
+            }
+            return true;
+        } else
+            return false;
+    },
     app.isOnline = function () {
         if (!navigator || !navigator.connection) {
             return true;
         } else {
             return navigator.connection.type !== 'none';
         }
-    };
-
-    app.isAnonymous = function () {
-        // authenticationModel defaults to "ANONYMOUS"
-        if (!jsdoSettings.authenticationModel ||
-             jsdoSettings.authenticationModel.toUpperCase() === "ANONYMOUS") {
-            return true;
-        }
-
-        return false;
     };
     app.getErrors = function (restResultArr) {
         var errors = '';
@@ -109,16 +77,14 @@
             //$("#navbar").data("kendoMobileNavBar").title(customTitle);
         }
     };
-
     app.onSelectTab = function (e) {
         if (e.item[0].id == "listIcon") {
-            if (!app.viewModels.loginViewModel.isLoggedIn && !app.isAnonymous()) {
+            if (!app.viewModels.loginViewModel.isLoggedIn) {
                 MessageDialogController.showMessage("Please login first", "Error");
                 e.preventDefault();
             }
         }
     };
-
     app.clearData = function (vm) {
         var clearModel = function (m) {
             if (m.jsdoModel && m.jsdoModel._clearData) { //cleaning jsdo
@@ -139,7 +105,7 @@
         }
     }
     app.navigate = function (url) {
-        var currentView = app.mobileApp.view().id;
+        var currentView = app.mobileApp.view() ? app.mobileApp.view().id : '';
         if (currentView == url)
             return;
         if (app.beforeNavigate) {
@@ -153,7 +119,6 @@
     app.back = function () {
         app.navigate("#:back");
     };
-
     app.autoLogin = true;
     app.onViewShow = function (e) {
         if (!e.view.model)
@@ -169,11 +134,11 @@
     };
     app.updateShoppingCartQty = function () {
         //configuring JSDO Settings
-        jsdoSettings.resourceName = 'dsOrder';
-        jsdoSettings.tableName = 'eOrder';
+        app.jsdoSettings.resourceName = 'dsOrder';
+        app.jsdoSettings.tableName = 'eOrder';
         // create JSDO
         var shoppingCartJsdoModel = new progress.data.JSDO({
-            name: jsdoSettings.resourceName,
+            name: app.jsdoSettings.resourceName,
             autoFill: false
         });
         var promise = shoppingCartJsdoModel.invoke('CartRead', {});
@@ -220,7 +185,6 @@
             } catch (e) {
                 alert('Scanning failed: ' + e.message);
             }
-
         }
     },
     app.pageSize = 10;

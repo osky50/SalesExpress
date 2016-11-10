@@ -1,10 +1,8 @@
 <!-- Login view -->
 <div id="login"
      data-role="view"
-     data-init="app.viewModels.loginViewModel.onInit"
      data-before-show="app.viewModels.loginViewModel.onBeforeShow"
      data-model="app.viewModels.loginViewModel">
-
     <div>
         <ul id="logoutListView" data-role="listview" data-style="" data-bind="visible: isLoggedIn">
             <li>
@@ -30,13 +28,9 @@
                     <input type="password" id='password' style="width: 70%" data-bind="value: password" />
                 </label>
             </li>
-
             <li>
                 <input style="width: 100%" id="login" type="submit" data-role="button" data-bind="click: login, invisible: isLoggedIn" value="Login" class="login-button" />
             </li>
-
         </ul>
-
     </form>
-
 </div>

@@ -205,11 +205,11 @@
         createJSDODataSource: function () {
             try {
                 //configuring JSDO Settings
-                jsdoSettings.resourceName = 'dsOrder';
-                jsdoSettings.tableName = 'eOrder';
+                app.jsdoSettings.resourceName = 'dsOrder';
+                app.jsdoSettings.tableName = 'eOrder';
                 // create JSDO
                 this.jsdoModel = new progress.data.JSDO({
-                    name: jsdoSettings.resourceName,
+                    name: app.jsdoSettings.resourceName,
                     autoFill: false
                 });
                 this.jsdoDataSource = {

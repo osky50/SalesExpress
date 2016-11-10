@@ -33,9 +33,9 @@
         },
         getNoteIds: function () {
 
-            jsdoSettings.resourceName = 'RestGetRecord';
+            app.jsdoSettings.resourceName = 'RestGetRecord';
             var getNoteIdsJSDOModel = new progress.data.JSDO({
-                name: jsdoSettings.resourceName,
+                name: app.jsdoSettings.resourceName,
                 autoFill: false,
             });
             var rparam = { "pTableName": "note-type" };
@@ -69,9 +69,9 @@
 
         },
         saveNotes: function (e) {
-            jsdoSettings.resourceName = 'dsOrder';
+            app.jsdoSettings.resourceName = 'dsOrder';
             var updateNotesJSDOModel = new progress.data.JSDO({
-                name: jsdoSettings.resourceName,
+                name: app.jsdoSettings.resourceName,
                 autoFill: false,
             });
             var data = {

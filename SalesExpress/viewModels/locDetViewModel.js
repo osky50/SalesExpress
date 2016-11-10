@@ -49,10 +49,10 @@
         },
         createLocStockDataSource: function () {
             //configuring JSDO Settings
-            jsdoSettings.resourceName = 'dsLoc';
-            jsdoSettings.tableName = 'stockdetail';
+            app.jsdoSettings.resourceName = 'dsLoc';
+            app.jsdoSettings.tableName = 'stockdetail';
             this.jsdoStockModel = new progress.data.JSDO({
-                name: jsdoSettings.resourceName,
+                name: app.jsdoSettings.resourceName,
                 autoFill: false,
             });
             this.locStockDataSource = {
@@ -101,10 +101,10 @@
                 // create JSDO
                 var eLoc = locationModel();
                 //configuring JSDO Settings
-                jsdoSettings.resourceName = 'dsLoc';
-                jsdoSettings.tableName = 'eLocation';
+                app.jsdoSettings.resourceName = 'dsLoc';
+                app.jsdoSettings.tableName = 'eLocation';
                 this.jsdoModel = new progress.data.JSDO({
-                    name: jsdoSettings.resourceName,
+                    name: app.jsdoSettings.resourceName,
                     autoFill: false,
                 });
                 this.jsdoDataSource = {

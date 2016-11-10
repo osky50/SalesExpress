@@ -27,10 +27,10 @@
         },
         createProdReviewsJSDO: function () {
             //configuring JSDO Settings
-            jsdoSettings.resourceName = 'dsProd';
-            jsdoSettings.tableName = 'ProdReview';
+            app.jsdoSettings.resourceName = 'dsProd';
+            app.jsdoSettings.tableName = 'ProdReview';
             this.jsdoReviewsModel = new progress.data.JSDO({
-                name: jsdoSettings.resourceName,
+                name: app.jsdoSettings.resourceName,
                 autoFill: false,
             });
         },

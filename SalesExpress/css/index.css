@@ -337,4 +337,15 @@ input::-webkit-inner-spin-button {
     font-size: 1em; 
     font-weight: bold;
 }
+form .ui-grid-a.ui-responsive .ui-block-a label,
+form .ui-grid-a.ui-responsive .ui-block-b label{
+    float: none;
+    margin-top:auto;
+}
+form .ui-grid-a.ui-responsive .ui-block-a input,
+form .ui-grid-a.ui-responsive .ui-block-b input{
+    position:relative;
+    width:100%;
+    margin-top:auto;
+}
 

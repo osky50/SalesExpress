@@ -76,12 +76,12 @@
         createCustomerDetDataSource: function () {
             try {
                 //configuring JSDO Settings
-                jsdoSettings.resourceName = 'dsCust';
-                jsdoSettings.tableName = 'eCustomer';
+                app.jsdoSettings.resourceName = 'dsCust';
+                app.jsdoSettings.tableName = 'eCustomer';
                 var eCustomer = customerModel();
                 // create JSDO
                 this.customerDetJsdoModel = new progress.data.JSDO({
-                    name: jsdoSettings.resourceName,
+                    name: app.jsdoSettings.resourceName,
                     autoFill: false,
                 });
                 this.customerDetDataSource = {
@@ -123,10 +123,10 @@
         createCustomerPerfDataSource: function () {
             try {
                 //configuring JSDO Settings
-                jsdoSettings.resourceName = 'dsCust';
+                app.jsdoSettings.resourceName = 'dsCust';
                 // create JSDO
                 this.customerPerfJsdoModel = new progress.data.JSDO({
-                    name: jsdoSettings.resourceName,
+                    name: app.jsdoSettings.resourceName,
                     autoFill: false,
                 });
                 this.customerPerfDataSource = {
