@@ -1,7 +1,8 @@
 <!-- Login view -->
 <div id="login"
      data-role="view"
-     data-before-show="app.viewModels.loginViewModel.onBeforeShow"
+     data-init="app.viewModels.loginViewModel.onInit"
+     data-show="app.viewModels.loginViewModel.onBeforeShow"
      data-model="app.viewModels.loginViewModel">
     <div>
         <ul id="logoutListView" data-role="listview" data-style="" data-bind="visible: isLoggedIn">

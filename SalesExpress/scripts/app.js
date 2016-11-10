@@ -3,7 +3,7 @@
         data: {},
         mobileApp: {},
         jsdoSettings: {},
-        jsdoSession: {},
+        jsdoSession: undefined,
         views: {},
         viewModels: {},
     };

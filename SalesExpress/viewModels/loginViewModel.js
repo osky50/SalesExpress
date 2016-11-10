@@ -18,6 +18,29 @@
             { number: 2559, name: 'facebookUrl' },
             { number: 2560, name: 'twitterUrl' },
         ],
+        onInit: function () {
+            try {
+                if (app.jsdoSession == undefined) {
+                    //looking for required settings...
+                    if (!app.readSettings()) {
+                        app.viewModels.settingsViewModel.fromLogin = true;
+                        app.navigate('views/settingsView.html'); //missing settings..going to settings page
+                        return;
+                    }
+                    app.jsdoSettings = {
+                        "serviceURI": app.hostname + "/LatitudeIpadService/",
+                        "catalogURIs": app.hostname + "/LatitudeIpadService/rest/static/LatitudeIpadService.json",
+                        "authenticationModel": "Basic",
+                        "resourceName": "",
+                        "tableName": ""
+                    };
+                    progress.util.jsdoSettingsProcessor(app.jsdoSettings);
+                    app.jsdoSession = new progress.data.JSDOSession(app.jsdoSettings);
+                }
+            } catch (e) {
+                alert('Error instantiating session: ' + e.message);
+            }
+        },
         onBeforeShow: function (e) {
             // Always clear password
             app.viewModels.loginViewModel.set("username", "");
@@ -30,38 +53,20 @@
                 $("#password").parent().hide();
                 $("#welcome").parent().show();
             } else {
-                //showing login screen                
+                //showing login screen
                 app.changeTitle(app.viewModels.loginViewModel.loginLabel);
                 $("#credentials").parent().show();
                 $("#username").parent().show();
                 $("#password").parent().show();
                 $("#welcome").parent().hide();
-                //looking for required settings...
-                if (!app.readSettings()) {
-                    app.viewModels.settingsViewModel.fromLogin = true;
-                    app.navigate('views/settingsView.html'); //missing settings..going to settings page
+                if (app.autoLogin) { //only used first time
+                    // Login as anonymous automatically, data will be available on list page
+                    app.autoLogin = false;
+                    $('#loginIcon').hide();
+                    app.viewModels.loginViewModel.username = "gouser";
+                    app.viewModels.loginViewModel.password = "gouser";
+                    app.viewModels.loginViewModel.login();
                     return;
-                }
-                app.jsdoSettings = {
-                    "serviceURI": app.hostname + "/LatitudeIpadService/",
-                    "catalogURIs": app.hostname + "/LatitudeIpadService/rest/static/LatitudeIpadService.json",
-                    "authenticationModel": "Basic",
-                    "resourceName": "",
-                    "tableName": ""
-                };
-                try {
-                    progress.util.jsdoSettingsProcessor(app.jsdoSettings);
-                    app.jsdosession = new progress.data.JSDOSession(app.jsdoSettings);
-                    if (app.autoLogin) {
-                        // Login as anonymous automatically, data will be available on list page
-                        $('#loginIcon').hide();
-                        app.viewModels.loginViewModel.username = "gouser";
-                        app.viewModels.loginViewModel.password = "gouser";
-                        app.viewModels.loginViewModel.login();
-                        return;
-                    }
-                } catch (e) {
-                    alert('Error instantiating session: ' + e.message);
                 }
             }
         },
@@ -70,13 +75,14 @@
             details,
             promise;
             try {
-                promise = app.jsdosession.login(this.get("username"), this.get("password"));
-                promise.done(function (jsdosession, result, info) {
+                promise = app.jsdoSession.login(this.get("username"), this.get("password"));
+                promise.done(function (jsdo, result, info) {
                     try {
-                        console.log("Success on login()");
                         that.set("isLoggedIn", true);
-                        var catPromise = jsdosession.addCatalog(app.jsdoSettings.catalogURIs);
-                        catPromise.done(function (jsdosession, result, details) {
+                        var catPromise = app.jsdoSession.addCatalog(app.jsdoSettings.catalogURIs);
+                        catPromise.done(function (jsdo, result, details) {
+                            app.viewModels.loginViewModel.startApplication();
+                            return;
                             //getting system parameters
                             app.jsdoSettings.resourceName = "dsSystem";
                             var jsdoParameters = new progress.data.JSDO({
@@ -116,30 +122,25 @@
                                 app.viewModels.loginViewModel.startApplication();
                             });
                             paramsPromise.fail(function (jsdo, result, details) {
-                                app.viewModels.loginViewModel.addCatalogErrorFn(
-                                    jsdo,
-                                    progress.data.Session.GENERAL_FAILURE,
-                                    details);
+                                app.viewModels.loginViewModel.addCatalogErrorFn(progress.data.Session.GENERAL_FAILURE, details);
                             });
                         });
-                        catPromise.fail(function (jsdosession, result, details) {
-                            app.viewModels.loginViewModel.addCatalogErrorFn(app.jsdosession,
-                                progress.data.Session.GENERAL_FAILURE, details);
+                        catPromise.fail(function (jsdo, result, details) {
+                            app.viewModels.loginViewModel.addCatalogErrorFn(progress.data.Session.GENERAL_FAILURE, details);
                         });
                     }
                     catch (ex) {
                         details = [{ "catalogURI": app.jsdoSettings.catalogURIs, errorObject: ex }];
-                        app.viewModels.loginViewModel.addCatalogErrorFn(app.jsdosession,
-                            progress.data.Session.GENERAL_FAILURE, details);
+                        app.viewModels.loginViewModel.addCatalogErrorFn(progress.data.Session.GENERAL_FAILURE, details);
                     }
                 });
-                promise.fail(function (jsdosession, result, info) {
-                    app.viewModels.loginViewModel.loginErrorFn(app.jsdosession, result, info);
+                promise.fail(function (jsdo, result, info) {
+                    debugger;
+                    app.viewModels.loginViewModel.loginErrorFn(result, info);
                 }); // end promise.fail
             }
             catch (ex) {
-                app.viewModels.loginViewModel.loginErrorFn(app.jsdosession,
-                    progress.data.Session.GENERAL_FAILURE, { errorObject: ex });
+                app.viewModels.loginViewModel.loginErrorFn(progress.data.Session.GENERAL_FAILURE, { errorObject: ex });
             }
         },
         startApplication: function () {
@@ -159,27 +160,22 @@
                 e.preventDefault();
             }
             try {
-                promise = app.jsdosession.logout();
-                promise.done(function (jsdosession, result, info) {
+                promise = app.jsdoSession.logout();
+                promise.done(function (jsdo, result, info) {
                     console.log("Success on logout()");
                     that.set("isLoggedIn", false);
                     $(".login-info").hide();
-                    app.viewModels.loginViewModel.onBeforeShow();
-
                     app.clearData(); //cleaning all data
+                    app.viewModels.loginViewModel.onBeforeShow();
                 });
-                promise.fail(function (jsdosession, result, info) {
-                    app.viewModels.loginViewModel.logoutErrorFn(jsdosession, result, info);
+                promise.fail(function (jsdo, result, info) {
+                    app.viewModels.loginViewModel.logoutErrorFn(result, info);
                 });
             }
             catch (ex) {
-                app.viewModels.loginViewModel.logoutErrorFn(app.jsdosession,
-                                                 progress.data.Session.GENERAL_FAILURE,
-                                                 { errorObject: ex });
+                app.viewModels.loginViewModel.logoutErrorFn(progress.data.Session.GENERAL_FAILURE, { errorObject: ex });
             }
         },
-
-
         checkEnter: function (e) {
             var that = this;
             if (e.keyCode === 13) {
@@ -187,13 +183,12 @@
                 that.login();
             }
         },
-
-        addCatalogErrorFn: function (jsdo, result, details) {
+        addCatalogErrorFn: function (result, details) {
             var msg = "", i;
             if (details !== undefined && Array.isArray(details)) {
                 for (i = 0; i < details.length; i += 1) {
                     msg = msg + "\nresult for " + details[i].catalogURI + ": " +
-                            details[i].result + "\n    " + details[i].errorObject;
+                        details[i].result + "\n    " + details[i].errorObject;
                 }
             }
             MessageDialogController.showMessage(msg, "Error");
@@ -202,8 +197,7 @@
                 app.viewModels.loginViewModel.logout();
             }
         },
-
-        logoutErrorFn: function (jsdosession, result, info) {
+        logoutErrorFn: function (result, info) {
             var msg = "Error on logout";
             MessageDialogController.showMessage(msg, "Error");
             if (info.errorObject !== undefined) {
@@ -215,28 +209,24 @@
             }
             alert(msg);
         },
-
-        loginErrorFn: function (jsdosession, result, info) {
-            var msg = "Error on login";
+        loginErrorFn: function (result, info) {
+            var msg = "Login failed: ";
             if (result === progress.data.Session.LOGIN_AUTHENTICATION_FAILURE) {
-                msg = msg + " Invalid userid or password";
+                msg = msg + " Invalid user or password";
             }
             else {
-                msg = msg + " Service " + app.jsdoSettings.serviceURI + " is unavailable";
+                if (info.xhr) {
+                    msg = msg + "\n-status= \"" + info.xhr.status + "\"";
+                    msg = msg + "\n-statusText= \"" + info.xhr.statusText + "\"";
+                    if (info.xhr.status === 200) {
+                        msg = msg + "\n-responseText= \"" + info.xhr.responseText + "\n";
+                    }
+                } else if (info.errorObject) {
+                    msg = msg + "\n-statusText=\"" + info.errorObject + "\"";
+                } else
+                    msg = msg + "\n-statusText= \"unknown\"";
             }
             MessageDialogController.showMessage(msg, "Error");
-            if (info.xhr) {
-                msg = msg + " status (from jqXHT):" + info.xhr.status;
-                msg = msg + " statusText (from jqXHT):" + info.xhr.statusText;
-                if (info.xhr.status === 200) {
-                    //something is likely wrong with the catalog, so dump it out     
-                    msg = msg + "\nresponseText (from jqXHT):" + info.xhr.responseText;
-                }
-            }
-            if (info.errorObject) {
-                msg = msg + "\n" + info.errorObject;
-            }
-            alert(msg);
         }
     });
 
