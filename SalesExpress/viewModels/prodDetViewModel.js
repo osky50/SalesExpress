@@ -177,9 +177,11 @@
                 transport: {
                     read: function (options) {
                         //displaying notes if exist
-                        if (app.viewModels.prodDetViewModel.product && app.viewModels.prodDetViewModel.product.eProductNote &&
-                            app.viewModels.prodDetViewModel.product.eProductNote.length) {
-                            options.success(app.viewModels.prodDetViewModel.product.eOrderNote);
+                        if (app.viewModels.prodDetViewModel.product && app.viewModels.prodDetViewModel.product.Notes) {
+                            var notes = {
+                                Notes: app.viewModels.prodDetViewModel.product.Notes
+                            }
+                            options.success([notes]);
                             $('.prod-notes-collapsible').show();
                         }
                         else {

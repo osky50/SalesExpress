@@ -13,14 +13,12 @@
         selectedRow: {},
         origRow: {},
         resourceName: 'Product List',
-        forceLoad: false,
         onBeforeShow: function () {
             var prodListView = $("#productListView").data("kendoMobileListView");
             if (prodListView === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.prodListViewModel.onInit(this);
-            } else if (prodListView.dataSource && prodListView.dataSource.data().length === 0 || app.viewModels.prodListViewModel.forceLoad) {
-                prodListView.dataSource.read();
             }
+            prodListView.dataSource.read();
 
             // Set list title to resource name
             if (app.viewModels.prodListViewModel.resourceName !== undefined) {
@@ -58,7 +56,6 @@
                                 app.navigate('views/prodDetReviewsView.html');
                             } else if (button.name == 'create-review-link') {
                                 var addReviewCallback = function (prodReviewDet) {
-                                    app.viewModels.prodListViewModel.forceLoad = true;
                                     app.back();
                                 };
                                 app.viewModels.prodAddReviewViewModel.set("selectedProduct", e.dataItem);
@@ -220,7 +217,6 @@
             lineAdded = function () {
                 app.mobileApp.hideLoading();
                 app.updateShoppingCartQty();
-                app.viewModels.prodListViewModel.forceLoad = true;
                 app.viewModels.prodListViewModel.onBeforeShow();
                 VibrationController.vibrate();
             };

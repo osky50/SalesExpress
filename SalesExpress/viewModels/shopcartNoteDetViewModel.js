@@ -7,7 +7,6 @@
         noteIdList: [],
         origRow: {},
         resourceName: 'Shopping Cart Notes',
-        forceLoad: false,
         backButton: true,
         onBeforeShow: function () {
             kendo.bind($('#shopcartNotesHeader'), app.viewModels.shopcartDetViewModel.shopCart, kendo.mobile.ui);
@@ -109,7 +108,6 @@
                         return;
                     }
                     // Executing call back as everything finshed successfully
-                    app.viewModels.shopcartDetViewModel.forceLoad = true; //for loading again the shopping cart
                     app.back();
                 }
             });
