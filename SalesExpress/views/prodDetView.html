@@ -15,16 +15,17 @@
         </h4>
         <ul id="prodNotes" style="margin:0" data-role="listview" data-style="inset"></ul>
     </div>
-    <ul data-role="listview" data-style="inset" class="header">
-        <li>
-            <label>Images</label>
-        </li>
-    </ul>
-    <div class="images-info gallery">
-        <ul id="prodDetailImageView" data-style="inset" data-role="listview"></ul>
-    </div>
-    <div class="images-placeholder placeholder">
-        <ul data-role="listview" data-style="inset">
+    <div data-role="collapsible" data-animation="false" class="fa padding-0"
+         data-icon-position="right" data-expand-icon="fa-arrow-circle-down"
+         data-collapse-icon="fa-arrow-circle-up" 
+         data-expand="app.viewModels.prodDetViewModel.imagesCollapsibleExpand">
+        <h4>
+            Images
+        </h4>
+        <ul id="prodDetailImageView" style="margin:0" data-style="inset" data-role="listview"
+            class="images-info"></ul>
+        <ul data-role="listview" style="margin:0" data-style="inset"
+            class="images-placeholder placeholder">
             <li>
                 <label>No Images available...</label>
             </li>
@@ -103,7 +104,7 @@
     </script>
     <script type="text/x-kendo-template" id="prodDetImageTemplate">
         <a data-role="button" style="height:100%; width:100%;padding:0;margin:0;border:0">
-            <img src="#: FileUrl #" alt="#: FileDesc#" style="width:100%; height:100%" 
+            <img src="#: FileUrl #" alt="#: FileDesc#" style="width:100%; height:100%"
                  onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'">
         </a>
     </script>

@@ -215,6 +215,9 @@ label {
     width: 20%;
     float: left;
 }
+#prodDetailImageView li{
+    border-width: 0px !important;
+}
 
 #prodDetailImageView img {
     width: 100%;
@@ -308,6 +311,9 @@ ul.header {
 
 .padding-0, .padding-0 .km-collapsible-content {
     padding: 0 !important;
+}
+.km-collapsible-content{
+    border-width: 1px;
 }
 
 .item-details {

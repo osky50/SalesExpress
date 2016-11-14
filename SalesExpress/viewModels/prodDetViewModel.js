@@ -311,11 +311,14 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
+        imagesCollapsibleExpand: function(){
+            setTimeout(app.viewModels.prodDetViewModel.resizeProductImages, 100);
+        },
         resizeProductImages: function () {
             $('#prodDetailImageView li img').each(function (index, item) {
                 $(item).height($(item).width());
             });
-        },        
+        },
     });
 
     parent.prodDetViewModel = prodDetViewModel;

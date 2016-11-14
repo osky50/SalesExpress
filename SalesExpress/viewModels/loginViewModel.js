@@ -69,6 +69,7 @@
             });
         },
         login: function (e) {
+            app.autoLogin = false;
             if (e) {
                 var form = e.button.closest('form');
                 var validator = $(form).kendoValidator({
@@ -137,8 +138,7 @@
                                         else if (paramData.Param_Value === 'no')
                                             paramData.Param_Value = false;
                                         localStorage.setItem(paramDefinition.name, paramData.Param_Value);
-                                    }                                    
-                                    app.autoLogin = false;
+                                    }                                                                        
                                     app.viewModels.loginViewModel.startApplication();
                                 });
                                 paramsPromise.fail(function (jsdo, result, details) {
