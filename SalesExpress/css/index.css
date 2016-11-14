@@ -212,8 +212,7 @@ label {
 }
 
 #prodDetailImageView li {
-    width: 4em;
-    height: 4em;
+    width: 20%;
     float: left;
 }
 

@@ -12,6 +12,7 @@
         resourceName: 'Product Details',
         backButton: true,
         onBeforeShow: function () {
+            $(window).on('resize', app.viewModels.prodDetViewModel.resizeProductImages);
             var prodDetListView = $("#prodDetailView").data("kendoMobileListView");
             if (prodDetListView === undefined) { //extra protection in case onInit have not been fired yet
                 app.viewModels.prodDetViewModel.onInit(this);
@@ -23,6 +24,9 @@
             if (app.viewModels.prodDetViewModel.resourceName !== undefined) {
                 app.changeTitle(app.viewModels.prodDetViewModel.resourceName);
             }
+        },
+        onAfterShow: function () {
+            app.viewModels.prodDetViewModel.resizeProductImages();
         },
         onInit: function (e) {
             try {
@@ -154,6 +158,9 @@
             catch (ex) {
                 alert("Error in initproductDetView: " + ex);
             }
+        },
+        onHide: function () {
+            $(window).off('resize', app.viewModels.prodDetViewModel.resizeProductImages);
         },
         addLineToCart: function (qty) {
             app.mobileApp.showLoading();
@@ -304,6 +311,11 @@
                 createDataSourceErrorFn({ errorObject: ex });
             }
         },
+        resizeProductImages: function () {
+            $('#prodDetailImageView li img').each(function (index, item) {
+                $(item).height($(item).width());
+            });
+        },        
     });
 
     parent.prodDetViewModel = prodDetViewModel;

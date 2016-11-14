@@ -185,7 +185,6 @@
     <Content Include="scripts\jplot\jquery.jqplot.min.js">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="scripts\jqm-spinbox.js" />
     <Content Include="scripts\scriptsUtils.js" />
     <Content Include="scripts\swipebox\ios-orientationchange-fix.js" />
     <Content Include="scripts\jquery.rateit.min.js" />

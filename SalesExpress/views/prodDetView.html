@@ -2,6 +2,7 @@
      data-model="app.viewModels.prodDetViewModel"
      data-init="app.viewModels.prodDetViewModel.onInit"
      data-show="app.viewModels.prodDetViewModel.onBeforeShow"
+     data-after-show="app.viewModels.prodDetViewModel.onAfterShow"
      data-hide="app.viewModels.prodDetViewModel.onHide"
      data-transition="fade">
     <ul id="prodDetailView"
@@ -102,7 +103,8 @@
     </script>
     <script type="text/x-kendo-template" id="prodDetImageTemplate">
         <a data-role="button" style="height:100%; width:100%;padding:0;margin:0;border:0">
-            <img src="#: FileUrl #" alt="#: FileDesc#" style="width:100%; height:100%" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'">
+            <img src="#: FileUrl #" alt="#: FileDesc#" style="width:100%; height:100%" 
+                 onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'">
         </a>
     </script>
     <script type="text/x-kendo-template" id="prodDetLocTemplate">
