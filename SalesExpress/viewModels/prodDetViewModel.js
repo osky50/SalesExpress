@@ -207,7 +207,6 @@
             this.prodImageDataSource = {
                 transport: {
                     read: function (options) {
-                        debugger;
                         var prodImageList = app.viewModels.prodDetViewModel.prodImageList || [];
                         //removing placeholder images (noimage.jpg)
                         prodImageList = prodImageList.filter(function (image) {

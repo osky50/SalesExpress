@@ -20,7 +20,7 @@
         <div style="text-align:right; padding-right:.7em">
             <button class="fa" data-role="button" data-icon="fa-plus" data-bind="click: addNotes">Add Note</button>
         </div>
-        <div data-role="collapsible" data-animation="false" class="fa padding-0 shopcart-notes-collapsible" 
+        <div data-role="collapsible" data-animation="false" class="fa padding-0 shopcart-notes-collapsible"
              id="shopcart-notes-collapsible"
              data-icon-position="right" data-expand-icon="fa-arrow-circle-down"
              data-collapse-icon="fa-arrow-circle-up">
@@ -56,6 +56,13 @@
     </div>
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="shopcartHeaderTemplate">
+        <div style="background-color:\\#f4f4f4;margin:-9px;padding:9px;">
+            <div><b>Customer: </b>#: CustId #</div>
+            <div><b>Cust. PO: </b>#: CustPO #</div>
+            <div><b>Carrier: </b>#: CarrierId #</div>
+            <div><b>Request Date: </b>#: RequestDate #</div>
+        </div>
+        <br />
         <div class="ui-grid-a ui-responsive">
             <div class="ui-block-a">
                 <div>
@@ -128,7 +135,7 @@
     </script>
     <script type="text/x-kendo-template" id="shopcartNoteTemplate">
         <form>
-            <div><b>NoteId: </b>#: NoteId #</div>
+            <div><b>Note Id: </b>#: NoteId #</div>
             <div><b>Note: </b>#: NoteText #</div>
             <div class="float-right">
                 <button type="button" data-role="button" name="update-note" class="fa" data-icon="fa-pencil">Update</button>
@@ -146,7 +153,7 @@
                 <button data-role="button" name="decrement-qty" data-style="notext"
                         class="fa spin-button spin-button-left" data-icon="fa-minus"></button>
                 <input type="number" min="0.0000001" name="Quantity" required class="input-qty select-on-focus border-1 relative width-50"
-                       value="#: OrderQty #" data-last-value="#: OrderQty #" data-original-value="#: OrderQty #" data-original-afs="#: AFS #"/>
+                       value="#: OrderQty #" data-last-value="#: OrderQty #" data-original-value="#: OrderQty #" data-original-afs="#: AFS #" />
                 <button data-role="button" name="increment-qty" data-style="notext"
                         class="fa spin-button spin-button-right" data-icon="fa-plus" style="margin-right:15px"></button>
                 <button type="button" data-role="button" name="update-line" disabled data-afs="#: AFS #" data-style="notext" class="fa update-line" data-icon="fa-floppy-o"></button>
