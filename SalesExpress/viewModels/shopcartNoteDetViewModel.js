@@ -31,7 +31,6 @@
             }
         },
         getNoteIds: function () {
-
             app.jsdoSettings.resourceName = 'RestGetRecord';
             var getNoteIdsJSDOModel = new progress.data.JSDO({
                 name: app.jsdoSettings.resourceName,
@@ -68,6 +67,7 @@
 
         },
         saveNotes: function (e) {
+            app.mobileApp.showLoading();
             app.jsdoSettings.resourceName = 'dsOrder';
             var updateNotesJSDOModel = new progress.data.JSDO({
                 name: app.jsdoSettings.resourceName,

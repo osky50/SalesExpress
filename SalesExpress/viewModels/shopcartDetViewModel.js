@@ -29,6 +29,7 @@
                 app.viewModels.shopcartDetViewModel.onInit(this);
             } else {
                 shopcartHeader.dataSource.read();
+                $("#shopcart-notes-collapsible").data("kendoMobileCollapsible").collapse();
             }
             // Set list title to resource name
             if (app.viewModels.shopcartDetViewModel.resourceName !== undefined) {
@@ -72,7 +73,7 @@
                             else if (button.name == 'delete-note') {
                                 var callback = function (index) {
                                     if (index == 1)
-                                        app.viewModels.shopcartDetViewModel.deleteNote();
+                                        app.viewModels.shopcartDetViewModel.deleteNote(e.dataItem);
                                 }
                                 MessageDialogController.showConfirm("Are you sure you want to delete the note?", callback, "Yes,No", "Delete Note");
                             }
@@ -333,8 +334,53 @@
             app.viewModels.shopcartDetViewModel.set("selectedNote", {});
             app.navigate('views/shopcartNoteDetView.html');
         },
-        deleteNote: function () {
-            alert('delete');
+        deleteNote: function (note) {
+            app.mobileApp.showLoading();
+            app.jsdoSettings.resourceName = 'dsOrder';
+            var deleteNotesJSDOModel = new progress.data.JSDO({
+                name: app.jsdoSettings.resourceName,
+                autoFill: false,
+            });
+            var data = {
+                "dsOrder": {
+                    "eOrder": [
+                      {
+                          "ControlEnt": app.viewModels.shopcartDetViewModel.shopCart.ControlEnt,
+                          "TransNo": app.viewModels.shopcartDetViewModel.selectedNote.TransNo,
+                          "TransCode": app.viewModels.shopcartDetViewModel.selectedNote.TransCode,
+                          "eOrderNote": [
+                            {
+                                "TransNo": app.viewModels.shopcartDetViewModel.selectedNote.TransNo,
+                                "TransCode": app.viewModels.shopcartDetViewModel.selectedNote.TransCode,
+                                "NoteId": app.viewModels.shopcartDetViewModel.selectedNote.NoteId,
+                                "Rowid": app.viewModels.shopcartDetViewModel.selectedNote.Rowid,
+                                "CheckSum": app.viewModels.shopcartDetViewModel.selectedNote.Checksum,
+                            }
+                          ]
+                      }
+                    ]
+                }
+            };
+            var promise = deleteNotesJSDOModel.invoke('DeleteNotes', data);
+            promise.done(function (session, result, details) {
+                if (details.success == true) {
+                    var errors = false;
+                    try {
+                        errors = app.getErrors(details.response.dsOrder.dsOrder.restResult);
+                    } catch (e) {
+                        alert("Error", e)
+                    }
+                    if (errors) {
+                        app.mobileApp.hideLoading();
+                        return;
+                    }
+                    app.viewModels.shopcartDetViewModel.onShow();
+                }
+            });
+            promise.fail(function () {
+                app.mobileApp.hideLoading();
+                MessageDialogController.showMessage('Deleting the note failed', "Error");
+            });
         },
         validateLineQty: function (input) {
             //analizing "enabledBackOrders" parameter

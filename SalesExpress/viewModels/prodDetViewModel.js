@@ -18,8 +18,9 @@
                 app.viewModels.prodDetViewModel.onInit(this);
             } else {
                 prodDetListView.dataSource.read();
+                $("#prod-notes-collapsible").data("kendoMobileCollapsible").collapse();
+                $("#prod-images-collapsible").data("kendoMobileCollapsible").collapse();
             }
-
             // Set list title to resource name
             if (app.viewModels.prodDetViewModel.resourceName !== undefined) {
                 app.changeTitle(app.viewModels.prodDetViewModel.resourceName);
@@ -206,11 +207,20 @@
             this.prodImageDataSource = {
                 transport: {
                     read: function (options) {
+                        debugger;
                         var prodImageList = app.viewModels.prodDetViewModel.prodImageList || [];
+                        //removing placeholder images (noimage.jpg)
+                        prodImageList = prodImageList.filter(function (image) {
+                            var pathArr = image.FileUrl.split('/');
+                            var fileName = pathArr[pathArr.length - 1];
+                            return fileName !== 'noimage.jpg';
+                        });
                         if (prodImageList.length) {
+                            $('.prod-images-collapsible').show();
                             $('.images-info').show();
                             $('.images-placeholder').hide();
                         } else {
+                            $('.prod-images-collapsible').hide();
                             $('.images-info').hide();
                             $('.images-placeholder').show();
                         }
