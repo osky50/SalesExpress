@@ -8,7 +8,7 @@
      data-model="app.viewModels.prodListViewModel">
     <button data-role="button" class="fa scan-button" data-bind="click: scan" data-icon="fa-barcode">Scan</button>
     <ul id="productListView"
-        data-role="listview" data-style="inset"></ul>
+        data-role="listview" data-style="inset" class="ui-responsive"></ul>
 
     <div style="text-align:center">
         <button data-role="button" id="loadMore" data-bind="click: loadMore, visible: moreRecords">Load More</button>
@@ -16,54 +16,51 @@
 
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="prodTemplate">
-        <div class="prod-list-item-image"><img src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" /></div>
-        <div class="prod-list-item-details">
-            <div style="width:100%">
-                <div class="float-left" style="padding-right: 70px;">#: description #</div>
-                <button type="button" data-role="button" name="details" class="fa item-details link float-right" data-icon="fa-info-circle">Details</button>
-            </div>
-            <div class="ui-grid-a ui-responsive float-left" style="width:100%">
-                <div class="ui-block-a">
-                    <label>Report Syn.: </label>#: ReportSyn #
-                </div>
-                <div class="ui-block-b">
-                    <label>Manuf. Syn.: </label>#: ManSyn #
-                </div>
-            </div>
-            <div class="float-left" style="width:100%">
-                <label>Price: </label>$#: Price #&nbsp;#: CurrencyId #
-            </div>
-            <div class="ui-grid-a ui-responsive float-left" style="width:100%">
-                <div class="ui-block-a">
-                    <label>Default Loc. AFS: </label> #: DefaultAfs # (#: UnitId #)
-                </div>
-                <div class="ui-block-b">
-                    <label>All Loc. AFS: </label> #: Afs # (#: UnitId #)
-                </div>
-            </div>
-            <div style="width:100%; padding-top:5px" data-rateit-readonly="true" rating-value="#: AvgRating #" class="float-left prod-list-rateit a" data-rateit-starwidth="16" data-rateit-starheight="16" step="1"></div>
-            <div class="float-left" style="width:100%">
-                <div style="margin-top:3px" class="font-smaller rateit-description float-left">#: AvgRating # out of 5 stars&nbsp;|&nbsp;</div>
-                <button data-role="button" name="reviews-link" class="font-smaller link rateit-description">#: TotalReview # customers reviews</button>
-            </div>
-            <div class="float-left" style="width:100%"><button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button></div>
-            <form>
-                <div class="float-left">
-                    <button data-role="button" name="decrement-qty" style="display: #: BuyDisplay #" data-style="notext"
-                            class="fa spin-button spin-button-left" data-icon="fa-minus"></button>
-                    <input type="number" min="0.0000001" required style="display: #: BuyDisplay #" class="select-on-focus width-50 border-1 relative" name="Quantity"
-                           value="1" />
-                    <button data-role="button" name="increment-qty" style="display: #: BuyDisplay #" data-style="notext"
-                            class="fa spin-button spin-button-right" data-icon="fa-plus" style="margin-right:15px"></button>
-                    <div style="display: #: ShopCartIndicatorDisplay #; color:darkgreen; margin-left: 10px; margin-top: 8px;" class="float-right">
-                        <div class="fa link-disable" style="display:inline-block" data-role="button" data-icon="fa-shopping-cart">
-                            <span>(#: CartQty #)</span>
-                        </div>
-                    </div>
-                    <button type="button" data-role="button" style="display: #: BuyDisplay #" name="addToCart" class="fa" data-icon="fa-shopping-cart">Buy</button>
-                </div>
-            </form>
+        <img style="width: 50%;" src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" />
+        <div style="width:100%">
+            <div>#: description #</div>
+            <button type="button" data-role="button" name="details" class="fa item-details link float-right" data-icon="fa-info-circle">Details</button>
         </div>
+        <div>
+            <label>Report Syn.: </label>#: ReportSyn #
+        </div>
+        <div>
+            <label>Manuf. Syn.: </label>#: ManSyn #
+        </div>
+        <div>
+            <label>Price: </label>$#: Price #&nbsp;#: CurrencyId #
+        </div>
+        <div>
+            <label>Default Loc. AFS: </label> #: DefaultAfs # (#: UnitId #)
+        </div>
+        <div>
+            <label>All Loc. AFS: </label> #: Afs # (#: UnitId #)
+        </div>
+        <div style="width:100%; padding-top:5px" data-rateit-readonly="true" rating-value="#: AvgRating #" class="float-left prod-list-rateit a" data-rateit-starwidth="16" data-rateit-starheight="16" step="1"></div>
+        <div class="float-left" style="width:100%">
+            <div style="margin-top:3px" class="font-smaller rateit-description float-left">#: AvgRating # out of 5 stars&nbsp;|&nbsp;</div>
+            <button data-role="button" name="reviews-link" class="font-smaller link rateit-description">#: TotalReview # customers reviews</button>
+        </div>
+        <div class="float-left" style="width:100%"><button data-role="button" name="create-review-link" class="font-smaller link">Create you own review</button></div>
+        <form>
+            <div class="float-left">
+                <button data-role="button" name="decrement-qty" style="display: #: BuyDisplay #" data-style="notext"
+                        class="fa spin-button spin-button-left" data-icon="fa-minus"></button>
+                <input type="number" min="0.0000001" required style="display: #: BuyDisplay #" class="select-on-focus width-50 border-1 relative" name="Quantity"
+                       value="1" />
+                <button data-role="button" name="increment-qty" style="display: #: BuyDisplay #" data-style="notext"
+                        class="fa spin-button spin-button-right" data-icon="fa-plus" style="margin-right:15px"></button>
+                <div style="display: #: ShopCartIndicatorDisplay #; color:darkgreen; margin-left: 10px; margin-top: 8px;" class="float-right">
+                    <div class="fa link-disable" style="display:inline-block" data-role="button" data-icon="fa-shopping-cart">
+                        <span>(#: CartQty #)</span>
+                    </div>
+                </div>
+                <button type="button" data-role="button" style="margin-bottom:10px;display: #: BuyDisplay #" name="addToCart" class="fa"
+                        data-icon="fa-shopping-cart">
+                    Buy
+                </button>
+            </div>
+        </form>
     </script>
 
 </div>

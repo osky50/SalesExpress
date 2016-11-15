@@ -133,15 +133,6 @@ h1 {
     -webkit-animation: fade 3000ms infinite;
 }
 
-.prod-list-item-image {
-    width: 20%;
-    float: left;
-}
-
-    .prod-list-item-image img {
-        width: 100%;
-    }
-
 .prod-list-item-details {
     padding-left: 20%;
     margin-left: 8px;
@@ -159,9 +150,11 @@ h1 {
 .align-center {
     text-align: center;
 }
+
 .amount-label-width {
     width: 140px !important;
 }
+
 .amount-width {
     width: 110px !important;
 }
@@ -196,7 +189,7 @@ label {
 
     .currency:before {
         content: "$";
-        margin-right:-3px;
+        margin-right: -3px;
     }
 
 .k-invalid-msg {
@@ -215,7 +208,8 @@ label {
     width: 20%;
     float: left;
 }
-#prodDetailImageView li{
+
+#prodDetailImageView li {
     border-width: 0px !important;
 }
 
@@ -291,7 +285,7 @@ ul.header {
     width: 75px;
     margin-right: 15px;
     margin-top: 14px;
-    z-index:1000;
+    z-index: 1000;
 }
 
     .scan-button ~ .km-listview-wrapper .km-filter-form {
@@ -312,7 +306,8 @@ ul.header {
 .padding-0, .padding-0 .km-collapsible-content {
     padding: 0 !important;
 }
-.km-collapsible-content{
+
+.km-collapsible-content {
     border-width: 1px;
 }
 
@@ -332,25 +327,41 @@ input::-webkit-inner-spin-button {
 .spin-button {
     padding: .5em 3px .5em 5px !important;
 }
-.spin-button-left{
+
+.spin-button-left {
     margin-right: -3px !important;
 }
-.spin-button-right{
+
+.spin-button-right {
     margin-left: -3px !important;
 }
-.km-view-title{
-    font-size: 1em; 
+
+.km-view-title {
+    font-size: 1em;
     font-weight: bold;
 }
+
 form .ui-grid-a.ui-responsive .ui-block-a label,
-form .ui-grid-a.ui-responsive .ui-block-b label{
+form .ui-grid-a.ui-responsive .ui-block-b label {
     float: none;
-    margin-top:auto;
-}
-form .ui-grid-a.ui-responsive .ui-block-a input,
-form .ui-grid-a.ui-responsive .ui-block-b input{
-    position:relative;
-    width:100%;
-    margin-top:auto;
+    margin-top: auto;
 }
 
+form .ui-grid-a.ui-responsive .ui-block-a input,
+form .ui-grid-a.ui-responsive .ui-block-b input {
+    position: relative;
+    width: 100%;
+    margin-top: auto;
+}
+
+@media (min-width: 500px) {
+    /* CSS that should be displayed if width is equal to or less than 800px goes here */
+    ul.ui-responsive li {
+        width: 50% !important;
+        float: left !important;
+        padding-bottom: 10000px;
+        margin-bottom: -10000px;
+        border-color: rgba(0,0,0,0.1) !important;
+        border-width: 1px 1px 1px 1px !important;
+    }
+}

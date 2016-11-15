@@ -57,10 +57,23 @@
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="shopcartHeaderTemplate">
         <div style="background-color:\\#f4f4f4;margin:-9px;padding:9px;">
-            <div><b>Customer: </b>#: CustId #</div>
-            <div><b>Cust. PO: </b>#: CustPO #</div>
-            <div><b>Carrier: </b>#: CarrierId #</div>
-            <div><b>Request Date: </b>#: RequestDate #</div>
+            <div>
+                <b>Customer: </b>#: CustId #
+            </div>
+            <div>
+                <b>Cust. PO: </b>#: CustPO #
+            </div>
+            <div>
+                <b>Carrier: </b>#: CarrierId #
+            </div>
+            <div style="display:table; width:100%">
+                <div style="display:table-cell; vertical-align:top">
+                    <b>Request Date: </b>#: RequestDate #
+                </div>
+                <div style="display:table-cell;width:80px">
+                    <button type="button" data-role="button" name="update-shopcart" class="fa float-right" data-icon="fa-pencil">Edit</button>
+                </div>
+            </div>
         </div>
         <br />
         <div class="ui-grid-a ui-responsive">
@@ -138,7 +151,7 @@
             <div><b>Note Id: </b>#: NoteId #</div>
             <div><b>Note: </b>#: NoteText #</div>
             <div class="float-right">
-                <button type="button" data-role="button" name="update-note" class="fa" data-icon="fa-pencil">Update</button>
+                <button type="button" data-role="button" name="update-note" class="fa" data-icon="fa-pencil">Edit</button>
                 <button type="button" data-role="button" name="delete-note" class="fa" data-icon="fa-trash-o">Remove</button>
             </div>
         </form>
