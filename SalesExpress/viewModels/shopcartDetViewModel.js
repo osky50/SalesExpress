@@ -52,6 +52,16 @@
                     endlessScroll: false,
                     autoBind: false,
                     template: kendo.template($("#shopcartHeaderTemplate").html()),
+                    click: function (e) {
+                        if (!e.button)
+                            return;
+                        try {
+                            var button = e.button.element[0];
+                            if (button.name == 'update-shopcart') {
+                                app.navigate('views/shopcartHeaderEditView.html');
+                            }
+                        } catch (e) { }
+                    }
                 });
                 $("#shopcartNotes").kendoMobileListView({
                     dataSource: app.viewModels.shopcartDetViewModel.notesDataSource,
