@@ -53,9 +53,11 @@
                     // Executing call back as everything finshed successfully
                     // Parsing response
                     var noteIds = [];
-                    details.response.ProDataSet["T_note-type"].forEach(function (nt) {
-                        noteIds.push(nt["Note-ID"] + " - " + nt.Description);
-                    });
+                    try {
+                        details.response.ProDataSet["T_note-type"].forEach(function (nt) {
+                            noteIds.push(nt["Note-ID"] + " - " + nt.Description);
+                        });
+                    } catch (e) {}
                     app.viewModels.shopcartNoteDetViewModel.set("noteIdList", noteIds);
                     return noteIds;
                 }

@@ -17,7 +17,7 @@
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="prodTemplate">
         <div style="width: 100%">
-            <img style="height:100px" src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" />
+            <img style="height:100px" src="#: ImgUrl #" onerror="this.src = app.imageErrorUrl" />
         </div>
         <div style="width:100%">
             <div>#: description #</div>
@@ -27,7 +27,7 @@
             <label>Report Syn.: </label>&nbsp;#: ReportSyn #
         </div>
         <div>
-            <label>Manuf. Syn.: </label>&nbsp;#: ManSyn #
+            <label>Manuf. Syn.: </label>&nbsp;#: (ManSyn == '') ? '--' : ManSyn #
         </div>
         <div>
             <label>Price: </label>&nbsp;$#: Price #&nbsp;#: CurrencyId #

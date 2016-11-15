@@ -95,7 +95,7 @@
                             var rparam = JSON.stringify(options.data);
                             var promise = me.jsdoModel.read(rparam);
                             promise.done(function (session, result, details) {
-                                var currentCustList = details.response.dsCust.eCustomer;
+                                var currentCustList = details.response.dsCust.eCustomer || [];
                                 currentCustList.forEach(function (eCustomer) {
                                     eCustomer['Cust-Id'] = eCustomer['Cust-Id'] || '<not specified>';
                                 });

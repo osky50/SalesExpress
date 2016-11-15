@@ -96,12 +96,17 @@
                                 });
                             promise.done(function (session, result, details) {
                                 //formatting the customer address
-                                details.response.dsCust.dsCust.eCustomer.forEach(function (eCustomer) {
-                                    eCustomer.FormattedAddress = getFormattedAddress(eCustomer);
-                                });
+                                if (details.response.dsCust.dsCust.eCustomer) {
+                                    details.response.dsCust.dsCust.eCustomer.forEach(function (eCustomer) {
+                                        eCustomer.FormattedAddress = getFormattedAddress(eCustomer);
+                                    });
+                                    options.success(details.response.dsCust.dsCust.eCustomer);
+                                } else {
+                                    options.success([]);
+                                }
                                 var customerPerfData = $("#customerPerfData").data("kendoMobileListView");
                                 customerPerfData.dataSource.read();
-                                options.success(details.response.dsCust.dsCust.eCustomer);
+                                
                             });
                             promise.fail(function () {
                                 options.success([]);
