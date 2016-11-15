@@ -282,14 +282,14 @@ ul.header {
 
 .scan-button {
     float: right;
-    width: 75px;
+    width: 80px;
     margin-right: 15px;
     margin-top: 14px;
     z-index: 1000;
 }
 
     .scan-button ~ .km-listview-wrapper .km-filter-form {
-        padding-right: 80px !important;
+        padding-right: 95px !important;
     }
 
 .km-collapsible {
@@ -341,11 +341,11 @@ input::-webkit-inner-spin-button {
     font-weight: bold;
 }
 
-form .ui-grid-a.ui-responsive .ui-block-a label,
+/*form .ui-grid-a.ui-responsive .ui-block-a label,
 form .ui-grid-a.ui-responsive .ui-block-b label {
     float: none;
     margin-top: auto;
-}
+}*/
 
 form .ui-grid-a.ui-responsive .ui-block-a input,
 form .ui-grid-a.ui-responsive .ui-block-b input {
