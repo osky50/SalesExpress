@@ -137,6 +137,8 @@
                                         var enableBackOrder = localStorage.getItem('enabledBackOrder').toString();
                                         eProduct.BuyDisplay = eProduct.DefaultAfs == 0 && localStorage.getItem('enabledBackOrder') == 'false' ? 'none' : 'visible';
                                         eProduct.ShopCartIndicatorDisplay = eProduct.CartQty > 0 ? 'visible' : 'none';
+                                        if (eProduct.Afs == 5 || eProduct.Afs == '5')
+                                            eProduct.description = eProduct.description + 'pepe va a la escuela';
                                     });
                                 } catch (e) {
 

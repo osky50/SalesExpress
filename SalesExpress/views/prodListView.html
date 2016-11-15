@@ -16,10 +16,12 @@
 
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="prodTemplate">
-        <img style="width: 50%;" src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" />
+        <div style="width: 100%">
+            <img style="height:100px" src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" />
+        </div>
         <div style="width:100%">
             <div>#: description #</div>
-            <button type="button" data-role="button" name="details" class="fa item-details link float-right" data-icon="fa-info-circle">Details</button>
+            <button type="button" data-role="button" name="details" class="fa item-details link" data-icon="fa-info-circle">Details</button>
         </div>
         <div>
             <label>Report Syn.: </label>#: ReportSyn #
