@@ -17,26 +17,26 @@
     <div id="pager" class="k-pager-wrap"></div>
     <script type="text/x-kendo-template" id="prodTemplate">
         <div style="width: 100%">
-            <img style="height:100px" src="#: ImgUrl #" onerror="this.src = app.imageErrorUrl" />
+            <img style="height:100px" src="#: ImgUrl #" onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'" />
         </div>
         <div style="width:100%">
             <div>#: description #</div>
             <button type="button" data-role="button" name="details" class="fa item-details link" data-icon="fa-info-circle">Details</button>
         </div>
         <div>
-            <label>Report Syn.: </label>&nbsp;#: ReportSyn #
+            <div class="label">Report Syn.: </div>#: ReportSyn #
         </div>
         <div>
-            <label>Manuf. Syn.: </label>&nbsp;#: (ManSyn == '') ? '--' : ManSyn #
+            <div class="label">Manuf. Syn.: </div>#: ManSyn #
         </div>
         <div>
-            <label>Price: </label>&nbsp;$#: Price #&nbsp;#: CurrencyId #
+            <div class="label">Price: </div>$#: Price #&nbsp;#: CurrencyId #
         </div>
         <div>
-            <label>Default Loc. AFS: </label>&nbsp;#: DefaultAfs # (#: UnitId #)
+            <div class="label">Default Loc. AFS: </div>#: DefaultAfs # (#: UnitId #)
         </div>
         <div>
-            <label>All Loc. AFS: </label>&nbsp;#: Afs # (#: UnitId #)
+            <div class="label">All Loc. AFS: </div>#: Afs # (#: UnitId #)
         </div>
         <div style="width:100%; padding-top:5px" data-rateit-readonly="true" rating-value="#: AvgRating #" class="float-left prod-list-rateit a" data-rateit-starwidth="16" data-rateit-starheight="16" step="1"></div>
         <div class="float-left" style="width:100%">

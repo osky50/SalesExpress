@@ -177,6 +177,8 @@ label {
 
 .label {
     font-weight: bold;
+    display:inline-block;
+    margin-right: 5px;
 }
 
 .inline {
@@ -187,10 +189,10 @@ label {
     text-align: right;
 }
 
-    .currency:before {
-        content: "$";
-        margin-right: -3px;
-    }
+.currency:before {
+    content: "$";
+    margin-right: -3px;
+}
 
 .k-invalid-msg {
     color: red;
