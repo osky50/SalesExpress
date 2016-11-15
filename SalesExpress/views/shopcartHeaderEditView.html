@@ -5,11 +5,6 @@
      data-show="app.viewModels.shopcartHeaderEditViewModel.onShow"
      data-model="app.viewModels.shopcartHeaderEditViewModel">
     <div>
-        <ul data-role="listview" data-style="inset" class="header">
-            <li>
-                <label>Note Details</label>
-            </li>
-        </ul>
         <div>
             <form>
                 <ul data-role="listview" data-style="inset" id="shopCartHeaderDetails">
@@ -25,17 +20,17 @@
                             <input type="text" data-bind="value: custPO" class="border-1" />
                         </label>
                     </li>
-                    <li style="height:39px">
+                    <li style="height:40px">
                         <label>
                             Note ID:
                             <select id="dropdownbound" class="border-1"
                                     data-role="dropdownlist" data-bind="source: carrierIdList, value: carrierId"></select>
                         </label>
                     </li>
-                    <li>
+                    <li style="height:45px">
                         <label>
                             Request Date:
-                            <input type="date" data-bind="value: requestDate" />
+                            <input type="date" data-bind="value: requestDate" class="border-1"/>
                         </label>
                     </li>
                     <li>

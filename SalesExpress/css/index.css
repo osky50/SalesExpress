@@ -356,6 +356,10 @@ form .ui-grid-a.ui-responsive .ui-block-b input {
     margin-top: auto;
 }
 
+form > .km-listview-wrapper li {
+    min-height: 50px;
+}
+
 @media (min-width: 500px) {
     /* CSS that should be displayed if width is equal to or less than 800px goes here */
     ul.ui-responsive li {
