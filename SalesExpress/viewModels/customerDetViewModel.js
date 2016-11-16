@@ -160,6 +160,18 @@
         getDirections: function () {
             app.navigate('views/customerDetMapView.html');
         },
+        GetCustStatus: function (status) {
+            var ostatus = status;
+            switch (status.toUpperCase()) {
+                case "A":
+                    ostatus = "Active";
+                    break;
+                case "I":
+                    ostatus = "Inactive";
+                    break;
+            }
+            return ostatus;
+        },
         createPerfGraph: function () {
             //creating the graph
             try {

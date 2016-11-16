@@ -17,14 +17,28 @@
     <script type="text/x-kendo-template" id="customerListTemplate">
         <div class="ui-grid-b ui-responsive">
             <div class="ui-block-a">
-                <label>Customer ID: </label>#: Cust_Id #
+                <div class="label">Customer ID: </div>#: Cust_Id #
             </div>
             <div class="ui-block-b">
-                <label>Search Name: </label>#: SearchName #
+                <div class="label">Search Name: </div>#: SearchName #
             </div>
             <div class="ui-block-c">
                 <button class="fa float-right" type="button" data-role="button" 
                         name="change-customer" data-icon="fa-check">Change</button>
+            </div>
+        </div>
+        <div class="ui-grid-b ui-responsive">
+            <div class="ui-block-a">
+                <div class="label">Full Name: </div>#: Name #
+            </div>
+            <div class="ui-block-b">
+                <label>Address: </label>
+                <button class="link" style="text-align:left" type="button" data-role="button" name="directions">
+                    #: FormattedAddress #
+                </button>
+
+            </div>
+            <div class="ui-block-c">
             </div>
         </div>
         
