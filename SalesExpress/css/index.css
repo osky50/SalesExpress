@@ -358,6 +358,7 @@ form .ui-grid-a.ui-responsive .ui-block-b input {
 
 form > .km-listview-wrapper li {
     min-height: 50px;
+    padding-right:5px;
 }
 
 @media (min-width: 500px) {

@@ -11,7 +11,6 @@
         resourceName: 'Edit Shopping Cart',
         backButton: true,
         onShow: function () {
-            debugger;
             app.viewModels.shopcartHeaderEditViewModel.rowId = app.viewModels.shopcartDetViewModel.shopCart.Rowid || '';
             app.viewModels.shopcartHeaderEditViewModel.checksum = app.viewModels.shopcartDetViewModel.shopCart.Checksum || '';
             app.viewModels.shopcartHeaderEditViewModel.custId = app.viewModels.shopcartDetViewModel.shopCart.CustId;
@@ -38,7 +37,6 @@
             var rparam = { "pTableName": "carrier" };
             var promise = getCarrierListJSDOModel.read(rparam);
             promise.done(function (session, result, details) {
-                debugger;
                 if (details.success == true) {
                     var errors = false;
                     try {
@@ -55,7 +53,7 @@
                     var carrierIdList = [];
                     try {
                         details.response.ProDataSet["T_carrier"].forEach(function (carrier) {
-                            carrierIdList.push(carrier["Carrier-ID"] + " - " + carrier.Description);
+                            carrierIdList.push(carrier["Carrier-ID"]);
                         });
                     } catch (e) { }
                     app.viewModels.shopcartHeaderEditViewModel.set("carrierIdList", carrierIdList);
@@ -68,40 +66,42 @@
             });
 
         },
-        saveNotes: function (e) {
+        saveHeader: function (e) {
+            debugger;
             app.mobileApp.showLoading();
-            app.jsdoSettings.resourceName = 'dsOrder';
-            var updateNotesJSDOModel = new progress.data.JSDO({
+            app.jsdoSettings.resourceName = 'RestCRUDRecord';
+            var updateHeaderJSDOModel = new progress.data.JSDO({
                 name: app.jsdoSettings.resourceName,
                 autoFill: false,
             });
             var data = {
-                "dsOrder": {
-                    "eOrder": [
-                      {
-                          "ControlEnt": app.viewModels.shopcartDetViewModel.shopCart.ControlEnt,
-                          "TransNo": app.viewModels.shopcartDetViewModel.shopCart.TransNo,
-                          "TransCode": app.viewModels.shopcartDetViewModel.shopCart.TransCode,
-                          "eOrderNote": [
-                            {
-                                "TransNo": app.viewModels.shopcartDetViewModel.shopCart.TransNo,
-                                "TransCode": app.viewModels.shopcartDetViewModel.shopCart.TransCode,
-                                "CarrierId": app.viewModels.shopcartHeaderEditViewModel.carrierId,
-                                "Rowid": app.viewModels.shopcartHeaderEditViewModel.rowId,
-                                "CheckSum": app.viewModels.shopcartHeaderEditViewModel.checksum,
-                                "CustId": app.viewModels.shopcartHeaderEditViewModel.custId
-                            }
-                          ]
-                      }
-                    ]
+                "writeRequest": {
+                    "ProDataSet": {
+                        "T_So-trans": [
+                          {
+                              "Control-Ent": app.viewModels.shopcartDetViewModel.shopCart.ControlEnt,
+                              "Trans-No": app.viewModels.shopcartDetViewModel.shopCart.TransNo,
+                              "Trans-Code": app.viewModels.shopcartDetViewModel.shopCart.TransCode,
+                              "Rowid": app.viewModels.shopcartHeaderEditViewModel.rowId,
+                              "CheckSum": app.viewModels.shopcartHeaderEditViewModel.checksum,
+                              "Cust-PO": app.viewModels.shopcartHeaderEditViewModel.custPO,
+                              "Carrier-ID": app.viewModels.shopcartHeaderEditViewModel.carrierId,
+                              "Request-Date": app.viewModels.shopcartHeaderEditViewModel.requestDate,
+                              "Action": "Change",
+                              "pUserId": app.viewModels.loginViewModel.username
+                          }
+                        ]
+                    }
                 }
             };
-            var promise = updateNotesJSDOModel.invoke('SaveNotes', data);
+            var promise = updateHeaderJSDOModel.invoke('WriteRecord', data);
             promise.done(function (session, result, details) {
+                debugger;
                 if (details.success == true) {
                     var errors = false;
                     try {
-                        errors = app.getErrors(details.response.dsOrder.dsOrder.restResult);
+                        var writeResponse = JSON.parse(details.response.writeResponse);
+                        errors = app.getErrors(writeResponse.ProDataSet.wsResult);
                     } catch (e) {
                         alert("Error", e)
                     }
