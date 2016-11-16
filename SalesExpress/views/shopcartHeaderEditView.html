@@ -1,0 +1,48 @@
+<div id="shopcartNotes"
+     data-role="view"
+     data-style="inset"
+     data-init="app.viewModels.shopcartHeaderEditViewModel.onInit"
+     data-show="app.viewModels.shopcartHeaderEditViewModel.onShow"
+     data-model="app.viewModels.shopcartHeaderEditViewModel">
+    <div>
+        <div>
+            <form>
+                <ul data-role="listview" data-style="inset" id="shopCartHeaderDetails">
+                    <li>
+                        <label>
+                            Cust Id:
+                            <input type="text" readonly data-bind="value: custId" class="border-1" />
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Cust. PO:
+                            <input type="text" data-bind="value: custPO" class="border-1" />
+                        </label>
+                    </li>
+                    <li style="height:40px">
+                        <label>
+                            Carrier ID:
+                            <select id="dropdownbound" class="border-1"
+                                    data-role="dropdownlist" data-bind="source: carrierIdList, value: carrierId"></select>
+                        </label>
+                    </li>
+                    <li style="height:45px">
+                        <label>
+                            Request Date:
+                            <input type="date" data-bind="value: requestDate" class="border-1"/>
+                        </label>
+                    </li>
+                    <li>
+                        <a data-bind="click: cancel" data-role="button" class="fa float-right" data-icon="fa-step-backward">Cancel</a>
+                        <a data-bind="click: saveHeader" data-role="button" class="fa float-right" data-icon="fa-floppy-o">Save</a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    <div id="pager" class="k-pager-wrap"></div>
+</div>
+
+
+

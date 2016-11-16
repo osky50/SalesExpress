@@ -107,7 +107,7 @@
     <script type="text/x-kendo-template" id="prodDetImageTemplate">
         <a data-role="button" style="height:100%; width:100%;padding:0;margin:0;border:0">
             <img src="#: FileUrl #" alt="#: FileDesc#" style="width:100%; height:100%"
-                 onerror="this.src = 'http://10.10.51.4:8080/lat/images/noimage.png'">
+                 onerror="this.src = app.imageErrorUrl">
         </a>
     </script>
     <script type="text/x-kendo-template" id="prodDetLocTemplate">

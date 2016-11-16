@@ -6,6 +6,7 @@
         jsdoSession: undefined,
         views: {},
         viewModels: {},
+        imageErrorUrl: 'MUST BE DEFINED'
     };
     var bootstrap = function () {
         $(function () {

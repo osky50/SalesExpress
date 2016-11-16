@@ -72,7 +72,7 @@
                                         options.success([]);
                                         return;
                                     }
-                                    var currentlocStockList = details.response.dsLocStockDetail.dsLocStockDetail.stockdetail;
+                                    var currentlocStockList = details.response.dsLocStockDetail.dsLocStockDetail.stockdetail || [];
                                     currentlocStockList.forEach(function (stockDetail) {
                                         stockDetail.ShortDescription = stockDetail.Description.replace(
                                             ' for ' + app.viewModels.locDetViewModel.selectedRow.Name, "");
@@ -118,7 +118,7 @@
                             var filter = { "LocationId": app.viewModels.prodDetViewModel.currentLoc.Loc_Id };
                             var promise = app.viewModels.locDetViewModel.jsdoModel.invoke('GetLocation', filter);
                             promise.done(function (session, result, details) {
-                                var currentLocList = details.response.dsLoc.dsLoc.eLocation;
+                                var currentLocList = details.response.dsLoc.dsLoc.eLocation || [];
                                 //formatting address
                                 currentLocList.forEach(function (eLocation) {
                                     eLocation.FormattedAddress = getFormattedAddress(eLocation);

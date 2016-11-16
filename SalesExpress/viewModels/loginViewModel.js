@@ -138,7 +138,7 @@
                                         else if (paramData.Param_Value === 'no')
                                             paramData.Param_Value = false;
                                         localStorage.setItem(paramDefinition.name, paramData.Param_Value);
-                                    }                                                                        
+                                    }
                                     app.viewModels.loginViewModel.startApplication();
                                 });
                                 paramsPromise.fail(function (jsdo, result, details) {
@@ -165,6 +165,7 @@
             app.viewModels.loginViewModel.validUrl(app.hostname + "/LatitudeIpadService/", validUrlCallback);
         },
         startApplication: function () {
+            app.imageErrorUrl = localStorage.getItem('SalesExpressHostName') + '/lat/images/noimage.png';
             app.updateShoppingCartQty();
             $(".user-info").html(app.viewModels.loginViewModel.get("username"));
             $(".control-ent-info").html(localStorage.getItem('defaultControlEnt'));

@@ -211,6 +211,7 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="viewModels\loginViewModel.js" />
+    <Content Include="viewModels\shopcartHeaderEditViewModel.js" />
     <Content Include="viewModels\shopcartNoteDetViewModel.js">
       <SubType>Content</SubType>
     </Content>
@@ -232,6 +233,7 @@
     <Content Include="views\orderListView.html" />
     <Content Include="views\prodListView.html" />
     <Content Include="views\loginView.html" />
+    <Content Include="views\shopcartHeaderEditView.html" />
     <Content Include="views\shopcartNoteDetView.html">
       <SubType>Content</SubType>
     </Content>
